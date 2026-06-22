@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+
+<html lang="fr" style="background-color: #353027;">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>LE CANAPÉ | Mobilier de Luxe & Décoration d'Intérieur à Oran</title>
+    <meta name="description"
+        content="Découvrez LE CANAPÉ à Oran. Un showroom exclusif dédié au mobilier de luxe, canapés haut de gamme, aménagement et décoration d'intérieur en Algérie. L'art de vivre par excellence." />
+    <meta name="keywords"
+        content="Le canapé, canapé Oran, meuble Oran, mobilier de luxe Algérie, décoration d'intérieur, aménagement salon, meubles haut de gamme" />
+    <meta name="author" content="LE CANAPÉ" />
+    <link rel="canonical" href="https://canape.vercel.app/" />
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/png" href="./logo.png" />
+    <link rel="apple-touch-icon" href="./logo.png" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://canape.vercel.app/" />
+    <meta property="og:title" content="LE CANAPÉ | Mobilier de Luxe & Décoration à Oran" />
+    <meta property="og:description"
+        content="Découvrez notre showroom à Oran. Mobilier haut de gamme et décoration pour créer l'intérieur de vos rêves." />
+    <meta property="og:image" content="https://canape.vercel.app/homepage.png" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://canape.vercel.app/" />
+    <meta property="twitter:title" content="LE CANAPÉ | Mobilier de Luxe à Oran" />
+    <meta property="twitter:description"
+        content="Découvrez notre showroom à Oran. Mobilier haut de gamme et décoration pour créer l'intérieur de vos rêves." />
+    <meta property="twitter:image" content="https://canape.vercel.app/homepage.png" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Playfair+Display:wght@500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.39/dist/lenis.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-container": "#592800",
+                        "inverse-surface": "#353027",
+                        "on-secondary-fixed": "#1c1b1b",
+                        "tertiary-fixed-dim": "#c7c7c3",
+                        "outline-variant": "#ddc1b1",
+                        "error-container": "#ffdad6",
+                        "tertiary-container": "#9f9f9c",
+                        "error": "#ba1a1a",
+                        "primary-fixed-dim": "#ffb787",
+                        "surface-tint": "#964900",
+                        "inverse-on-surface": "#faefe1",
+                        "on-secondary-fixed-variant": "#474746",
+                        "on-tertiary-fixed": "#1b1c1a",
+                        "on-background": "#201b13",
+                        "surface-container-lowest": "#ffffff",
+                        "outline": "#897265",
+                        "primary": "#964900",
+                        "on-primary-fixed": "#311300",
+                        "secondary-fixed-dim": "#c8c6c5",
+                        "on-tertiary-container": "#353634",
+                        "background": "#fff8f3",
+                        "surface-container-highest": "#ece1d3",
+                        "on-surface-variant": "#564337",
+                        "surface-container-high": "#f2e7d9",
+                        "on-secondary-container": "#636262",
+                        "surface-container-low": "#fdf2e4",
+                        "surface-bright": "#fff8f3",
+                        "on-error": "#ffffff",
+                        "on-primary-fixed-variant": "#723600",
+                        "surface-variant": "#ece1d3",
+                        "secondary-container": "#e2dfde",
+                        "on-secondary": "#ffffff",
+                        "tertiary-fixed": "#e3e2df",
+                        "secondary": "#5f5e5e",
+                        "on-tertiary-fixed-variant": "#464744",
+                        "surface": "#fff8f3",
+                        "on-surface": "#201b13",
+                        "on-tertiary": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "on-primary": "#ffffff",
+                        "surface-container": "#f7ecdf",
+                        "secondary-fixed": "#e5e2e1",
+                        "tertiary": "#5e5f5c",
+                        "inverse-primary": "#ffb787",
+                        "primary-fixed": "#ffdcc7",
+                        "surface-dim": "#e3d8cb",
+                        "primary-container": "#f08128"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-md": "24px",
+                        "section-gap": "160px",
+                        "margin-mobile": "24px",
+                        "margin-desktop": "80px",
+                        "stack-lg": "48px",
+                        "stack-sm": "8px",
+                        "gutter": "32px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "display-lg": ["Playfair Display"],
+                        "headline-md": ["Playfair Display"],
+                        "body-lg": ["Inter"],
+                        "headline-lg-mobile": ["Playfair Display"],
+                        "headline-lg": ["Playfair Display"]
+                    },
+                    "fontSize": {
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "600" }],
+                        "display-lg": ["80px", { "lineHeight": "96px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "headline-md": ["32px", { "lineHeight": "40px", "fontWeight": "500" }],
+                        "body-lg": ["18px", { "lineHeight": "32px", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["32px", { "lineHeight": "40px", "fontWeight": "500" }],
+                        "headline-lg": ["48px", { "lineHeight": "56px", "fontWeight": "500" }]
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Lenis recommended css */
+        html.lenis {
+            height: auto;
+        }
+
+        .lenis.lenis-smooth {
+            scroll-behavior: auto;
+        }
+
+        .lenis.lenis-smooth [data-lenis-prevent] {
+            overscroll-behavior: contain;
+        }
+
+        .lenis.lenis-stopped {
+            overflow: hidden;
+        }
+
+        .lenis.lenis-scrolling iframe {
+            pointer-events: none;
+        }
+
+        /* Hide global scrollbar for a cleaner look */
+        ::-webkit-scrollbar {
+            display: none;
+        }
+
+        html,
+        body {
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .glass-nav {
+            transition: background-color 0.5s ease, backdrop-filter 0.5s ease, padding 0.5s ease, border-color 0.5s ease, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            background-color: transparent;
+            border-bottom: 1px solid transparent;
+        }
+
+        .glass-nav.scrolled {
+            background-color: rgba(255, 248, 243, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(221, 193, 177, 0.4);
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+        }
+
+        .glass-nav.hidden-nav {
+            transform: translateY(-100%);
+        }
+
+        /* GSAP Initial States (prevent FOUC) */
+        .reveal-up,
+        .hero-entrance {
+            visibility: hidden;
+        }
+
+        /* Title is handled by split-word children, so make parent visible */
+        .hero-entrance-1 {
+            visibility: visible;
+        }
+
+        /* Parallax/Zoom Containers */
+        .parallax-wrapper {
+            overflow: hidden;
+            position: relative;
+        }
+
+        .parallax-element {
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+            transform: scale(1.15);
+            will-change: transform;
+        }
+
+        /* Refined Hover States */
+        .hover-scale-soft {
+            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .group:hover .hover-scale-soft {
+            transform: scale(1.04);
+        }
+
+        .btn-hover-effect {
+            position: relative;
+            overflow: hidden;
+            transition: color 0.4s ease, background-color 0.4s ease;
+        }
+
+        .btn-hover-effect::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.05);
+            transform: translateY(100%);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: -1;
+        }
+
+        .btn-hover-effect:hover::after {
+            transform: translateY(0);
+        }
+
+        /* Hero Pinning */
+        .hero-section {
+            position: relative;
+            z-index: 1;
+        }
+
+        .category-panel {
+            will-change: transform;
+        }
+
+        .main-content {
+            position: relative;
+            z-index: 2;
+            background-color: theme('colors.background');
+        }
+    </style>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FurnitureStore",
+      "name": "LE CANAPÉ",
+      "image": "https://canape.vercel.app/homepage.png",
+      "@id": "https://canape.vercel.app/",
+      "url": "https://canape.vercel.app/",
+      "telephone": "",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "",
+        "addressLocality": "Oran",
+        "addressRegion": "Oran",
+        "postalCode": "31000",
+        "addressCountry": "DZ"
+      },
+      "description": "Showroom exclusif dédié au mobilier de luxe, canapés haut de gamme et décoration d'intérieur à Oran, Algérie.",
+      "priceRange": "$$$"
+    }
+    </script>
+</head>
+
+<body
+    class="bg-background text-on-background font-body-md antialiased selection:bg-primary-container selection:text-on-primary-container">
+    <!-- Cinematic Preloader -->
+    <div id="preloader" class="fixed inset-0 z-[9999] flex flex-col items-center justify-center"
+        style="background: #353027;">
+        <!-- Masked word reveal container -->
+        <div id="pre-logo-wrap" style="overflow: hidden; padding-bottom: 4px;">
+            <div id="preloader-logo"
+                style="color: #c9a96e; font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 5vw, 3.5rem); font-weight: 600; letter-spacing: 0.4em; text-transform: uppercase; transform: translateY(110%); opacity: 0;">
+                Le Canapé</div>
+        </div>
+        <!-- Thin gold rule that expands after text is in -->
+        <div id="pre-rule"
+            style="width: 0; height: 1px; background: linear-gradient(90deg, transparent, #c9a96e, transparent); margin-top: 1.5rem; opacity: 0;">
+        </div>
+    </div>
+
+    <!-- TopNavBar -->
+    <nav class="fixed top-0 w-full z-50 glass-nav flex justify-between items-center px-margin-mobile md:px-margin-desktop py-6 transition-all duration-500"
+        id="main-nav">
+        <div class="hidden md:flex gap-8 items-center">
+            <a class="font-label-caps text-label-caps tracking-[0.1em] uppercase text-primary border-b border-primary pb-1"
+                href="#">Home</a>
+            <a class="font-label-caps text-label-caps tracking-[0.1em] uppercase text-on-surface-variant hover:text-primary transition-colors duration-300"
+                href="./produits/">Products</a>
+            <a class="font-label-caps text-label-caps tracking-[0.1em] uppercase text-on-surface-variant hover:text-primary transition-colors duration-300"
+                href="#">Materials</a>
+        </div>
+        <a class="font-headline-md text-headline-md font-bold tracking-tighter text-primary hover:opacity-80 transition-opacity"
+            href="#">LE CANAPÉ</a>
+        <div class="flex items-center gap-6">
+            <div class="hidden md:flex gap-8 items-center">
+                <a class="font-label-caps text-label-caps tracking-[0.1em] uppercase text-on-surface-variant hover:text-primary transition-colors duration-300"
+                    href="#">Services</a>
+                <a class="font-label-caps text-label-caps tracking-[0.1em] uppercase text-on-surface-variant hover:text-primary transition-colors duration-300"
+                    href="#">About</a>
+                <a class="font-label-caps text-label-caps tracking-[0.1em] uppercase text-on-surface-variant hover:text-primary transition-colors duration-300"
+                    href="#">Contacts</a>
+            </div>
+            <button id="mobile-menu-toggle" aria-label="Menu Principal"
+                class="md:hidden text-on-surface-variant hover:text-primary transition-colors duration-300 relative z-[60]">
+                <span class="material-symbols-outlined" id="mobile-menu-icon" aria-hidden="true">menu</span>
+            </button>
+        </div>
+
+        <!-- Mobile Menu Overlay -->
+        <div id="mobile-menu"
+            class="fixed inset-0 bg-surface-container-lowest z-[55] flex flex-col items-center justify-center gap-8 translate-x-full transition-transform duration-500 md:hidden">
+            <a class="font-headline-md text-headline-md text-primary" href="#">Home</a>
+            <a class="font-headline-md text-headline-md text-on-surface-variant" href="./produits/">Products</a>
+            <a class="font-headline-md text-headline-md text-on-surface-variant" href="#">Materials</a>
+            <a class="font-headline-md text-headline-md text-on-surface-variant" href="#">Services</a>
+            <a class="font-headline-md text-headline-md text-on-surface-variant" href="#">About</a>
+            <a class="font-headline-md text-headline-md text-on-surface-variant" href="#">Contacts</a>
+        </div>
+    </nav>
+    <!-- Hero Section -->
+    <header class="hero-section sticky top-0 h-screen w-full overflow-hidden bg-inverse-surface">
+        <div class="absolute inset-0 w-full h-full parallax-wrapper" id="hero-bg-wrapper">
+            <img src="./homepage.png" class="parallax-element w-full h-full object-cover opacity-80"
+                alt="Le Canapé Oran - Showroom de Mobilier de Luxe et Décoration d'Intérieur Haut de Gamme" />
+        </div>
+        <div
+            class="relative h-full flex flex-col justify-end pb-16 md:pb-24 px-margin-mobile md:px-margin-desktop items-center text-center z-10 max-w-5xl mx-auto">
+            <h1
+                class="font-display-lg text-5xl md:text-display-lg text-surface-container-lowest mb-6 hero-entrance hero-entrance-1 leading-tight">
+                The Art of Living Well.</h1>
+            <p
+                class="font-body-lg text-body-lg text-surface-container-highest max-w-2xl mb-10 hero-entrance hero-entrance-2">
+                Timeless comfort, crafted for the modern home.</p>
+            <button
+                class="magnetic-btn inline-flex items-center justify-center px-10 py-4 bg-primary text-on-primary font-label-caps text-label-caps tracking-[0.1em] uppercase hover:bg-primary-container hover:text-on-primary-container transition-colors duration-400 hero-entrance hero-entrance-3 shadow-lg hover:shadow-xl"
+                onclick="lenis.scrollTo('#collections')">
+                <span class="magnetic-text">Explore Collections</span>
+            </button>
+        </div>
+    </header>
+    <main class="main-content">
+
+        <!-- Categories Section (Pinned GSAP Overlay) -->
+        <section id="categories-section" class="relative h-screen bg-surface-container-lowest overflow-hidden w-full">
+            <!-- Floating Navigation Overlay -->
+            <div
+                class="hidden md:block absolute left-margin-desktop top-1/2 -translate-y-1/2 z-[60] pointer-events-none">
+                <ul id="category-links" class="flex flex-col gap-6 pointer-events-auto">
+                    <li
+                        class="cat-link font-headline-md text-headline-md text-surface-container-lowest opacity-100 whitespace-nowrap drop-shadow-md cursor-pointer hover:opacity-100 transition-opacity duration-300">
+                        Séjour</li>
+                    <li
+                        class="cat-link font-headline-md text-headline-md text-surface-container-lowest opacity-30 whitespace-nowrap drop-shadow-md cursor-pointer hover:opacity-100 transition-opacity duration-300">
+                        Salle à manger</li>
+                    <li
+                        class="cat-link font-headline-md text-headline-md text-surface-container-lowest opacity-30 whitespace-nowrap drop-shadow-md cursor-pointer hover:opacity-100 transition-opacity duration-300">
+                        Chambre</li>
+                    <li
+                        class="cat-link font-headline-md text-headline-md text-surface-container-lowest opacity-30 whitespace-nowrap drop-shadow-md cursor-pointer hover:opacity-100 transition-opacity duration-300">
+                        Décoration</li>
+                    <li
+                        class="cat-link font-headline-md text-headline-md text-surface-container-lowest opacity-30 whitespace-nowrap drop-shadow-md cursor-pointer hover:opacity-100 transition-opacity duration-300">
+                        Salon</li>
+                </ul>
+            </div>
+
+            <!-- Full Screen Panels (Stacking) -->
+            <div class="w-full h-full relative" id="category-panels">
+                <!-- Panel 1: Séjour -->
+                <div
+                    class="category-panel absolute inset-0 w-full h-full flex flex-col justify-end p-margin-mobile md:p-12 text-surface-container-lowest bg-inverse-surface z-10">
+                    <img src="./Séjour.png" class="absolute inset-0 w-full h-full object-cover opacity-70"
+                        alt="Séjour" />
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+                    <div class="relative z-10 md:ml-[33%]">
+                        <h3 class="font-display-lg text-headline-lg md:text-display-lg mb-6 drop-shadow-lg">Séjour</h3>
+                        <div class="flex flex-wrap gap-4">
+                            <span
+                                class="px-4 py-2 border border-surface-container-lowest font-label-caps text-label-caps tracking-[0.1em] uppercase hover:bg-surface-container-lowest hover:text-on-surface transition-colors cursor-pointer pointer-events-auto bg-black/30">Tables Basses</span>
+                            <span
+                                class="px-4 py-2 border border-surface-container-lowest font-label-caps text-label-caps tracking-[0.1em] uppercase hover:bg-surface-container-lowest hover:text-on-surface transition-colors cursor-pointer pointer-events-auto bg-black/30">Meubles TV</span>
+                            <span
+                                class="px-4 py-2 border border-surface-container-lowest font-label-caps text-label-caps tracking-[0.1em] uppercase hover:bg-surface-container-lowest hover:text-on-surface transition-colors cursor-pointer pointer-events-auto bg-black/30">Bibliothèques</span>
+                            <span
+                                class="px-4 py-2 border border-surface-container-lowest font-label-caps text-label-caps tracking-[0.1em] uppercase hover:bg-surface-container-lowest hover:text-on-surface transition-colors cursor-pointer pointer-events-auto bg-black/30">Consoles</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Panel 2: Salle à manger -->
+                <div
+                    class="category-panel absolute inset-0 w-full h-full flex flex-col justify-end p-margin-mobile md:p-12 text-surface-container-lowest bg-inverse-surface z-20">
+                    <img src="./Salle à manger.png" class="absolute inset-0 w-full h-full object-cover opacity-70"
+                        alt="Salle à manger" />
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+                    <div class="relative z-10 md:ml-[33%]">
+                        <h3 class="font-display-lg text-headline-lg md:text-display-lg mb-6 drop-shadow-lg">Salle à
+                            manger</h3>
+                        <div class="flex flex-wrap gap-4">
+                            <span
+                                class="px-4 py-2 border border-surface-container-lowest font-label-caps text-label-caps tracking-[0.1em] uppercase hover:bg-surface-container-lowest hover:text-on-surface transition-colors cursor-pointer pointer-events-auto bg-black/30">Tables de Repas</span>
+                            <span
+                                class="px-4 py-2 border border-surface-container-lowest font-label-caps text-label-caps tracking-[0.1em] uppercase hover:bg-surface-container-lowest hover:text-on-surface transition-colors cursor-pointer pointer-events-auto bg-black/30">Chaises</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Panel 3: Chambre -->
+                <div
+                    class="category-panel absolute inset-0 w-full h-full flex flex-col justify-end p-margin-mobile md:p-12 text-surface-container-lowest bg-inverse-surface z-30">
+                    <img src="./homepage.png" class="absolute inset-0 w-full h-full object-cover opacity-70"
+                        alt="Chambre" />
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+                    <div class="relative z-10 md:ml-[33%]">
+                        <h3 class="font-display-lg text-headline-lg md:text-display-lg mb-6 drop-shadow-lg">Chambre</h3>
+                        <div class="flex flex-wrap gap-4">
+                            <span
+                                class="px-4 py-2 border border-surface-container-lowest font-label-caps text-label-caps tracking-[0.1em] uppercase hover:bg-surface-container-lowest hover:text-on-surface transition-colors cursor-pointer pointer-events-auto bg-black/30">Lits</span>
+                            <span
+                                class="px-4 py-2 border border-surface-container-lowest font-label-caps text-label-caps tracking-[0.1em] uppercase hover:bg-surface-container-lowest hover:text-on-surface transition-colors cursor-pointer pointer-events-auto bg-black/30">Dressing</span>
+                            <span
+                                class="px-4 py-2 border border-surface-container-lowest font-label-caps text-label-caps tracking-[0.1em] uppercase hover:bg-surface-container-lowest hover:text-on-surface transition-colors cursor-pointer pointer-events-auto bg-black/30">Commodes</span>
+                            <span
+                                class="px-4 py-2 border border-surface-container-lowest font-label-caps text-label-caps tracking-[0.1em] uppercase hover:bg-surface-container-lowest hover:text-on-surface transition-colors cursor-pointer pointer-events-auto bg-black/30">Bureau</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Panel 4: Décoration -->
+                <div
+                    class="category-panel absolute inset-0 w-full h-full flex flex-col justify-end p-margin-mobile md:p-12 text-surface-container-lowest bg-inverse-surface z-40">
+                    <img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=1920&auto=format&fit=crop"
+                        class="absolute inset-0 w-full h-full object-cover opacity-70" alt="Décoration" />
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+                    <div class="relative z-10 md:ml-[33%]">
+                        <h3 class="font-display-lg text-headline-lg md:text-display-lg mb-6 drop-shadow-lg">Décoration
+                        </h3>
+                        <div class="flex flex-wrap gap-4">
+                            <span
+                                class="px-4 py-2 border border-surface-container-lowest font-label-caps text-label-caps tracking-[0.1em] uppercase hover:bg-surface-container-lowest hover:text-on-surface transition-colors cursor-pointer pointer-events-auto bg-black/30">Luminaires</span>
+                            <span
+                                class="px-4 py-2 border border-surface-container-lowest font-label-caps text-label-caps tracking-[0.1em] uppercase hover:bg-surface-container-lowest hover:text-on-surface transition-colors cursor-pointer pointer-events-auto bg-black/30">Tapis</span>
+                            <span
+                                class="px-4 py-2 border border-surface-container-lowest font-label-caps text-label-caps tracking-[0.1em] uppercase hover:bg-surface-container-lowest hover:text-on-surface transition-colors cursor-pointer pointer-events-auto bg-black/30">Miroirs</span>
+                            <span
+                                class="px-4 py-2 border border-surface-container-lowest font-label-caps text-label-caps tracking-[0.1em] uppercase hover:bg-surface-container-lowest hover:text-on-surface transition-colors cursor-pointer pointer-events-auto bg-black/30">Tableaux</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Panel 5: Salon -->
+                <div
+                    class="category-panel absolute inset-0 w-full h-full flex flex-col justify-end p-margin-mobile md:p-12 text-surface-container-lowest bg-inverse-surface z-50">
+                    <img src="./produits/images/salon.png"
+                        class="absolute inset-0 w-full h-full object-cover opacity-70" alt="Salon" />
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+                    <div class="relative z-10 md:ml-[33%]">
+                        <h3 class="font-display-lg text-headline-lg md:text-display-lg mb-6 drop-shadow-lg">Salon</h3>
+                        <div class="flex flex-wrap gap-4">
+                            <span
+                                class="px-4 py-2 border border-surface-container-lowest font-label-caps text-label-caps tracking-[0.1em] uppercase hover:bg-surface-container-lowest hover:text-on-surface transition-colors cursor-pointer pointer-events-auto bg-black/20 backdrop-blur-sm">Pouf</span>
+                            <span
+                                class="px-4 py-2 border border-surface-container-lowest font-label-caps text-label-caps tracking-[0.1em] uppercase hover:bg-surface-container-lowest hover:text-on-surface transition-colors cursor-pointer pointer-events-auto bg-black/20 backdrop-blur-sm">Salon L</span>
+                            <span
+                                class="px-4 py-2 border border-surface-container-lowest font-label-caps text-label-caps tracking-[0.1em] uppercase hover:bg-surface-container-lowest hover:text-on-surface transition-colors cursor-pointer pointer-events-auto bg-black/20 backdrop-blur-sm">Salon 7 places</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+        <!-- Brand Mood / Quote Section -->
+        <section id="brand-statement" class="relative overflow-hidden bg-inverse-surface"
+            style="min-height: 85vh; display: flex; align-items: center;">
+            <!-- Background image with parallax -->
+            <div class="absolute inset-0 w-full h-full parallax-wrapper" style="z-index:0;">
+                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBNnvHoj0UhJtHEsxy4qk-mYajw4wsvMEn0llWdJbHJoxQVCK794jOVGboZr4CFITW2P9hzJ4BIu3dAfLq4TVhcEPf10dImSCEFYcvnTi6Lsl6OrETTDA0OZ4qRr3PARu0P3MJyUy_VnX3Dx65m0_oyqZoOXMHVZf3cVYacBwnGkclnztacCq9eC78I-k9UrklDMkgDVx84qWD-SSpJLSw9NjYwqVhhcI403_qvvsohOonWV6yOtJkrFxf_eayJiXMpgM2vv6A0Ii8"
+                    class="parallax-element absolute inset-0 w-full h-full object-cover opacity-30"
+                    alt="Le Canapé Showroom Atmosphere" />
+            </div>
+            <!-- Gradient overlays -->
+            <div class="absolute inset-0"
+                style="background: linear-gradient(135deg, rgba(20,15,10,0.95) 0%, rgba(20,15,10,0.6) 60%, rgba(20,15,10,0.85) 100%); z-index:1;">
+            </div>
+            <!-- Thin gold accent line top -->
+            <div class="absolute top-0 left-0 right-0 h-px"
+                style="background: linear-gradient(90deg, transparent, #c9a96e 30%, #c9a96e 70%, transparent); opacity: 0.5; z-index:2;">
+            </div>
+
+            <!-- Content -->
+            <div class="relative w-full px-margin-mobile md:px-margin-desktop py-24 flex flex-col items-center text-center"
+                style="z-index:2;">
+                <!-- Eyebrow label -->
+                <span class="brand-quote-el font-label-caps text-label-caps tracking-[0.25em] uppercase mb-8"
+                    style="color: #c9a96e; letter-spacing: 0.3em;">
+                    Le Canapé — Oran
+                </span>
+
+                <!-- Main quote -->
+                <div class="brand-quote-el overflow-hidden mb-6" style="max-width: 900px;">
+                    <h2 class="font-display-lg text-display-lg text-surface-container-lowest"
+                        style="font-size: clamp(2.2rem, 6vw, 4.5rem); line-height: 1.1; font-weight: 700; letter-spacing: -0.02em;">
+                        Votre intérieur mérite<br />
+                        <em style="color: #c9a96e; font-style: italic;">l'excellence.</em>
+                    </h2>
+                </div>
+
+                <!-- Subtext -->
+                <p class="brand-quote-el font-body-lg text-body-lg mb-14"
+                    style="color: rgba(255,248,243,0.6); max-width: 520px; line-height: 1.7;">
+                    Découvrez notre showroom à Oran un espace entièrement dédié à vous aider à créer l'intérieur de vos
+                    rêves.
+                </p>
+
+
+
+                <!-- CTA -->
+                <div class="brand-quote-el">
+                    <a href="#"
+                        class="magnetic-btn inline-flex items-center gap-3 px-10 py-4 font-label-caps text-label-caps tracking-[0.15em] uppercase transition-all duration-400"
+                        style="border: 1px solid #c9a96e; color: #c9a96e; position:relative; overflow:hidden;">
+                        <span class="magnetic-text inline-flex items-center gap-3">
+                            Visiter le Showroom
+                            <span class="material-symbols-outlined" style="font-size:1.1rem;">arrow_forward</span>
+                        </span>
+                    </a>
+                </div>
+            </div>
+            <!-- Thin gold accent line bottom -->
+            <div class="absolute bottom-0 left-0 right-0 h-px"
+                style="background: linear-gradient(90deg, transparent, #c9a96e 30%, #c9a96e 70%, transparent); opacity: 0.5; z-index:2;">
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="bg-surface-container-highest w-full pt-stack-lg pb-stack-md border-t border-outline-variant">
+            <div
+                class="flex flex-col md:flex-row justify-between items-start px-margin-mobile md:px-margin-desktop max-w-7xl mx-auto gap-stack-md mb-16 reveal-up">
+                <div class="max-w-xs">
+                    <a class="font-headline-lg text-headline-lg text-primary block mb-6 hover:opacity-80 transition-opacity"
+                        href="#">LE CANAPÉ</a>
+                    <p class="font-body-md text-body-md text-on-surface-variant">Élever le quotidien grâce à un confort
+                        sans compromis et un design intemporel.</p>
+                    <p class="font-body-md text-body-md text-on-surface-variant mt-4 text-sm opacity-80">
+                        LE CANAPÉ est la référence en matière de mobilier de luxe à Oran. Découvrez notre sélection de
+                        canapés haut de gamme, tables à manger, lits design et décoration d'intérieur en Algérie.
+                    </p>
+                </div>
+                <div class="flex flex-col gap-4">
+                    <span
+                        class="font-label-caps text-label-caps tracking-[0.1em] uppercase text-on-surface">Navigation</span>
+                    <a class="font-body-md text-body-md text-on-surface-variant hover:text-primary hover:translate-x-1 transition-all duration-300"
+                        href="#">Accueil</a>
+                    <a class="font-body-md text-body-md text-on-surface-variant hover:text-primary hover:translate-x-1 transition-all duration-300"
+                        href="#">Catalogue</a>
+                    <a class="font-body-md text-body-md text-on-surface-variant hover:text-primary hover:translate-x-1 transition-all duration-300"
+                        href="#">À propos de nous</a>
+                    <a class="font-body-md text-body-md text-on-surface-variant hover:text-primary hover:translate-x-1 transition-all duration-300"
+                        href="#">Contact</a>
+                </div>
+                <div class="flex flex-col gap-4">
+                    <span
+                        class="font-label-caps text-label-caps tracking-[0.1em] uppercase text-on-surface">Information</span>
+                    <a class="font-body-md text-body-md text-on-surface-variant hover:text-primary hover:translate-x-1 transition-all duration-300"
+                        href="#">Compte</a>
+                    <a class="font-body-md text-body-md text-on-surface-variant hover:text-primary hover:translate-x-1 transition-all duration-300"
+                        href="#">Liste de souhaits</a>
+                    <a class="font-body-md text-body-md text-on-surface-variant hover:text-primary hover:translate-x-1 transition-all duration-300"
+                        href="#">Commandes</a>
+                    <a class="font-body-md text-body-md text-on-surface-variant hover:text-primary hover:translate-x-1 transition-all duration-300"
+                        href="#">Termes et conditions</a>
+                    <a class="font-body-md text-body-md text-on-surface-variant hover:text-primary hover:translate-x-1 transition-all duration-300"
+                        href="#">Privacy Policy</a>
+                </div>
+                <div class="w-full md:w-auto">
+                    <span
+                        class="font-label-caps text-label-caps tracking-[0.1em] uppercase text-on-surface block mb-4">Newsletter</span>
+                    <div class="flex border-b border-outline group">
+                        <input
+                            class="bg-transparent border-none outline-none font-body-md text-body-md text-on-surface placeholder:text-on-surface-variant/50 w-full py-2 px-0 focus:ring-0"
+                            placeholder="Your email address" type="email" />
+                        <button
+                            class="text-primary hover:text-primary-container transition-colors p-2 transform group-hover:translate-x-1 duration-300">
+                            <span class="material-symbols-outlined">arrow_forward</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div
+                class="px-margin-mobile md:px-margin-desktop max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center pt-8 border-t border-outline-variant/50 reveal-up reveal-delay-1">
+                <p class="font-body-md text-body-md text-on-surface-variant text-sm">© 2024 LE CANAPÉ. All rights
+                    reserved. Crafted in Europe.</p>
+                <div class="flex gap-4 mt-4 md:mt-0">
+                    <a class="text-on-surface-variant hover:text-primary transition-colors hover:-translate-y-1 duration-300 transform inline-block"
+                        href="#"><span class="material-symbols-outlined">share</span></a>
+                </div>
+            </div>
+        </footer>
+    </main>
+    <script>
+        // Initialize Lenis for ultra-smooth scrolling
+        const lenis = new Lenis({
+            duration: 2.2, // Extremely slow, luxurious smooth scroll
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            direction: 'vertical',
+            gestureDirection: 'vertical',
+            smooth: true,
+            mouseMultiplier: 0.6, // Very soft mouse speed
+            smoothTouch: true,
+            touchMultiplier: 1.5,
+            infinite: false,
+        });
+
+        // GSAP Registration & Lenis Sync
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Drive Lenis exclusively through GSAP ticker — perfect 1:1 sync, no double RAF
+        gsap.ticker.add((time) => {
+            lenis.raf(time * 1000);
+        });
+        gsap.ticker.lagSmoothing(0);
+        lenis.on('scroll', ScrollTrigger.update);
+
+
+        // Mobile Menu Toggle
+        const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileMenuIcon = document.getElementById('mobile-menu-icon');
+        let mobileMenuOpen = false;
+
+        if (mobileMenuToggle && mobileMenu) {
+            mobileMenuToggle.addEventListener('click', () => {
+                mobileMenuOpen = !mobileMenuOpen;
+                if (mobileMenuOpen) {
+                    mobileMenu.classList.remove('translate-x-full');
+                    mobileMenuIcon.textContent = 'close';
+                    lenis.stop();
+                } else {
+                    mobileMenu.classList.add('translate-x-full');
+                    mobileMenuIcon.textContent = 'menu';
+                    lenis.start();
+                }
+            });
+
+            mobileMenu.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenuOpen = false;
+                    mobileMenu.classList.add('translate-x-full');
+                    mobileMenuIcon.textContent = 'menu';
+                    lenis.start();
+                });
+            });
+        }
+
+        // Smooth Sticky Nav with Lenis
+        const nav = document.getElementById('main-nav');
+        let lastScrollY = window.scrollY;
+
+        lenis.on('scroll', ({ scroll, velocity }) => {
+            if (scroll > 50) {
+                nav.classList.add('scrolled');
+                if (velocity > 0 && scroll > 200) {
+                    nav.classList.add('hidden-nav');
+                } else {
+                    nav.classList.remove('hidden-nav');
+                }
+            } else {
+                nav.classList.remove('scrolled');
+                nav.classList.remove('hidden-nav');
+            }
+        });
+
+        // Cinematic 3D Character Splitter (no external plugin needed)
+        let splitChars = [];
+        const heroTitle = document.querySelector('.hero-entrance-1');
+        if (heroTitle) {
+            const text = heroTitle.innerText;
+            heroTitle.innerHTML = '';
+            heroTitle.style.cssText += '; perspective: 800px;';
+            [...text].forEach((char) => {
+                const span = document.createElement('span');
+                span.style.cssText = 'display:inline-block; will-change: transform, opacity, filter;';
+                span.textContent = char === ' ' ? '\u00a0' : char;
+                heroTitle.appendChild(span);
+                splitChars.push(span);
+            });
+            // Set initial 3D hidden state — very dramatic starting position
+            gsap.set(splitChars, {
+                opacity: 0,
+                y: 120,
+                rotationX: -120,
+                filter: 'blur(8px)',
+                transformOrigin: '50% 0% -40px',
+                transformPerspective: 800
+            });
+        }
+
+        // 1. Force Scroll to Top on Refresh
+        if (history.scrollRestoration) {
+            history.scrollRestoration = 'manual';
+        }
+        window.scrollTo(0, 0);
+
+        // 2. Smart Preloader — only show once every 4 minutes
+        const PRELOADER_COOLDOWN = 4 * 60 * 1000; // 4 minutes in ms
+        const lastShown = localStorage.getItem('lc_preloader_ts');
+        const now = Date.now();
+        const shouldShowPreloader = !lastShown || (now - parseInt(lastShown, 10)) > PRELOADER_COOLDOWN;
+
+        if (shouldShowPreloader) {
+            // Save timestamp so it won't show again for 4 minutes
+            localStorage.setItem('lc_preloader_ts', now.toString());
+
+            lenis.stop();
+
+            const preloaderTl = gsap.timeline({
+                defaults: { ease: 'expo.out' },
+                onComplete: () => { enableHeroScrollGate(); }
+            });
+
+            preloaderTl
+                // Logo slides up from behind the mask
+                .to('#preloader-logo', { y: '0%', opacity: 1, duration: 1.6, ease: 'expo.out' }, 0.3)
+                // Gold rule expands below
+                .to('#pre-rule', { opacity: 1, duration: 0.4, ease: 'none' }, 1.4)
+                .to('#pre-rule', { width: '200px', duration: 1.0, ease: 'expo.inOut' }, 1.4)
+                // Hold
+                .to({}, { duration: 0.8 })
+                // Logo slides back down into mask
+                .to('#preloader-logo', { y: '110%', opacity: 0, duration: 1.0, ease: 'expo.in' })
+                .to('#pre-rule', { width: 0, opacity: 0, duration: 0.6, ease: 'expo.in' }, '<')
+                // Screen peels away
+                .to('#preloader', { yPercent: -100, duration: 1.0, ease: 'expo.inOut' }, '+=0.05');
+
+            // Hero Entrance (Nav & CTA) plays right as preloader lifts
+            const heroEntranceTl = gsap.timeline({ delay: 3.2 });
+            heroEntranceTl.fromTo(".hero-entrance:not(.hero-entrance-1)",
+                { y: 40, autoAlpha: 0 },
+                { y: 0, autoAlpha: 1, duration: 1.4, stagger: 0.2, ease: "expo.out" }
+            );
+
+        } else {
+            // Skip preloader — hide it instantly and go straight into the page
+            gsap.set('#preloader', { display: 'none' });
+
+            // Instantly show nav & CTA elements
+            gsap.set(".hero-entrance:not(.hero-entrance-1)", { autoAlpha: 1, y: 0 });
+
+            // Start scroll right away
+            enableHeroScrollGate();
+        }
+
+        // 4. Scroll Gate (Cinematically slow scroll during reveal)
+        function enableHeroScrollGate() {
+            lenis.start(); // Unlock scrolling immediately
+            let heroRevealed = false;
+            
+            function onScrollIntent() {
+                if (heroRevealed) return;
+                heroRevealed = true;
+
+                window.removeEventListener('wheel', onScrollIntent);
+                window.removeEventListener('touchmove', onScrollIntent);
+
+                // Make the scroll extremely slow while animating
+                const originalWheel = lenis.options.wheelMultiplier || lenis.options.mouseMultiplier || 0.6;
+                const originalTouch = lenis.options.touchMultiplier || 1.5;
+                
+                lenis.options.wheelMultiplier = 0.15;
+                lenis.options.mouseMultiplier = 0.15;
+                lenis.options.touchMultiplier = 0.3;
+
+                if (splitChars.length > 0) {
+                    gsap.to(splitChars, {
+                        opacity: 1,
+                        y: 0,
+                        rotationX: 0,
+                        filter: 'blur(0px)',
+                        duration: 1.2,
+                        stagger: 0.03,
+                        ease: "expo.out",
+                        onComplete: () => {
+                            // Restore normal scroll speed
+                            lenis.options.wheelMultiplier = originalWheel;
+                            lenis.options.mouseMultiplier = originalWheel;
+                            lenis.options.touchMultiplier = originalTouch;
+                        }
+                    });
+                }
+            }
+
+            window.addEventListener('wheel', onScrollIntent, { passive: true });
+            window.addEventListener('touchmove', onScrollIntent, { passive: true });
+        }
+
+
+        // Brand Quote Section - staggered reveal
+        ScrollTrigger.batch(".brand-quote-el", {
+            onEnter: (elements) => {
+                gsap.fromTo(elements,
+                    { y: 50, autoAlpha: 0 },
+                    { y: 0, autoAlpha: 1, duration: 1.4, stagger: 0.15, ease: "expo.out", overwrite: true }
+                );
+            },
+            start: "top 88%",
+            once: true
+        });
+        const magneticBtns = document.querySelectorAll(".magnetic-btn");
+        magneticBtns.forEach(btn => {
+            const text = btn.querySelector(".magnetic-text");
+            const xTo = gsap.quickTo(btn, "x", { duration: 0.4, ease: "power3" }),
+                yTo = gsap.quickTo(btn, "y", { duration: 0.4, ease: "power3" }),
+                textXTo = gsap.quickTo(text, "x", { duration: 0.4, ease: "power3" }),
+                textYTo = gsap.quickTo(text, "y", { duration: 0.4, ease: "power3" });
+
+            btn.addEventListener("mousemove", (e) => {
+                const rect = btn.getBoundingClientRect();
+                const x = (e.clientX - (rect.left + rect.width / 2)) * 0.3; // 30% pull
+                const y = (e.clientY - (rect.top + rect.height / 2)) * 0.3;
+                xTo(x);
+                yTo(y);
+                textXTo(x * 0.5); // Text moves less
+                textYTo(y * 0.5);
+            });
+
+            btn.addEventListener("mouseleave", () => {
+                xTo(0);
+                yTo(0);
+                textXTo(0);
+                textYTo(0);
+            });
+        });
+
+        // Advanced Scroll Reveal (Batched)
+        ScrollTrigger.batch(".reveal-up", {
+            onEnter: (elements) => {
+                gsap.fromTo(elements,
+                    { y: 60, autoAlpha: 0 },
+                    { y: 0, autoAlpha: 1, duration: 1.8, stagger: 0.15, ease: "expo.out", overwrite: true }
+                );
+            },
+            start: "top 85%",
+            once: true
+        });
+
+        // Scroll-triggered Zoom Effect for Images sync with GSAP
+        gsap.utils.toArray('.parallax-wrapper').forEach(wrapper => {
+            const img = wrapper.querySelector('.parallax-element');
+            gsap.fromTo(img,
+                { scale: 1.15 },
+                {
+                    scale: 1,
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: wrapper,
+                        start: "top bottom",
+                        end: "bottom top",
+                        scrub: true
+                    }
+                }
+            );
+        });
+
+        // Pinned Categories Section Animation
+        const categoriesSection = document.getElementById("categories-section");
+        const categoryPanels = gsap.utils.toArray(".category-panel");
+        const categoryLinks = gsap.utils.toArray(".cat-link");
+
+        if (categoriesSection && categoryPanels.length > 0) {
+            // Initially hide panels 2 and 3 below the view
+            gsap.set(categoryPanels.slice(1), { yPercent: 100 });
+
+            const tl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: "#categories-section",
+                    start: "top top",
+                    end: "+=400%", // 4 transitions
+                    pin: true,
+                    anticipatePin: 1,
+                    scrub: 1, // Better performance for mobile
+                    snap: {
+                        snapTo: "labels", // Snap cleanly to the resting state labels
+                        duration: { min: 0.4, max: 0.8 },
+                        delay: 0.1,
+                        ease: "power2.inOut"
+                    }
+                }
+            });
+
+            // Resting state 1
+            tl.addLabel("cat0");
+            tl.to({}, { duration: 0.5 }); // Hold
+
+            // Transition to Panel 2
+            tl.to(categoryLinks[0], { opacity: 0.3, duration: 0.8 }, "trans1")
+                .to(categoryLinks[1], { opacity: 1, duration: 0.8 }, "trans1")
+                .to(categoryPanels[1], { yPercent: 0, ease: "none", duration: 1.5 }, "trans1")
+                .from(categoryPanels[1].querySelectorAll(".backdrop-blur-sm"), { y: 30, autoAlpha: 0, stagger: 0.1, duration: 0.8 }, "trans1+=0.7")
+                .addLabel("cat1")
+                .to({}, { duration: 0.5 }); // Hold
+
+            // Transition to Panel 3
+            tl.to(categoryLinks[1], { opacity: 0.3, duration: 0.8 }, "trans2")
+                .to(categoryLinks[2], { opacity: 1, duration: 0.8 }, "trans2")
+                .to(categoryPanels[2], { yPercent: 0, ease: "none", duration: 1.5 }, "trans2")
+                .from(categoryPanels[2].querySelectorAll(".backdrop-blur-sm"), { y: 30, autoAlpha: 0, stagger: 0.1, duration: 0.8 }, "trans2+=0.7")
+                .addLabel("cat2")
+                .to({}, { duration: 0.5 }); // Hold
+
+            // Transition to Panel 4
+            tl.to(categoryLinks[2], { opacity: 0.3, duration: 0.8 }, "trans3")
+                .to(categoryLinks[3], { opacity: 1, duration: 0.8 }, "trans3")
+                .to(categoryPanels[3], { yPercent: 0, ease: "none", duration: 1.5 }, "trans3")
+                .from(categoryPanels[3].querySelectorAll(".backdrop-blur-sm"), { y: 30, autoAlpha: 0, stagger: 0.1, duration: 0.8 }, "trans3+=0.7")
+                .addLabel("cat3")
+                .to({}, { duration: 0.5 }); // Hold
+
+            // Transition to Panel 5
+            tl.to(categoryLinks[3], { opacity: 0.3, duration: 0.8 }, "trans4")
+                .to(categoryLinks[4], { opacity: 1, duration: 0.8 }, "trans4")
+                .to(categoryPanels[4], { yPercent: 0, ease: "none", duration: 1.5 }, "trans4")
+                .from(categoryPanels[4].querySelectorAll(".backdrop-blur-sm"), { y: 30, autoAlpha: 0, stagger: 0.1, duration: 0.8 }, "trans4+=0.7")
+                .addLabel("cat4")
+                .to({}, { duration: 0.5 }); // Hold
+
+            // Handle Clicks on Category Links to scroll directly to the label
+            categoryLinks.forEach((link, i) => {
+                link.addEventListener("click", () => {
+                    const labelTime = tl.labels["cat" + i];
+                    const progress = labelTime / tl.duration();
+                    const scrollTrigger = tl.scrollTrigger;
+                    const scrollPos = scrollTrigger.start + (scrollTrigger.end - scrollTrigger.start) * progress;
+
+                    // Use Lenis to scroll smoothly to the calculated position
+                    lenis.scrollTo(scrollPos, {
+                        duration: 1.2,
+                        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+                    });
+                });
+            });
+        }
+    </script>
+</body>
+
+</html>
