@@ -1,0 +1,310 @@
+[
+  {
+    "slug": "table-chene",
+    "name": "Table Chêne",
+    "nameDisplay": "TABLE CHÊNE",
+    "category": "salle-a-manger",
+    "categoryLabel": "SALLE À MANGER",
+    "subcategory": "tables",
+    "subcategoryLabel": "TABLES",
+    "price": 2800,
+    "currency": "DZD",
+    "shortDescription": "Une table de repas en chêne massif aux lignes épurées, conçue pour rassembler famille et amis autour d'un centre de table d'exception.",
+    "description": "Plateau en chêne massif huilé, piètement sculpté et finitions artisanales. Un morceau central intemporel pour la salle à manger contemporaine.",
+    "status": "draft",
+    "archived": false,
+    "createdAt": "2026-06-25",
+    "updatedAt": "2026-06-28",
+    "images": {
+      "hero": "https://lh3.googleusercontent.com/aida-public/AB6AXuA0Z-EhelDaeLPLKadJobSWHdG91mvxFoYp1bTl5i3XWIa1h-SeTpAewAhx9S7IPckW0dqjDYVEDzOQW3kP9F6EheME2GB8QIWUn4fPWRHlZsq3_T-DBGXwRS9telozYKp9hLB0oHE4syWiciNRKPz8xd-RUBf-6FeQE6jTndaVy090sbkfQZK_ZJcjMldBzW9xZ3bcSz6Pf8hnR2mq-7HHIqlTKbjgncZr6JVokmT1aCAxtSd4yTCwyvrlJIfY7RWkXxVb01mUOPrZ",
+      "gallery": [
+        "https://lh3.googleusercontent.com/aida-public/AB6AXuA0Z-EhelDaeLPLKadJobSWHdG91mvxFoYp1bTl5i3XWIa1h-SeTpAewAhx9S7IPckW0dqjDYVEDzOQW3kP9F6EheME2GB8QIWUn4fPWRHlZsq3_T-DBGXwRS9telozYKp9hLB0oHE4syWiciNRKPz8xd-RUBf-6FeQE6jTndaVy090sbkfQZK_ZJcjMldBzW9xZ3bcSz6Pf8hnR2mq-7HHIqlTKbjgncZr6JVokmT1aCAxtSd4yTCwyvrlJIfY7RWkXxVb01mUOPrZ"
+      ]
+    },
+    "colors": [],
+    "dimensions": {
+      "largeur": "220 cm",
+      "profondeur": "100 cm",
+      "hauteur": "76 cm",
+      "assise": "—"
+    },
+    "specs": [
+      {
+        "label": "Structure",
+        "value": "Chêne massif"
+      },
+      {
+        "label": "Suspension",
+        "value": "Acier laqué"
+      },
+      {
+        "label": "Fabrication",
+        "value": "Europe"
+      }
+    ],
+    "materials": [
+      {
+        "tag": "BOIS",
+        "title": "Chêne Européen",
+        "text": "Bois sélectionné pour son grain régulier et sa résistance, travaillé en atelier pour un toucher satiné.",
+        "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuA0Z-EhelDaeLPLKadJobSWHdG91mvxFoYp1bTl5i3XWIa1h-SeTpAewAhx9S7IPckW0dqjDYVEDzOQW3kP9F6EheME2GB8QIWUn4fPWRHlZsq3_T-DBGXwRS9telozYKp9hLB0oHE4syWiciNRKPz8xd-RUBf-6FeQE6jTndaVy090sbkfQZK_ZJcjMldBzW9xZ3bcSz6Pf8hnR2mq-7HHIqlTKbjgncZr6JVokmT1aCAxtSd4yTCwyvrlJIfY7RWkXxVb01mUOPrZ",
+        "aspect": "square",
+        "offset": false
+      }
+    ]
+  },
+  {
+    "slug": "lampe-bronze",
+    "name": "Lampe Bronze",
+    "nameDisplay": "LAMPE BRONZE",
+    "category": "sejour",
+    "categoryLabel": "SÉJOUR",
+    "subcategory": "luminaires",
+    "subcategoryLabel": "SÉJOUR",
+    "price": 450,
+    "currency": "DZD",
+    "shortDescription": "Luminaire sculptural en bronze patiné, diffusant une lumière chaleureuse qui sublime chaque intérieur.",
+    "description": "Abat-jour en lin naturel et structure en bronze vieilli. Une pièce de caractère pour salon ou chambre.",
+    "status": "published",
+    "archived": false,
+    "createdAt": "2026-06-25",
+    "updatedAt": "2026-06-28",
+    "images": {
+      "hero": "https://lh3.googleusercontent.com/aida-public/AB6AXuAfOSO-kkT85iezoqN_27BS1y3sBmUF8PocV8FQL49tCM-iZ3lcYri_SDWhVshCtAWqa7fwcTz5jToLDj61kXyASkxjB6nlNW-15xzYbEAPrnouH68Yzm9Ie_7TyOvasFQXWPTdAxQhopRp8B3qL9kQh7vgMEbhdy_8rPiydcT3-_lyzFz7pkhB_yYBxtK9uWjSwG7wVVC4UyLB4jdW8nMe7F3oEpWAfsCKP-eER54xqpmDRSdLcw1295EQcIfYV678KXn3tpeYhPSW",
+      "gallery": [
+        "https://lh3.googleusercontent.com/aida-public/AB6AXuAfOSO-kkT85iezoqN_27BS1y3sBmUF8PocV8FQL49tCM-iZ3lcYri_SDWhVshCtAWqa7fwcTz5jToLDj61kXyASkxjB6nlNW-15xzYbEAPrnouH68Yzm9Ie_7TyOvasFQXWPTdAxQhopRp8B3qL9kQh7vgMEbhdy_8rPiydcT3-_lyzFz7pkhB_yYBxtK9uWjSwG7wVVC4UyLB4jdW8nMe7F3oEpWAfsCKP-eER54xqpmDRSdLcw1295EQcIfYV678KXn3tpeYhPSW"
+      ]
+    },
+    "colors": [],
+    "dimensions": {
+      "largeur": "35 cm",
+      "profondeur": "35 cm",
+      "hauteur": "58 cm",
+      "assise": "—"
+    },
+    "specs": [
+      {
+        "label": "Structure",
+        "value": "Bronze patiné"
+      },
+      {
+        "label": "Rembourrage",
+        "value": "Lin naturel"
+      },
+      {
+        "label": "Suspension",
+        "value": "E27 max 60W"
+      },
+      {
+        "label": "Fabrication",
+        "value": "Italie"
+      }
+    ],
+    "materials": [
+      {
+        "tag": "MÉTAL",
+        "title": "Bronze Patiné",
+        "text": "Finition vieillie à la main pour un éclat discret et une patine qui se bonifie avec le temps.",
+        "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuAfOSO-kkT85iezoqN_27BS1y3sBmUF8PocV8FQL49tCM-iZ3lcYri_SDWhVshCtAWqa7fwcTz5jToLDj61kXyASkxjB6nlNW-15xzYbEAPrnouH68Yzm9Ie_7TyOvasFQXWPTdAxQhopRp8B3qL9kQh7vgMEbhdy_8rPiydcT3-_lyzFz7pkhB_yYBxtK9uWjSwG7wVVC4UyLB4jdW8nMe7F3oEpWAfsCKP-eER54xqpmDRSdLcw1295EQcIfYV678KXn3tpeYhPSW",
+        "aspect": "square",
+        "offset": false
+      }
+    ]
+  },
+  {
+    "slug": "canape-cuir",
+    "name": "Canapé Cuir",
+    "nameDisplay": "CANAPÉ CUIR",
+    "category": "salon",
+    "categoryLabel": "SALON",
+    "subcategory": "canapes",
+    "subcategoryLabel": "SALON",
+    "price": 4100,
+    "currency": "DZD",
+    "shortDescription": "Canapé en cuir pleine fleur aux proportions généreuses, alliant confort profond et élégance intemporelle.",
+    "description": "Assise profonde, dossier ergonomique et cuir italien tanné végétal. Une pièce maîtresse pour le séjour contemporain.",
+    "status": "published",
+    "archived": false,
+    "createdAt": "2026-06-25",
+    "updatedAt": "2026-06-28",
+    "images": {
+      "hero": "https://lh3.googleusercontent.com/aida-public/AB6AXuBcJzyTtU0QZJM2dDqn2n_A2QIpR-MVCcA8RFX9zhCV85dQgIwabQSAZs1bj08SBsZEGL1pAGkzcZ1IXn0_vhN1IKTiwzs-Vdg7nn3eTooPsYGEg734kRYgtTdYEIY2sM7U8Rva75ACxQlPh65eGfy-uIC0ymukB-Feuab24Ft1tX24A9TKHH9NeJ2YRUfz5JVpMLoAOs8-UB59mwD_nGJ1pNNLOY-shD1uxVRA0zQVw9xVd__3CaRebXeUldY4NIIBHnBr7ToG-XH7",
+      "gallery": [
+        "https://lh3.googleusercontent.com/aida-public/AB6AXuBcJzyTtU0QZJM2dDqn2n_A2QIpR-MVCcA8RFX9zhCV85dQgIwabQSAZs1bj08SBsZEGL1pAGkzcZ1IXn0_vhN1IKTiwzs-Vdg7nn3eTooPsYGEg734kRYgtTdYEIY2sM7U8Rva75ACxQlPh65eGfy-uIC0ymukB-Feuab24Ft1tX24A9TKHH9NeJ2YRUfz5JVpMLoAOs8-UB59mwD_nGJ1pNNLOY-shD1uxVRA0zQVw9xVd__3CaRebXeUldY4NIIBHnBr7ToG-XH7"
+      ]
+    },
+    "colors": [
+      {
+        "hex": "#3b2f2f",
+        "label": "Noir"
+      },
+      {
+        "hex": "#8b5a2b",
+        "label": "Cognac"
+      },
+      {
+        "hex": "#d2b48c",
+        "label": "Camel"
+      }
+    ],
+    "dimensions": {
+      "largeur": "240 cm",
+      "profondeur": "98 cm",
+      "hauteur": "82 cm",
+      "assise": "44 cm"
+    },
+    "specs": [
+      {
+        "label": "Structure",
+        "value": "Bois massif"
+      },
+      {
+        "label": "Rembourrage",
+        "value": "Mousse HR"
+      },
+      {
+        "label": "Fabrication",
+        "value": "Italie"
+      }
+    ],
+    "materials": [
+      {
+        "tag": "CUIR",
+        "title": "Cuir Pleine Fleur",
+        "text": "Cuir italien tanné végétal, souple et résistant, qui développe une patine unique au fil des années.",
+        "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuBcJzyTtU0QZJM2dDqn2n_A2QIpR-MVCcA8RFX9zhCV85dQgIwabQSAZs1bj08SBsZEGL1pAGkzcZ1IXn0_vhN1IKTiwzs-Vdg7nn3eTooPsYGEg734kRYgtTdYEIY2sM7U8Rva75ACxQlPh65eGfy-uIC0ymukB-Feuab24Ft1tX24A9TKHH9NeJ2YRUfz5JVpMLoAOs8-UB59mwD_nGJ1pNNLOY-shD1uxVRA0zQVw9xVd__3CaRebXeUldY4NIIBHnBr7ToG-XH7",
+        "aspect": "square",
+        "offset": false
+      }
+    ]
+  },
+  {
+    "slug": "lit-minimaliste",
+    "name": "Lit Minimaliste",
+    "nameDisplay": "LIT MINIMALISTE",
+    "category": "chambre",
+    "categoryLabel": "CHAMBRE",
+    "subcategory": "lits",
+    "subcategoryLabel": "LITS",
+    "price": 1950,
+    "currency": "DZD",
+    "shortDescription": "Lit à lignes pures et tête de lit capitonnée, pour une chambre sereine et raffinée.",
+    "description": "Structure basse en bois massif, tête de lit rembourrée et finitions discrètes. Le minimalisme au service du repos.",
+    "images": {
+      "hero": "https://lh3.googleusercontent.com/aida-public/AB6AXuC6hDZ3EMb0J7VD5OONSwXwnj709EIBVtX0atQ318cyDZKz8CqtT8q-9BLszt2gP25GThh5Hx1bVlKjUumqWci5Z6kFz3tsGQjsTnVjV8iYGbSytuhqGdndr1NcJb-lcuxpoHWIC9Xoj9vfNcWK-65wR-CUANZM1zYZqbeeJcMja1WQutR9uybHDUXlQFV-fJ0ucVU-PlgXN7pKahOb47NutY5hi7_lkwSN085fWUvgWQFdAN6kTmjbm_zjurNDehqjvoTAbmjPmTgR",
+      "gallery": [
+        "https://lh3.googleusercontent.com/aida-public/AB6AXuC6hDZ3EMb0J7VD5OONSwXwnj709EIBVtX0atQ318cyDZKz8CqtT8q-9BLszt2gP25GThh5Hx1bVlKjUumqWci5Z6kFz3tsGQjsTnVjV8iYGbSytuhqGdndr1NcJb-lcuxpoHWIC9Xoj9vfNcWK-65wR-CUANZM1zYZqbeeJcMja1WQutR9uybHDUXlQFV-fJ0ucVU-PlgXN7pKahOb47NutY5hi7_lkwSN085fWUvgWQFdAN6kTmjbm_zjurNDehqjvoTAbmjPmTgR"
+      ]
+    },
+    "colors": [
+      {
+        "hex": "#f5f5dc",
+        "label": "Lin"
+      },
+      {
+        "hex": "#564337",
+        "label": "Taupe"
+      },
+      {
+        "hex": "#201b13",
+        "label": "Anthracite"
+      }
+    ],
+    "dimensions": {
+      "largeur": "180 cm",
+      "profondeur": "210 cm",
+      "hauteur": "110 cm",
+      "assise": "—"
+    },
+    "specs": [
+      {
+        "label": "Structure",
+        "value": "Chêne massif"
+      },
+      {
+        "label": "Tête de lit",
+        "value": "Capitonnée lin"
+      },
+      {
+        "label": "Sommier",
+        "value": "Lattes multiplis"
+      },
+      {
+        "label": "Fabrication",
+        "value": "Europe"
+      }
+    ],
+    "materials": [
+      {
+        "tag": "TEXTILE",
+        "title": "Lin Capitonné",
+        "text": "Tissu en lin naturel, respirant et résistant, pour une tête de lit douce au toucher.",
+        "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuC6hDZ3EMb0J7VD5OONSwXwnj709EIBVtX0atQ318cyDZKz8CqtT8q-9BLszt2gP25GThh5Hx1bVlKjUumqWci5Z6kFz3tsGQjsTnVjV8iYGbSytuhqGdndr1NcJb-lcuxpoHWIC9Xoj9vfNcWK-65wR-CUANZM1zYZqbeeJcMja1WQutR9uybHDUXlQFV-fJ0ucVU-PlgXN7pKahOb47NutY5hi7_lkwSN085fWUvgWQFdAN6kTmjbm_zjurNDehqjvoTAbmjPmTgR",
+        "aspect": "square",
+        "offset": false
+      }
+    ],
+    "status": "published",
+    "archived": false,
+    "createdAt": "2026-06-25",
+    "updatedAt": "2026-06-25"
+  },
+  {
+    "slug": "miroir-ovale",
+    "name": "Miroir Ovale",
+    "nameDisplay": "MIROIR OVALE",
+    "category": "decoration",
+    "categoryLabel": "DÉCORATION",
+    "subcategory": "miroirs",
+    "subcategoryLabel": "MIROIRS",
+    "price": 890,
+    "currency": "DZD",
+    "shortDescription": "Miroir ovale au cadre fin en laiton brossé, pièce signature pour entrée ou chambre.",
+    "description": "Verre argenté de haute qualité et cadre en laiton brossé. Forme ovale pour adoucir l'architecture de la pièce.",
+    "images": {
+      "hero": "https://lh3.googleusercontent.com/aida-public/AB6AXuDX75eFEc55Q6_Qd6K0EVSDNB73kSgJJr8JXZsMSQJvMP4dfra5uddJ3qTu__9L7cpijKOAq2acmV3847faNPBZedMiPnYWJixadfRMznDz2nxRs8GH4I1hol6NEi5MW6wiIbL4xO_eqzZQ35Krw2PCTekxnrkt5OGkq1TkXRNY-iKNyApnVU7h1h75f_KFG3Kf8CBG99QNrPK5GuiFe1xaKfuuU-pHxX2EyRE26Zd7rZ87ED9giTv6zSwBqRc3FZqUM8hmg2GiLuHs",
+      "gallery": [
+        "https://lh3.googleusercontent.com/aida-public/AB6AXuDX75eFEc55Q6_Qd6K0EVSDNB73kSgJJr8JXZsMSQJvMP4dfra5uddJ3qTu__9L7cpijKOAq2acmV3847faNPBZedMiPnYWJixadfRMznDz2nxRs8GH4I1hol6NEi5MW6wiIbL4xO_eqzZQ35Krw2PCTekxnrkt5OGkq1TkXRNY-iKNyApnVU7h1h75f_KFG3Kf8CBG99QNrPK5GuiFe1xaKfuuU-pHxX2EyRE26Zd7rZ87ED9giTv6zSwBqRc3FZqUM8hmg2GiLuHs"
+      ]
+    },
+    "colors": [],
+    "dimensions": {
+      "largeur": "80 cm",
+      "profondeur": "3 cm",
+      "hauteur": "120 cm",
+      "assise": "—"
+    },
+    "specs": [
+      {
+        "label": "Cadre",
+        "value": "Laiton brossé"
+      },
+      {
+        "label": "Verre",
+        "value": "Argenté 4mm"
+      },
+      {
+        "label": "Fixation",
+        "value": "Murale"
+      },
+      {
+        "label": "Fabrication",
+        "value": "Europe"
+      }
+    ],
+    "materials": [
+      {
+        "tag": "MÉTAL",
+        "title": "Laiton Brossé",
+        "text": "Cadre fin en laiton brossé à la main, résistant à l'humidité et au temps.",
+        "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuDX75eFEc55Q6_Qd6K0EVSDNB73kSgJJr8JXZsMSQJvMP4dfra5uddJ3qTu__9L7cpijKOAq2acmV3847faNPBZedMiPnYWJixadfRMznDz2nxRs8GH4I1hol6NEi5MW6wiIbL4xO_eqzZQ35Krw2PCTekxnrkt5OGkq1TkXRNY-iKNyApnVU7h1h75f_KFG3Kf8CBG99QNrPK5GuiFe1xaKfuuU-pHxX2EyRE26Zd7rZ87ED9giTv6zSwBqRc3FZqUM8hmg2GiLuHs",
+        "aspect": "square",
+        "offset": false
+      }
+    ],
+    "status": "published",
+    "archived": false,
+    "createdAt": "2026-06-25",
+    "updatedAt": "2026-06-25"
+  }
+]

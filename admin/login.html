@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="robots" content="noindex, nofollow"/>
+<title>Connexion Admin — LE CANAPÉ</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>tailwind.config={theme:{extend:{colors:{primary:'#964900',background:'#fff8f3','inverse-surface':'#353027','inverse-on-surface':'#faefe1','on-surface-variant':'#564337'}}}}</script>
+<link rel="stylesheet" href="../assets/admin.css"/>
+</head>
+<body>
+<div class="admin-login-wrap">
+    <div class="admin-login-box">
+        <p class="text-xs uppercase tracking-[0.25em] text-primary mb-2">Admin Suite</p>
+        <h1 class="text-2xl mb-2" style="font-family:'Playfair Display',serif">LE CANAPÉ</h1>
+        <p class="text-sm text-on-surface-variant mb-8">Connectez-vous pour gérer le catalogue.</p>
+        <form id="login-form" class="space-y-6">
+            <div>
+                <label class="admin-label" for="password">Mot de passe</label>
+                <input class="admin-input" type="password" id="password" name="password" required autocomplete="current-password" placeholder="••••••••"/>
+            </div>
+            <p id="login-error" class="text-sm text-red-700 hidden"></p>
+            <button type="submit" class="admin-btn-primary w-full">Se connecter</button>
+        </form>
+    </div>
+</div>
+<script type="module">
+    import { api } from '../assets/admin-auth.js';
+
+    const { authenticated } = await api('/admin/me').catch(() => ({ authenticated: false }));
+    if (authenticated) window.location.href = './catalog.html';
+
+    document.getElementById('login-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const password = document.getElementById('password').value;
+        const errEl = document.getElementById('login-error');
+        errEl.classList.add('hidden');
+        try {
+            await api('/login', { method: 'POST', body: JSON.stringify({ password }) });
+            window.location.href = './catalog.html';
+        } catch (err) {
+            errEl.textContent = err.message;
+            errEl.classList.remove('hidden');
+        }
+    });
+</script>
+</body>
+</html>

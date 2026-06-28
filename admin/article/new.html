@@ -1,0 +1,143 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Nouvel article - LE CANAPÉ Admin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700&display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@500;600&display=swap"
+        rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config = { theme: { extend: { colors: { primary: '#964900', secondary: '#5f5e5e', background: '#fff8f3', 'on-surface-variant': '#564337' } } } }</script>
+    <link rel="stylesheet" href="../../assets/admin.css" />
+</head>
+
+<body class="bg-background">
+    <div class="admin-shell">
+        <aside class="admin-sidebar">
+            <div class="admin-sidebar-brand">LE CANAPÉ<br /><span
+                    class="text-xs tracking-[0.3em] text-on-surface-variant">ADMIN SUITE</span></div>
+            <nav class="flex flex-col gap-2">
+                <a href="../catalog.html" class="admin-nav-link active">Catalogue</a>
+            </nav>
+            <button id="logout-btn" class="admin-btn-ghost mt-auto text-left">Déconnexion</button>
+        </aside>
+        <div class="admin-main">
+            <header class="admin-topbar">
+                <a href="../catalog.html"
+                    class="text-on-surface-variant hover:text-primary flex items-center gap-1 text-sm">
+                    <span class="material-symbols-outlined">arrow_back</span> Retour au catalogue
+                </a>
+                <div class="flex gap-3">
+                    <button type="button" id="save-draft" class="admin-btn-ghost">Enregistrer brouillon</button>
+                    <button type="button" id="publish-btn" class="admin-btn-primary">Publier sur le site</button>
+                </div>
+            </header>
+            <main class="admin-content max-w-4xl">
+                <h1 id="form-title" class="text-3xl mb-8" style="font-family:'Playfair Display',serif">Nouvel article
+                </h1>
+
+                <section class="admin-card">
+                    <h2 class="text-xs uppercase tracking-widest text-secondary mb-6">Informations de base</h2>
+                    <div class="space-y-6">
+                        <div>
+                            <label class="admin-label" for="article-title">Titre de l'article</label>
+                            <input class="admin-input" id="article-title" type="text" placeholder="Fauteuil Velours" />
+                            <p class="text-xs text-secondary mt-2">Slug : <span id="slug-preview">-</span></p>
+                        </div>
+                        <div>
+                            <label class="admin-label" for="category">Collection</label>
+                            <select class="admin-input" id="category"></select>
+                        </div>
+                        <div>
+                            <label class="admin-label" for="short-desc">Description courte</label>
+                            <textarea class="admin-input min-h-[80px] resize-y" id="short-desc" rows="3"></textarea>
+                        </div>
+                        <div>
+                            <label class="admin-label" for="price">Prix (DZD)</label>
+                            <input class="admin-input" id="price" type="number" min="0" step="1" placeholder="2850" />
+                        </div>
+                    </div>
+                </section>
+
+                <section class="admin-card">
+                    <h2 class="text-xs uppercase tracking-widest text-secondary mb-6">Spécifications techniques</h2>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-6">
+                        <div><label class="admin-label" for="dim-l">Largeur (cm)</label><input class="admin-input"
+                                id="dim-l" type="number" /></div>
+                        <div><label class="admin-label" for="dim-p">Profondeur (cm)</label><input class="admin-input"
+                                id="dim-p" type="number" /></div>
+                        <div><label class="admin-label" for="dim-h">Hauteur (cm)</label><input class="admin-input"
+                                id="dim-h" type="number" /></div>
+                        <div><label class="admin-label" for="dim-a">Assise (cm)</label><input class="admin-input"
+                                id="dim-a" type="number" /></div>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div><label class="admin-label" for="spec-structure">Structure</label><input class="admin-input"
+                                id="spec-structure" /></div>
+                        <div><label class="admin-label" for="spec-padding">Rembourrage</label><input class="admin-input"
+                                id="spec-padding" /></div>
+                        <div><label class="admin-label" for="spec-suspension">Suspension</label><input
+                                class="admin-input" id="spec-suspension" /></div>
+                        <div><label class="admin-label" for="spec-fabrication">Fabrication</label><input
+                                class="admin-input" id="spec-fabrication" /></div>
+                    </div>
+                </section>
+
+                <section class="admin-card">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-xs uppercase tracking-widest text-secondary">Variantes couleur</h2>
+                        <button type="button" id="add-color" class="admin-btn-ghost text-xs py-2">+ Ajouter</button>
+                    </div>
+                    <div id="colors-wrap" class="space-y-3"></div>
+                </section>
+
+                <section class="admin-card">
+                    <h2 class="text-xs uppercase tracking-widest text-secondary mb-6">Galerie visuelle</h2>
+                    <div class="space-y-4">
+                        <div><label class="admin-label" for="hero-image">Image principale (URL)</label><input
+                                class="admin-input" id="hero-image" type="url" placeholder="https://..." /></div>
+                        <div><label class="admin-label" for="gallery-1">Image galerie 1 (URL)</label><input
+                                class="admin-input" id="gallery-1" type="url" /></div>
+                        <div><label class="admin-label" for="gallery-2">Image galerie 2 (URL)</label><input
+                                class="admin-input" id="gallery-2" type="url" /></div>
+                    </div>
+                </section>
+
+                <section class="admin-card">
+                    <h2 class="text-xs uppercase tracking-widest text-secondary mb-6">Matières &amp; savoir-faire</h2>
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div class="space-y-3">
+                            <p class="text-xs text-secondary">Bloc 1</p>
+                            <input class="admin-input" id="mat-0-tag" placeholder="REVÊTEMENT" />
+                            <input class="admin-input" id="mat-0-title" placeholder="Velours Ambré" />
+                            <textarea class="admin-input min-h-[60px]" id="mat-0-text"
+                                placeholder="Description..."></textarea>
+                            <input class="admin-input" id="mat-0-image" type="url" placeholder="URL image" />
+                        </div>
+                        <div class="space-y-3">
+                            <p class="text-xs text-secondary">Bloc 2</p>
+                            <input class="admin-input" id="mat-1-tag" placeholder="STRUCTURE" />
+                            <input class="admin-input" id="mat-1-title" placeholder="Chêne Noir Massif" />
+                            <textarea class="admin-input min-h-[60px]" id="mat-1-text"
+                                placeholder="Description..."></textarea>
+                            <input class="admin-input" id="mat-1-image" type="url" placeholder="URL image" />
+                        </div>
+                    </div>
+                </section>
+
+                <section class="admin-card">
+                    <label class="admin-label" for="long-desc">Description longue</label>
+                    <textarea class="admin-input min-h-[100px]" id="long-desc" rows="4"></textarea>
+                </section>
+            </main>
+        </div>
+    </div>
+    <script type="module" src="../../assets/admin-form.js"></script>
+</body>
+
+</html>

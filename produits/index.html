@@ -1,0 +1,780 @@
+﻿<!DOCTYPE html>
+<html class="light" lang="fr" style="background-color: #353027;">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Nos Collections - LE CANAPÉ | Mobilier de Luxe à Oran</title>
+    <meta name="description"
+        content="Découvrez toutes nos collections de mobilier de luxe : séjour, salle à manger, chambre, décoration et bureaux. Showroom LE CANAPÉ à Oran, Algérie.">
+    <link rel="canonical" href="https://canape.vercel.app/produits/">
+    <link rel="icon" type="image/png" href="../logo.png" />
+    <!-- Material Symbols -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@500;600;700&display=swap"
+        rel="stylesheet">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <!-- GSAP & Lenis -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.39/dist/lenis.min.js"></script>
+    <!-- Tailwind Config -->
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "surface-tint": "#964900",
+                        "error-container": "#ffdad6",
+                        "surface-container-highest": "#ece1d3",
+                        "tertiary-container": "#9f9f9c",
+                        "secondary-fixed-dim": "#c8c6c5",
+                        "surface-container-lowest": "#ffffff",
+                        "on-error": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "primary-container": "#f08128",
+                        "surface-dim": "#e3d8cb",
+                        "on-background": "#201b13",
+                        "outline-variant": "#ddc1b1",
+                        "on-primary-container": "#592800",
+                        "inverse-surface": "#353027",
+                        "surface-bright": "#fff8f3",
+                        "tertiary-fixed": "#e3e2df",
+                        "on-surface": "#201b13",
+                        "surface-container": "#f7ecdf",
+                        "on-primary": "#ffffff",
+                        "outline": "#897265",
+                        "secondary": "#5f5e5e",
+                        "error": "#ba1a1a",
+                        "on-tertiary-fixed": "#1b1c1a",
+                        "on-surface-variant": "#564337",
+                        "inverse-primary": "#ffb787",
+                        "tertiary": "#5e5f5c",
+                        "surface-container-high": "#f2e7d9",
+                        "surface-container-low": "#fdf2e4",
+                        "on-secondary-container": "#636262",
+                        "on-tertiary": "#ffffff",
+                        "primary": "#964900",
+                        "on-primary-fixed": "#311300",
+                        "primary-fixed": "#ffdcc7",
+                        "primary-fixed-dim": "#ffb787",
+                        "on-primary-fixed-variant": "#723600",
+                        "on-secondary-fixed-variant": "#474746",
+                        "tertiary-fixed-dim": "#c7c7c3",
+                        "on-secondary": "#ffffff",
+                        "surface": "#fff8f3",
+                        "brand-gold": "#c9a96e",
+                        "secondary-fixed": "#e5e2e1",
+                        "surface-variant": "#ece1d3",
+                        "inverse-on-surface": "#faefe1",
+                        "background": "#fff8f3",
+                        "on-tertiary-fixed-variant": "#464744",
+                        "on-tertiary-container": "#353634",
+                        "secondary-container": "#e2dfde",
+                        "on-secondary-fixed": "#1c1b1b"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    spacing: {
+                        "stack-md": "24px",
+                        "margin-mobile": "24px",
+                        "gutter": "32px",
+                        "margin-desktop": "80px",
+                        "section-gap": "160px",
+                        "stack-sm": "8px",
+                        "stack-lg": "48px"
+                    },
+                    fontFamily: {
+                        "headline-lg": ["Playfair Display"],
+                        "body-lg": ["Inter"],
+                        "headline-md": ["Playfair Display"],
+                        "display-lg": ["Playfair Display"],
+                        "headline-lg-mobile": ["Playfair Display"],
+                        "body-md": ["Inter"],
+                        "label-caps": ["Inter"]
+                    },
+                    fontSize: {
+                        "headline-lg": ["48px", { "lineHeight": "56px", "fontWeight": "500" }],
+                        "body-lg": ["18px", { "lineHeight": "32px", "fontWeight": "400" }],
+                        "headline-md": ["32px", { "lineHeight": "40px", "fontWeight": "500" }],
+                        "display-lg": ["80px", { "lineHeight": "96px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "headline-lg-mobile": ["32px", { "lineHeight": "40px", "fontWeight": "500" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "600" }]
+                    }
+                }
+            }
+        };
+    </script>
+    <style>
+        /* Lenis */
+        html.lenis {
+            height: auto;
+        }
+
+        .lenis.lenis-smooth {
+            scroll-behavior: auto;
+        }
+
+        .lenis.lenis-smooth [data-lenis-prevent] {
+            overscroll-behavior: contain;
+        }
+
+        .lenis.lenis-stopped {
+            overflow: hidden;
+        }
+
+        .lenis.lenis-scrolling iframe {
+            pointer-events: none;
+        }
+
+        /* Hide scrollbar */
+        ::-webkit-scrollbar {
+            display: none;
+        }
+
+        html,
+        body {
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        body {
+            background-color: #fff8f3;
+            color: #201b13;
+            overflow-x: hidden;
+        }
+
+        .glass-nav {
+            transition: background-color 0.5s ease, backdrop-filter 0.5s ease, padding 0.5s ease, border-color 0.5s ease, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            background-color: transparent;
+            border-bottom: 1px solid transparent;
+        }
+
+        .glass-nav.scrolled {
+            background-color: rgba(255, 248, 243, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(221, 193, 177, 0.4);
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+        }
+
+        .glass-nav.hidden-nav {
+            transform: translateY(-100%);
+        }
+
+        /* GSAP Initial States */
+        .reveal-up {
+            visibility: hidden;
+        }
+
+        .page-hero-el {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .magnetic-link {
+            display: inline-block;
+        }
+
+        /* Sub-filter rows */
+        .sub-filter-row {
+            display: none;
+            opacity: 0;
+            transform: translateY(-8px);
+        }
+
+        .sub-filter-row.active {
+            display: flex;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Product card hover */
+        .product-card-img {
+            transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .product-card:hover .product-card-img {
+            transform: scale(1.04);
+        }
+
+        /* Active sub-filter tag */
+        .sub-tag.active-tag {
+            background-color: #201b13;
+            color: #fff8f3;
+            border-color: #201b13;
+        }
+
+        /* Accordion styles */
+        .acc-panel {
+            flex: 1;
+            transition: flex 0.7s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .acc-container:hover .acc-panel {
+            flex: 1;
+        }
+
+        .acc-container .acc-panel:hover {
+            flex: 4;
+        }
+
+        .acc-panel:hover .acc-overlay {
+            background-color: rgba(0, 0, 0, 0.1) !important;
+        }
+
+        .acc-title {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.7s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .acc-panel:hover .acc-title {
+            opacity: 1 !important;
+            transform: translateY(0) !important;
+        }
+
+        @media (max-width: 768px) {
+            .acc-panel {
+                flex: 1 !important;
+            }
+
+            .acc-container {
+                flex-direction: column;
+            }
+
+            .acc-title {
+                opacity: 1 !important;
+                transform: translateY(0) !important;
+            }
+
+            .acc-overlay {
+                background-color: rgba(0, 0, 0, 0.3) !important;
+            }
+        }
+
+        /* Dynamic Nav Colors for Split Theme */
+        .nav-text-color {
+            color: #faefe1;
+        }
+
+        /* inverse-on-surface */
+        .nav-brand-color {
+            color: #c9a96e;
+        }
+
+        /* brand-gold */
+
+        #main-nav.scrolled .nav-text-color {
+            color: #564337;
+        }
+
+        /* on-surface-variant */
+        #main-nav.scrolled .nav-brand-color {
+            color: #964900;
+        }
+
+        /* primary */
+
+        .nav-text-color:hover {
+            color: #c9a96e;
+        }
+
+        #main-nav.scrolled .nav-text-color:hover {
+            color: #964900;
+        }
+    </style>
+</head>
+
+<body
+    class="bg-background text-on-background font-body-md antialiased selection:bg-primary-container selection:text-on-primary-container">
+
+    <!-- TopNavBar -->
+    <nav class="fixed top-0 w-full z-50 glass-nav flex justify-between items-center px-margin-mobile md:px-margin-desktop py-6 transition-all duration-500"
+        id="main-nav">
+        <div class="hidden md:flex gap-8 items-center">
+            <a class="font-label-caps text-label-caps tracking-[0.1em] uppercase text-on-surface-variant hover:text-primary transition-colors duration-300"
+                href="../index.html">Accueil</a>
+            <a class="font-label-caps text-label-caps tracking-[0.1em] uppercase text-primary border-b border-primary pb-1"
+                href="./">Collections</a>
+            <a class="font-label-caps text-label-caps tracking-[0.1em] uppercase text-on-surface-variant hover:text-primary transition-colors duration-300"
+                href="../packs/">Compositions</a>
+        </div>
+        <a class="font-headline-md text-headline-md font-bold tracking-tighter text-primary hover:opacity-80 transition-opacity"
+            href="../index.html">LE CANAPÉ</a>
+        <div class="flex items-center gap-6">
+            <div class="hidden md:flex gap-8 items-center">
+                <a class="font-label-caps text-label-caps tracking-[0.1em] uppercase text-on-surface-variant hover:text-primary transition-colors duration-300"
+                    href="../index.html#services">Services</a>
+                <a class="font-label-caps text-label-caps tracking-[0.1em] uppercase text-on-surface-variant hover:text-primary transition-colors duration-300"
+                    href="../index.html#a-propos">About</a>
+                <a class="font-label-caps text-label-caps tracking-[0.1em] uppercase text-on-surface-variant hover:text-primary transition-colors duration-300"
+                    href="../index.html#contact">Contacts</a>
+            </div>
+            <button id="mobile-menu-toggle" aria-label="Menu Principal"
+                class="md:hidden text-on-surface-variant hover:text-primary transition-colors duration-300 relative z-[60]">
+                <span class="material-symbols-outlined" id="mobile-menu-icon" aria-hidden="true">menu</span>
+            </button>
+        </div>
+        <div id="mobile-menu"
+            class="fixed inset-0 bg-surface-container-lowest z-[55] flex flex-col items-center justify-center gap-8 translate-x-full transition-transform duration-500 md:hidden">
+            <a class="font-headline-md text-headline-md text-on-surface-variant" href="../index.html">Accueil</a>
+            <a class="font-headline-md text-headline-md text-primary" href="./">Collections</a>
+            <a class="font-headline-md text-headline-md text-on-surface-variant" href="../packs/">Compositions</a>
+            <a class="font-headline-md text-headline-md text-on-surface-variant"
+                href="../index.html#services">Services</a>
+            <a class="font-headline-md text-headline-md text-on-surface-variant" href="../index.html#a-propos">About</a>
+            <a class="font-headline-md text-headline-md text-on-surface-variant"
+                href="../index.html#contact">Contacts</a>
+        </div>
+    </nav>
+
+    <header class="bg-inverse-surface w-full pt-32 md:pt-40 pb-20 rounded-b-[2.5rem] relative z-10 mb-16 shadow-2xl">
+        <!-- Page Hero Title -->
+        <section class="text-center pb-8 flex flex-col items-center justify-center gap-6">
+            <p class="font-label-caps text-label-caps tracking-[0.2em] uppercase text-brand-gold page-hero-el">
+                Collection 2024</p>
+            <h1 class="font-display-lg md:text-display-lg text-headline-lg text-inverse-on-surface page-hero-el"
+                style="font-family: 'Playfair Display', serif;">Nos Collections</h1>
+        </section>
+
+        <!-- Interactive Image Accordion Hero -->
+        <section class="w-full px-margin-mobile md:px-margin-desktop mb-10 page-hero-el max-w-[1400px] mx-auto">
+            <div
+                class="w-full h-[60vh] md:h-[65vh] flex flex-col md:flex-row gap-2 rounded-xl overflow-hidden group acc-container">
+
+                <!-- Panel 1 -->
+                <div class="relative overflow-hidden cursor-pointer acc-panel" onclick="selectCategory('sejour')">
+                    <img src="./images/sejour.png" alt="Séjour" class="absolute inset-0 w-full h-full object-cover" />
+                    <div
+                        class="absolute inset-0 bg-black/40 group-hover:bg-black/60 transition-colors duration-700 acc-overlay">
+                    </div>
+                    <div class="absolute inset-0 p-6 flex flex-col justify-end md:items-center md:pb-10">
+                        <h2 class="text-surface-container-lowest font-headline-md text-2xl md:text-3xl tracking-wide acc-title"
+                            style="font-family: 'Playfair Display', serif;">Séjour</h2>
+                    </div>
+                </div>
+
+                <!-- Panel 2 -->
+                <div class="relative overflow-hidden cursor-pointer acc-panel"
+                    onclick="selectCategory('salle-a-manger')">
+                    <img src="./images/salleamanger.png" alt="Salle à manger"
+                        class="absolute inset-0 w-full h-full object-cover" />
+                    <div
+                        class="absolute inset-0 bg-black/40 group-hover:bg-black/60 transition-colors duration-700 acc-overlay">
+                    </div>
+                    <div class="absolute inset-0 p-6 flex flex-col justify-end md:items-center md:pb-10">
+                        <h2 class="text-surface-container-lowest font-headline-md text-2xl md:text-3xl tracking-wide acc-title"
+                            style="font-family: 'Playfair Display', serif;">Salle à manger</h2>
+                    </div>
+                </div>
+
+                <!-- Panel 3 -->
+                <div class="relative overflow-hidden cursor-pointer acc-panel" onclick="selectCategory('chambre')">
+                    <img src="./images/chambre.png" alt="Chambre" class="absolute inset-0 w-full h-full object-cover" />
+                    <div
+                        class="absolute inset-0 bg-black/40 group-hover:bg-black/60 transition-colors duration-700 acc-overlay">
+                    </div>
+                    <div class="absolute inset-0 p-6 flex flex-col justify-end md:items-center md:pb-10">
+                        <h2 class="text-surface-container-lowest font-headline-md text-2xl md:text-3xl tracking-wide acc-title"
+                            style="font-family: 'Playfair Display', serif;">Chambre</h2>
+                    </div>
+                </div>
+
+                <!-- Panel 4 -->
+                <div class="relative overflow-hidden cursor-pointer acc-panel" onclick="selectCategory('decoration')">
+                    <img src="./images/decor.png" alt="Décoration"
+                        class="absolute inset-0 w-full h-full object-cover" />
+                    <div
+                        class="absolute inset-0 bg-black/40 group-hover:bg-black/60 transition-colors duration-700 acc-overlay">
+                    </div>
+                    <div class="absolute inset-0 p-6 flex flex-col justify-end md:items-center md:pb-10">
+                        <h2 class="text-surface-container-lowest font-headline-md text-2xl md:text-3xl tracking-wide acc-title"
+                            style="font-family: 'Playfair Display', serif;">Décoration</h2>
+                    </div>
+                </div>
+
+                <!-- Panel 5 -->
+                <div class="relative overflow-hidden cursor-pointer acc-panel" onclick="selectCategory('salon')">
+                    <img src="./images/salon.png" alt="Salon" class="absolute inset-0 w-full h-full object-cover" />
+                    <div
+                        class="absolute inset-0 bg-black/40 group-hover:bg-black/60 transition-colors duration-700 acc-overlay">
+                    </div>
+                    <div class="absolute inset-0 p-6 flex flex-col justify-end md:items-center md:pb-10">
+                        <h2 class="text-surface-container-lowest font-headline-md text-2xl md:text-3xl tracking-wide acc-title"
+                            style="font-family: 'Playfair Display', serif;">Salon</h2>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Description below accordion -->
+        <div class="page-hero-el max-w-2xl mx-auto text-center px-margin-mobile">
+            <p class="font-body-lg text-body-lg text-inverse-on-surface opacity-80">
+                Explorez notre sélection de mobilier contemporain, conçu avec passion et fabriqué à partir des matériaux
+                les plus nobles pour sublimer votre intérieur.
+            </p>
+        </div>
+    </header>
+
+    <main class="pb-section-gap px-margin-mobile md:px-margin-desktop min-h-screen">
+
+        <!-- Filters -->
+        <section id="filters-section" class="mb-16 reveal-up">
+            <!-- Main Category Row -->
+            <div class="flex flex-wrap justify-center gap-6 md:gap-12 mb-6 border-b pb-4"
+                style="border-color: rgba(201,169,110,0.3);">
+                <button
+                    class="filter-btn active text-brand-gold border-b-2 border-brand-gold pb-2 font-label-caps text-label-caps uppercase tracking-widest transition-colors duration-300"
+                    data-target="sejour">Séjour</button>
+                <button
+                    class="filter-btn text-on-surface-variant hover:text-brand-gold pb-2 font-label-caps text-label-caps uppercase tracking-widest transition-colors duration-300"
+                    data-target="salle-a-manger">Salle à manger</button>
+                <button
+                    class="filter-btn text-on-surface-variant hover:text-brand-gold pb-2 font-label-caps text-label-caps uppercase tracking-widest transition-colors duration-300"
+                    data-target="chambre">Chambre</button>
+                <button
+                    class="filter-btn text-on-surface-variant hover:text-brand-gold pb-2 font-label-caps text-label-caps uppercase tracking-widest transition-colors duration-300"
+                    data-target="decoration">Décoration</button>
+                <button
+                    class="filter-btn text-on-surface-variant hover:text-brand-gold pb-2 font-label-caps text-label-caps uppercase tracking-widest transition-colors duration-300"
+                    data-target="salon">Salon</button>
+            </div>
+
+            <!-- Sub-filter Rows -->
+            <div class="relative min-h-[48px]">
+                <!-- Séjour -->
+                <div class="sub-filter-row active flex-wrap justify-center gap-3" id="sejour">
+                    <button
+                        class="sub-tag px-5 py-2 border border-outline-variant bg-surface-container-low hover:bg-on-surface hover:text-background hover:border-on-surface transition-all duration-300 font-label-caps text-label-caps uppercase tracking-wide">Tables
+                        Basses</button>
+                    <button
+                        class="sub-tag px-5 py-2 border border-outline-variant bg-surface-container-low hover:bg-on-surface hover:text-background hover:border-on-surface transition-all duration-300 font-label-caps text-label-caps uppercase tracking-wide">Meubles
+                        TV</button>
+                    <button
+                        class="sub-tag px-5 py-2 border border-outline-variant bg-surface-container-low hover:bg-on-surface hover:text-background hover:border-on-surface transition-all duration-300 font-label-caps text-label-caps uppercase tracking-wide">Bibliothèques</button>
+                    <button
+                        class="sub-tag px-5 py-2 border border-outline-variant bg-surface-container-low hover:bg-on-surface hover:text-background hover:border-on-surface transition-all duration-300 font-label-caps text-label-caps uppercase tracking-wide">Consoles</button>
+                </div>
+                <!-- Salle à manger -->
+                <div class="sub-filter-row flex-wrap justify-center gap-3 absolute top-0 w-full" id="salle-a-manger">
+                    <button
+                        class="sub-tag px-5 py-2 border border-outline-variant bg-surface-container-low hover:bg-on-surface hover:text-background hover:border-on-surface transition-all duration-300 font-label-caps text-label-caps uppercase tracking-wide">Tables
+                        de Repas</button>
+                </div>
+                <!-- Chambre -->
+                <div class="sub-filter-row flex-col items-center gap-4 absolute top-0 w-full" id="chambre">
+                    <div class="flex gap-4">
+                        <button
+                            class="chambre-tab active font-label-caps text-label-caps uppercase tracking-widest text-brand-gold border-b-2 border-brand-gold pb-1 transition-colors duration-300"
+                            onclick="toggleChambre('adulte')">Adulte</button>
+                        <button
+                            class="chambre-tab font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant hover:text-brand-gold pb-1 transition-colors duration-300"
+                            onclick="toggleChambre('junior')">Junior</button>
+                    </div>
+
+                    <div class="relative w-full min-h-[40px] flex justify-center">
+                        <div id="chambre-adulte"
+                            class="chambre-content flex flex-wrap justify-center gap-3 absolute top-0 w-full transition-all duration-300 opacity-100 translate-y-0">
+                            <button
+                                class="sub-tag px-5 py-2 border border-outline-variant bg-surface-container-low hover:bg-on-surface hover:text-background hover:border-on-surface transition-all duration-300 font-label-caps text-label-caps uppercase tracking-wide">Lits</button>
+                            <button
+                                class="sub-tag px-5 py-2 border border-outline-variant bg-surface-container-low hover:bg-on-surface hover:text-background hover:border-on-surface transition-all duration-300 font-label-caps text-label-caps uppercase tracking-wide">Dressing</button>
+                            <button
+                                class="sub-tag px-5 py-2 border border-outline-variant bg-surface-container-low hover:bg-on-surface hover:text-background hover:border-on-surface transition-all duration-300 font-label-caps text-label-caps uppercase tracking-wide">Commodes</button>
+                        </div>
+                        <div id="chambre-junior"
+                            class="chambre-content flex flex-wrap justify-center gap-3 absolute top-0 w-full transition-all duration-300 opacity-0 pointer-events-none -translate-y-2">
+                            <button
+                                class="sub-tag px-5 py-2 border border-outline-variant bg-surface-container-low hover:bg-on-surface hover:text-background hover:border-on-surface transition-all duration-300 font-label-caps text-label-caps uppercase tracking-wide">Lits</button>
+                            <button
+                                class="sub-tag px-5 py-2 border border-outline-variant bg-surface-container-low hover:bg-on-surface hover:text-background hover:border-on-surface transition-all duration-300 font-label-caps text-label-caps uppercase tracking-wide">Dressing</button>
+                            <button
+                                class="sub-tag px-5 py-2 border border-outline-variant bg-surface-container-low hover:bg-on-surface hover:text-background hover:border-on-surface transition-all duration-300 font-label-caps text-label-caps uppercase tracking-wide">Commodes</button>
+                            <button
+                                class="sub-tag px-5 py-2 border border-outline-variant bg-surface-container-low hover:bg-on-surface hover:text-background hover:border-on-surface transition-all duration-300 font-label-caps text-label-caps uppercase tracking-wide">Bureau</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Décoration -->
+                <div class="sub-filter-row flex-wrap justify-center gap-3 absolute top-0 w-full" id="decoration">
+                    <button
+                        class="sub-tag px-5 py-2 border border-outline-variant bg-surface-container-low hover:bg-on-surface hover:text-background hover:border-on-surface transition-all duration-300 font-label-caps text-label-caps uppercase tracking-wide">Luminaires</button>
+                    <button
+                        class="sub-tag px-5 py-2 border border-outline-variant bg-surface-container-low hover:bg-on-surface hover:text-background hover:border-on-surface transition-all duration-300 font-label-caps text-label-caps uppercase tracking-wide">Tapis</button>
+                    <button
+                        class="sub-tag px-5 py-2 border border-outline-variant bg-surface-container-low hover:bg-on-surface hover:text-background hover:border-on-surface transition-all duration-300 font-label-caps text-label-caps uppercase tracking-wide">Miroirs</button>
+                    <button
+                        class="sub-tag px-5 py-2 border border-outline-variant bg-surface-container-low hover:bg-on-surface hover:text-background hover:border-on-surface transition-all duration-300 font-label-caps text-label-caps uppercase tracking-wide">Tableaux</button>
+                </div>
+                <!-- Salon -->
+                <div class="sub-filter-row flex-wrap justify-center gap-3 absolute top-0 w-full" id="salon">
+                    <button
+                        class="sub-tag px-5 py-2 border border-outline-variant bg-surface-container-low hover:bg-on-surface hover:text-background hover:border-on-surface transition-all duration-300 font-label-caps text-label-caps uppercase tracking-wide">Pouf</button>
+                    <button
+                        class="sub-tag px-5 py-2 border border-outline-variant bg-surface-container-low hover:bg-on-surface hover:text-background hover:border-on-surface transition-all duration-300 font-label-caps text-label-caps uppercase tracking-wide">Salon
+                        L</button>
+                    <button
+                        class="sub-tag px-5 py-2 border border-outline-variant bg-surface-container-low hover:bg-on-surface hover:text-background hover:border-on-surface transition-all duration-300 font-label-caps text-label-caps uppercase tracking-wide">Salon
+                        7 places</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Product Grid (loaded from data/products.json) -->
+        <section id="product-grid"
+            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter product-grid min-h-[400px]">
+            <p class="col-span-full text-center text-on-surface-variant py-12">Chargement des collections...</p>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-surface-container-highest w-full pt-stack-lg pb-stack-md border-t border-outline-variant">
+        <div
+            class="flex flex-col md:flex-row justify-between items-start px-margin-mobile md:px-margin-desktop max-w-7xl mx-auto gap-stack-md mb-16 reveal-up">
+            <div class="max-w-xs">
+                <a class="font-headline-lg text-headline-lg text-primary block mb-6 hover:opacity-80 transition-opacity"
+                    href="../index.html"
+                    style="font-family:'Playfair Display',serif; font-size:48px; line-height:56px;">LE CANAPÉ</a>
+                <p class="font-body-md text-body-md text-on-surface-variant">Élever le quotidien grâce à un confort sans
+                    compromis et un design intemporel.</p>
+            </div>
+            <div class="flex flex-col gap-4">
+                <span
+                    class="font-label-caps text-label-caps tracking-[0.1em] uppercase text-on-surface">Navigation</span>
+                <a class="font-body-md text-body-md text-on-surface-variant hover:text-primary hover:translate-x-1 transition-all duration-300"
+                    href="../index.html">Accueil</a>
+                <a class="font-body-md text-body-md text-on-surface-variant hover:text-primary hover:translate-x-1 transition-all duration-300"
+                    href="./">Catalogue</a>
+                <a class="font-body-md text-body-md text-on-surface-variant hover:text-primary hover:translate-x-1 transition-all duration-300"
+                    href="#">À propos de nous</a>
+                <a class="font-body-md text-body-md text-on-surface-variant hover:text-primary hover:translate-x-1 transition-all duration-300"
+                    href="#">Contact</a>
+            </div>
+            <div class="flex flex-col gap-4">
+                <span
+                    class="font-label-caps text-label-caps tracking-[0.1em] uppercase text-on-surface">Information</span>
+                <a class="font-body-md text-body-md text-on-surface-variant hover:text-primary hover:translate-x-1 transition-all duration-300"
+                    href="#">Compte</a>
+                <a class="font-body-md text-body-md text-on-surface-variant hover:text-primary hover:translate-x-1 transition-all duration-300"
+                    href="#">Liste de souhaits</a>
+                <a class="font-body-md text-body-md text-on-surface-variant hover:text-primary hover:translate-x-1 transition-all duration-300"
+                    href="#">Commandes</a>
+                <a class="font-body-md text-body-md text-on-surface-variant hover:text-primary hover:translate-x-1 transition-all duration-300"
+                    href="#">Termes et conditions</a>
+            </div>
+        </div>
+        <div
+            class="px-margin-mobile md:px-margin-desktop max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center pt-8 border-t border-outline-variant/50 reveal-up">
+            <p class="font-body-md text-body-md text-on-surface-variant text-sm">é 2024 LE CANAPÉ. ALL RIGHTS RESERVED.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Lenis smooth scroll
+        const lenis = new Lenis({
+            duration: 2.2,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            direction: 'vertical',
+            gestureDirection: 'vertical',
+            smooth: true,
+            mouseMultiplier: 0.6,
+            smoothTouch: true,
+            touchMultiplier: 1.5,
+            infinite: false,
+        });
+
+        gsap.registerPlugin(ScrollTrigger);
+        gsap.ticker.add((time) => { lenis.raf(time * 1000); });
+        gsap.ticker.lagSmoothing(0);
+        lenis.on('scroll', ScrollTrigger.update);
+
+        // Sticky Nav
+        const nav = document.getElementById('main-nav');
+        lenis.on('scroll', ({ scroll, velocity }) => {
+            if (scroll > 50) {
+                nav.classList.add('scrolled');
+                if (velocity > 0 && scroll > 200) nav.classList.add('hidden-nav');
+                else nav.classList.remove('hidden-nav');
+            } else {
+                nav.classList.remove('scrolled', 'hidden-nav');
+            }
+        });
+
+        // Mobile menu
+        const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileMenuIcon = document.getElementById('mobile-menu-icon');
+        let mobileMenuOpen = false;
+        if (mobileMenuToggle && mobileMenu) {
+            mobileMenuToggle.addEventListener('click', () => {
+                mobileMenuOpen = !mobileMenuOpen;
+                if (mobileMenuOpen) {
+                    mobileMenu.classList.remove('translate-x-full');
+                    mobileMenuIcon.textContent = 'close';
+                    lenis.stop();
+                } else {
+                    mobileMenu.classList.add('translate-x-full');
+                    mobileMenuIcon.textContent = 'menu';
+                    lenis.start();
+                }
+            });
+            mobileMenu.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenuOpen = false;
+                    mobileMenu.classList.add('translate-x-full');
+                    mobileMenuIcon.textContent = 'menu';
+                    lenis.start();
+                });
+            });
+        }
+
+        // Page hero entrance - plays immediately, no preloader
+        gsap.to('.page-hero-el', {
+            opacity: 1,
+            y: 0,
+            duration: 1.2,
+            stagger: 0.15,
+            ease: 'expo.out',
+            delay: 0.3
+        });
+
+        // Scroll Reveal
+        ScrollTrigger.batch('.reveal-up', {
+            onEnter: (elements) => {
+                gsap.fromTo(elements,
+                    { y: 60, autoAlpha: 0 },
+                    { y: 0, autoAlpha: 1, duration: 1.8, stagger: 0.15, ease: 'expo.out', overwrite: true }
+                );
+            },
+            start: 'top 85%',
+            once: true
+        });
+
+        // Filter Logic
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const subRows = document.querySelectorAll('.sub-filter-row');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => {
+                    b.classList.remove('active', 'text-brand-gold', 'border-brand-gold', 'border-b-2');
+                    b.classList.add('text-on-surface-variant');
+                });
+                btn.classList.add('active', 'text-brand-gold', 'border-brand-gold', 'border-b-2');
+                btn.classList.remove('text-on-surface-variant');
+
+                const targetId = btn.getAttribute('data-target');
+
+                subRows.forEach(row => {
+                    if (row.classList.contains('active')) {
+                        gsap.to(row, {
+                            opacity: 0, y: -8, duration: 0.25, onComplete: () => {
+                                row.classList.remove('active');
+                                row.style.position = 'absolute';
+                            }
+                        });
+                    }
+                });
+
+                const targetRow = document.getElementById(targetId);
+                if (targetRow) {
+                    setTimeout(() => {
+                        targetRow.classList.add('active');
+                        targetRow.style.position = 'relative';
+                        gsap.fromTo(targetRow,
+                            { opacity: 0, y: 10 },
+                            { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out' }
+                        );
+                    }, 200);
+                }
+            });
+        });
+
+        // Magnetic Nav Links
+        document.querySelectorAll('.magnetic-link').forEach(link => {
+            link.addEventListener('mousemove', (e) => {
+                const rect = link.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                gsap.to(link, { x: x * 0.3, y: y * 0.3, duration: 0.4, ease: 'power2.out' });
+            });
+            link.addEventListener('mouseleave', () => {
+                gsap.to(link, { x: 0, y: 0, duration: 0.7, ease: 'elastic.out(1, 0.3)' });
+            });
+        });
+
+        // Accordion Category Selection & Scroll
+        function selectCategory(target) {
+            // Trigger the filter button
+            const btn = document.querySelector(`[data-target='${target}']`);
+            if (btn) btn.click();
+
+            // Smooth scroll to filters section
+            const section = document.getElementById('filters-section');
+            if (section) {
+                if (typeof lenis !== 'undefined') {
+                    lenis.scrollTo(section, { offset: -120, duration: 1.5 });
+                } else {
+                    section.scrollIntoView({ behavior: 'smooth' });
+                }
+            }
+        }
+
+        function toggleChambre(target) {
+            const tabs = document.querySelectorAll('.chambre-tab');
+            const contentAdulte = document.getElementById('chambre-adulte');
+            const contentJunior = document.getElementById('chambre-junior');
+
+            tabs.forEach(tab => {
+                tab.classList.remove('active', 'text-brand-gold', 'border-brand-gold', 'border-b-2');
+                tab.classList.add('text-on-surface-variant');
+            });
+
+            event.currentTarget.classList.add('active', 'text-brand-gold', 'border-brand-gold', 'border-b-2');
+            event.currentTarget.classList.remove('text-on-surface-variant');
+
+            if (target === 'adulte') {
+                contentJunior.classList.replace('opacity-100', 'opacity-0');
+                contentJunior.classList.add('pointer-events-none', '-translate-y-2');
+                contentJunior.classList.remove('translate-y-0');
+
+                setTimeout(() => {
+                    contentAdulte.classList.replace('opacity-0', 'opacity-100');
+                    contentAdulte.classList.remove('pointer-events-none', '-translate-y-2');
+                    contentAdulte.classList.add('translate-y-0');
+                }, 150);
+            } else {
+                contentAdulte.classList.replace('opacity-100', 'opacity-0');
+                contentAdulte.classList.add('pointer-events-none', '-translate-y-2');
+                contentAdulte.classList.remove('translate-y-0');
+
+                setTimeout(() => {
+                    contentJunior.classList.replace('opacity-0', 'opacity-100');
+                    contentJunior.classList.remove('pointer-events-none', '-translate-y-2');
+                    contentJunior.classList.add('translate-y-0');
+                }, 150);
+            }
+        }
+    </script>
+    <script src="../assets/products-grid.js"></script>
+    <script type="application/json"
+        id="catalog-data">[{"slug":"fauteuil-velours","name":"Fauteuil Velours","nameDisplay":"FAUTEUIL VELOURS","category":"salle-a-manger","categoryLabel":"SALLE À MANGER","subcategory":"fauteuils","subcategoryLabel":"SALLE À MANGER","price":2850,"currency":"DZD","shortDescription":"Une silhouette sculpturale qui épouse l'espace, avec une assise profonde et un velours lumineux.","description":"Fauteuil avec dossier haut, accoudoirs élégants et structure en chêne massif. Une pièce d'accent confortable pour le séjour.","status":"published","archived":false,"createdAt":"2026-06-25","updatedAt":"2026-06-25","images":{"hero":"https://lh3.googleusercontent.com/aida-public/AB6AXuCp2qam1FuXPhnjMgoHygJtHt8aLOWnSVWEENJRrwmlkPtONQQzBrrJ6XMhASequpBFJna1g88G2g5G1vb79ZDwnQ6q4_KO4QhNLAWb8hHHyL6B7W9mW6OvJDFGXRqc2JuQGmPZthDILDZlq0TdCtzJ46PYTd1aWvwI6SA13VjjGehpu_zH7gr9XbcFEwiFRzWlLbDzvIX0RLEjWJ1q3mQPTY8pMT8WVz7QEfOVURd_fkyy9JySWDhQK9XkDXQEHkYuuTtEUvqjYcBT","gallery":["https://lh3.googleusercontent.com/aida-public/AB6AXuCp2qam1FuXPhnjMgoHygJtHt8aLOWnSVWEENJRrwmlkPtONQQzBrrJ6XMhASequpBFJna1g88G2g5G1vb79ZDwnQ6q4_KO4QhNLAWb8hHHyL6B7W9mW6OvJDFGXRqc2JuQGmPZthDILDZlq0TdCtzJ46PYTd1aWvwI6SA13VjjGehpu_zH7gr9XbcFEwiFRzWlLbDzvIX0RLEjWJ1q3mQPTY8pMT8WVz7QEfOVURd_fkyy9JySWDhQK9XkDXQEHkYuuTtEUvqjYcBT"]},"colors":[{"hex":"#3b2f2f","label":"Noir profond"},{"hex":"#8b5a2b","label":"Cognac"},{"hex":"#d2b48c","label":"Ivoire"}],"dimensions":{"largeur":"78 cm","profondeur":"85 cm","hauteur":"92 cm","assise":"42 cm"},"specs":[{"label":"Structure","value":"Chêne massif"},{"label":"Rembourrage","value":"Mousse haute résilience"},{"label":"Fabrication","value":"Europe"}],"materials":[{"tag":"REVÊTEMENT","title":"Velours ambré","text":"Un velours dense et doux qui accroche subtilement la lumière.","image":"https://lh3.googleusercontent.com/aida-public/AB6AXuCp2qam1FuXPhnjMgoHygJtHt8aLOWnSVWEENJRrwmlkPtONQQzBrrJ6XMhASequpBFJna1g88G2g5G1vb79ZDwnQ6q4_KO4QhNLAWb8hHHyL6B7W9mW6OvJDFGXRqc2JuQGmPZthDILDZlq0TdCtzJ46PYTd1aWvwI6SA13VjjGehpu_zH7gr9XbcFEwiFRzWlLbDzvIX0RLEjWJ1q3mQPTY8pMT8WVz7QEfOVURd_fkyy9JySWDhQK9XkDXQEHkYuuTtEUvqjYcBT","aspect":"square","offset":false}]},{"slug":"table-chene","name":"Table Chêne","nameDisplay":"TABLE CHÊNE","category":"salle-a-manger","categoryLabel":"SALLE À MANGER","subcategory":"tables","subcategoryLabel":"TABLES","price":2800,"currency":"DZD","shortDescription":"Une table de repas en chêne massif aux lignes épurées, conçue pour rassembler famille et amis autour d'un centre de table d'exception.","description":"Plateau en chêne massif huilé, piètement sculpté et finitions artisanales. Un morceau central intemporel pour la salle à manger contemporaine.","images":{"hero":"https://lh3.googleusercontent.com/aida-public/AB6AXuA0Z-EhelDaeLPLKadJobSWHdG91mvxFoYp1bTl5i3XWIa1h-SeTpAewAhx9S7IPckW0dqjDYVEDzOQW3kP9F6EheME2GB8QIWUn4fPWRHlZsq3_T-DBGXwRS9telozYKp9hLB0oHE4syWiciNRKPz8xd-RUBf-6FeQE6jTndaVy090sbkfQZK_ZJcjMldBzW9xZ3bcSz6Pf8hnR2mq-7HHIqlTKbjgncZr6JVokmT1aCAxtSd4yTCwyvrlJIfY7RWkXxVb01mUOPrZ","gallery":["https://lh3.googleusercontent.com/aida-public/AB6AXuA0Z-EhelDaeLPLKadJobSWHdG91mvxFoYp1bTl5i3XWIa1h-SeTpAewAhx9S7IPckW0dqjDYVEDzOQW3kP9F6EheME2GB8QIWUn4fPWRHlZsq3_T-DBGXwRS9telozYKp9hLB0oHE4syWiciNRKPz8xd-RUBf-6FeQE6jTndaVy090sbkfQZK_ZJcjMldBzW9xZ3bcSz6Pf8hnR2mq-7HHIqlTKbjgncZr6JVokmT1aCAxtSd4yTCwyvrlJIfY7RWkXxVb01mUOPrZ"]},"colors":[],"dimensions":{"largeur":"220 cm","profondeur":"100 cm","hauteur":"76 cm","assise":"—"},"specs":[{"label":"Plateau","value":"Chêne massif"},{"label":"Finition","value":"Huile naturelle"},{"label":"Piètement","value":"Acier laqué"},{"label":"Fabrication","value":"Europe"}],"materials":[{"tag":"BOIS","title":"Chêne Européen","text":"Bois sélectionné pour son grain régulier et sa résistance, travaillé en atelier pour un toucher satiné.","image":"https://lh3.googleusercontent.com/aida-public/AB6AXuA0Z-EhelDaeLPLKadJobSWHdG91mvxFoYp1bTl5i3XWIa1h-SeTpAewAhx9S7IPckW0dqjDYVEDzOQW3kP9F6EheME2GB8QIWUn4fPWRHlZsq3_T-DBGXwRS9telozYKp9hLB0oHE4syWiciNRKPz8xd-RUBf-6FeQE6jTndaVy090sbkfQZK_ZJcjMldBzW9xZ3bcSz6Pf8hnR2mq-7HHIqlTKbjgncZr6JVokmT1aCAxtSd4yTCwyvrlJIfY7RWkXxVb01mUOPrZ","aspect":"square","offset":false}],"status":"published","archived":false,"createdAt":"2026-06-25","updatedAt":"2026-06-25"},{"slug":"lampe-bronze","name":"Lampe Bronze","nameDisplay":"LAMPE BRONZE","category":"decoration","categoryLabel":"DÉCORATION","subcategory":"luminaires","subcategoryLabel":"LUMINAIRES","price":450,"currency":"DZD","shortDescription":"Luminaire sculptural en bronze patiné, diffusant une lumière chaleureuse qui sublime chaque intérieur.","description":"Abat-jour en lin naturel et structure en bronze vieilli. Une pièce de caractère pour salon ou chambre.","images":{"hero":"https://lh3.googleusercontent.com/aida-public/AB6AXuAfOSO-kkT85iezoqN_27BS1y3sBmUF8PocV8FQL49tCM-iZ3lcYri_SDWhVshCtAWqa7fwcTz5jToLDj61kXyASkxjB6nlNW-15xzYbEAPrnouH68Yzm9Ie_7TyOvasFQXWPTdAxQhopRp8B3qL9kQh7vgMEbhdy_8rPiydcT3-_lyzFz7pkhB_yYBxtK9uWjSwG7wVVC4UyLB4jdW8nMe7F3oEpWAfsCKP-eER54xqpmDRSdLcw1295EQcIfYV678KXn3tpeYhPSW","gallery":["https://lh3.googleusercontent.com/aida-public/AB6AXuAfOSO-kkT85iezoqN_27BS1y3sBmUF8PocV8FQL49tCM-iZ3lcYri_SDWhVshCtAWqa7fwcTz5jToLDj61kXyASkxjB6nlNW-15xzYbEAPrnouH68Yzm9Ie_7TyOvasFQXWPTdAxQhopRp8B3qL9kQh7vgMEbhdy_8rPiydcT3-_lyzFz7pkhB_yYBxtK9uWjSwG7wVVC4UyLB4jdW8nMe7F3oEpWAfsCKP-eER54xqpmDRSdLcw1295EQcIfYV678KXn3tpeYhPSW"]},"colors":[],"dimensions":{"largeur":"35 cm","profondeur":"35 cm","hauteur":"58 cm","assise":"—"},"specs":[{"label":"Structure","value":"Bronze patiné"},{"label":"Abat-jour","value":"Lin naturel"},{"label":"Ampoule","value":"E27 max 60W"},{"label":"Fabrication","value":"Italie"}],"materials":[{"tag":"MÉTAL","title":"Bronze Patiné","text":"Finition vieillie à la main pour un éclat discret et une patine qui se bonifie avec le temps.","image":"https://lh3.googleusercontent.com/aida-public/AB6AXuAfOSO-kkT85iezoqN_27BS1y3sBmUF8PocV8FQL49tCM-iZ3lcYri_SDWhVshCtAWqa7fwcTz5jToLDj61kXyASkxjB6nlNW-15xzYbEAPrnouH68Yzm9Ie_7TyOvasFQXWPTdAxQhopRp8B3qL9kQh7vgMEbhdy_8rPiydcT3-_lyzFz7pkhB_yYBxtK9uWjSwG7wVVC4UyLB4jdW8nMe7F3oEpWAfsCKP-eER54xqpmDRSdLcw1295EQcIfYV678KXn3tpeYhPSW","aspect":"square","offset":false}],"status":"published","archived":false,"createdAt":"2026-06-25","updatedAt":"2026-06-25"},{"slug":"canape-cuir","name":"Canapé Cuir","nameDisplay":"CANAPÉ CUIR","category":"sejour","categoryLabel":"SÉJOUR","subcategory":"canapes","subcategoryLabel":"CANAPÉS","price":4100,"currency":"DZD","shortDescription":"Canapé en cuir pleine fleur aux proportions généreuses, alliant confort profond et élégance intemporelle.","description":"Assise profonde, dossier ergonomique et cuir italien tanné végétal. Une pièce maîtresse pour le séjour contemporain.","images":{"hero":"https://lh3.googleusercontent.com/aida-public/AB6AXuBcJzyTtU0QZJM2dDqn2n_A2QIpR-MVCcA8RFX9zhCV85dQgIwabQSAZs1bj08SBsZEGL1pAGkzcZ1IXn0_vhN1IKTiwzs-Vdg7nn3eTooPsYGEg734kRYgtTdYEIY2sM7U8Rva75ACxQlPh65eGfy-uIC0ymukB-Feuab24Ft1tX24A9TKHH9NeJ2YRUfz5JVpMLoAOs8-UB59mwD_nGJ1pNNLOY-shD1uxVRA0zQVw9xVd__3CaRebXeUldY4NIIBHnBr7ToG-XH7","gallery":["https://lh3.googleusercontent.com/aida-public/AB6AXuBcJzyTtU0QZJM2dDqn2n_A2QIpR-MVCcA8RFX9zhCV85dQgIwabQSAZs1bj08SBsZEGL1pAGkzcZ1IXn0_vhN1IKTiwzs-Vdg7nn3eTooPsYGEg734kRYgtTdYEIY2sM7U8Rva75ACxQlPh65eGfy-uIC0ymukB-Feuab24Ft1tX24A9TKHH9NeJ2YRUfz5JVpMLoAOs8-UB59mwD_nGJ1pNNLOY-shD1uxVRA0zQVw9xVd__3CaRebXeUldY4NIIBHnBr7ToG-XH7"]},"colors":[{"hex":"#3b2f2f","label":"Noir"},{"hex":"#8b5a2b","label":"Cognac"},{"hex":"#d2b48c","label":"Camel"}],"dimensions":{"largeur":"240 cm","profondeur":"98 cm","hauteur":"82 cm","assise":"44 cm"},"specs":[{"label":"Revêtement","value":"Cuir pleine fleur"},{"label":"Rembourrage","value":"Mousse HR"},{"label":"Structure","value":"Bois massif"},{"label":"Fabrication","value":"Italie"}],"materials":[{"tag":"CUIR","title":"Cuir Pleine Fleur","text":"Cuir italien tanné végétal, souple et résistant, qui développe une patine unique au fil des années.","image":"https://lh3.googleusercontent.com/aida-public/AB6AXuBcJzyTtU0QZJM2dDqn2n_A2QIpR-MVCcA8RFX9zhCV85dQgIwabQSAZs1bj08SBsZEGL1pAGkzcZ1IXn0_vhN1IKTiwzs-Vdg7nn3eTooPsYGEg734kRYgtTdYEIY2sM7U8Rva75ACxQlPh65eGfy-uIC0ymukB-Feuab24Ft1tX24A9TKHH9NeJ2YRUfz5JVpMLoAOs8-UB59mwD_nGJ1pNNLOY-shD1uxVRA0zQVw9xVd__3CaRebXeUldY4NIIBHnBr7ToG-XH7","aspect":"square","offset":false}],"status":"published","archived":false,"createdAt":"2026-06-25","updatedAt":"2026-06-25"},{"slug":"lit-minimaliste","name":"Lit Minimaliste","nameDisplay":"LIT MINIMALISTE","category":"chambre","categoryLabel":"CHAMBRE","subcategory":"lits","subcategoryLabel":"LITS","price":1950,"currency":"DZD","shortDescription":"Lit à lignes pures et tête de lit capitonnée, pour une chambre sereine et raffinée.","description":"Structure basse en bois massif, tête de lit rembourrée et finitions discrètes. Le minimalisme au service du repos.","images":{"hero":"https://lh3.googleusercontent.com/aida-public/AB6AXuC6hDZ3EMb0J7VD5OONSwXwnj709EIBVtX0atQ318cyDZKz8CqtT8q-9BLszt2gP25GThh5Hx1bVlKjUumqWci5Z6kFz3tsGQjsTnVjV8iYGbSytuhqGdndr1NcJb-lcuxpoHWIC9Xoj9vfNcWK-65wR-CUANZM1zYZqbeeJcMja1WQutR9uybHDUXlQFV-fJ0ucVU-PlgXN7pKahOb47NutY5hi7_lkwSN085fWUvgWQFdAN6kTmjbm_zjurNDehqjvoTAbmjPmTgR","gallery":["https://lh3.googleusercontent.com/aida-public/AB6AXuC6hDZ3EMb0J7VD5OONSwXwnj709EIBVtX0atQ318cyDZKz8CqtT8q-9BLszt2gP25GThh5Hx1bVlKjUumqWci5Z6kFz3tsGQjsTnVjV8iYGbSytuhqGdndr1NcJb-lcuxpoHWIC9Xoj9vfNcWK-65wR-CUANZM1zYZqbeeJcMja1WQutR9uybHDUXlQFV-fJ0ucVU-PlgXN7pKahOb47NutY5hi7_lkwSN085fWUvgWQFdAN6kTmjbm_zjurNDehqjvoTAbmjPmTgR"]},"colors":[{"hex":"#f5f5dc","label":"Lin"},{"hex":"#564337","label":"Taupe"},{"hex":"#201b13","label":"Anthracite"}],"dimensions":{"largeur":"180 cm","profondeur":"210 cm","hauteur":"110 cm","assise":"—"},"specs":[{"label":"Structure","value":"Chêne massif"},{"label":"Tête de lit","value":"Capitonnée lin"},{"label":"Sommier","value":"Lattes multiplis"},{"label":"Fabrication","value":"Europe"}],"materials":[{"tag":"TEXTILE","title":"Lin Capitonné","text":"Tissu en lin naturel, respirant et résistant, pour une tête de lit douce au toucher.","image":"https://lh3.googleusercontent.com/aida-public/AB6AXuC6hDZ3EMb0J7VD5OONSwXwnj709EIBVtX0atQ318cyDZKz8CqtT8q-9BLszt2gP25GThh5Hx1bVlKjUumqWci5Z6kFz3tsGQjsTnVjV8iYGbSytuhqGdndr1NcJb-lcuxpoHWIC9Xoj9vfNcWK-65wR-CUANZM1zYZqbeeJcMja1WQutR9uybHDUXlQFV-fJ0ucVU-PlgXN7pKahOb47NutY5hi7_lkwSN085fWUvgWQFdAN6kTmjbm_zjurNDehqjvoTAbmjPmTgR","aspect":"square","offset":false}],"status":"published","archived":false,"createdAt":"2026-06-25","updatedAt":"2026-06-25"},{"slug":"miroir-ovale","name":"Miroir Ovale","nameDisplay":"MIROIR OVALE","category":"decoration","categoryLabel":"DÉCORATION","subcategory":"miroirs","subcategoryLabel":"MIROIRS","price":890,"currency":"DZD","shortDescription":"Miroir ovale au cadre fin en laiton brossé, pièce signature pour entrée ou chambre.","description":"Verre argenté de haute qualité et cadre en laiton brossé. Forme ovale pour adoucir l'architecture de la pièce.","images":{"hero":"https://lh3.googleusercontent.com/aida-public/AB6AXuDX75eFEc55Q6_Qd6K0EVSDNB73kSgJJr8JXZsMSQJvMP4dfra5uddJ3qTu__9L7cpijKOAq2acmV3847faNPBZedMiPnYWJixadfRMznDz2nxRs8GH4I1hol6NEi5MW6wiIbL4xO_eqzZQ35Krw2PCTekxnrkt5OGkq1TkXRNY-iKNyApnVU7h1h75f_KFG3Kf8CBG99QNrPK5GuiFe1xaKfuuU-pHxX2EyRE26Zd7rZ87ED9giTv6zSwBqRc3FZqUM8hmg2GiLuHs","gallery":["https://lh3.googleusercontent.com/aida-public/AB6AXuDX75eFEc55Q6_Qd6K0EVSDNB73kSgJJr8JXZsMSQJvMP4dfra5uddJ3qTu__9L7cpijKOAq2acmV3847faNPBZedMiPnYWJixadfRMznDz2nxRs8GH4I1hol6NEi5MW6wiIbL4xO_eqzZQ35Krw2PCTekxnrkt5OGkq1TkXRNY-iKNyApnVU7h1h75f_KFG3Kf8CBG99QNrPK5GuiFe1xaKfuuU-pHxX2EyRE26Zd7rZ87ED9giTv6zSwBqRc3FZqUM8hmg2GiLuHs"]},"colors":[],"dimensions":{"largeur":"80 cm","profondeur":"3 cm","hauteur":"120 cm","assise":"—"},"specs":[{"label":"Cadre","value":"Laiton brossé"},{"label":"Verre","value":"Argenté 4mm"},{"label":"Fixation","value":"Murale"},{"label":"Fabrication","value":"Europe"}],"materials":[{"tag":"MÉTAL","title":"Laiton Brossé","text":"Cadre fin en laiton brossé à la main, résistant à l'humidité et au temps.","image":"https://lh3.googleusercontent.com/aida-public/AB6AXuDX75eFEc55Q6_Qd6K0EVSDNB73kSgJJr8JXZsMSQJvMP4dfra5uddJ3qTu__9L7cpijKOAq2acmV3847faNPBZedMiPnYWJixadfRMznDz2nxRs8GH4I1hol6NEi5MW6wiIbL4xO_eqzZQ35Krw2PCTekxnrkt5OGkq1TkXRNY-iKNyApnVU7h1h75f_KFG3Kf8CBG99QNrPK5GuiFe1xaKfuuU-pHxX2EyRE26Zd7rZ87ED9giTv6zSwBqRc3FZqUM8hmg2GiLuHs","aspect":"square","offset":false}],"status":"published","archived":false,"createdAt":"2026-06-25","updatedAt":"2026-06-25"}]</script>
+</body>
+
+</html>

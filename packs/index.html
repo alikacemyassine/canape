@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="fr" style="background-color:#fff8f3;">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Compositions | LE CANAPÉ</title>
+<meta name="description" content="Découvrez les compositions LE CANAPÉ, des ensembles de mobilier curés pour harmoniser votre intérieur."/>
+<link rel="icon" type="image/png" href="../logo.png"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+tailwind.config = {
+    darkMode: "class",
+    theme: {
+        extend: {
+            colors: {
+                primary: "#964900",
+                "primary-container": "#f08128",
+                background: "#fff8f3",
+                "on-background": "#201b13",
+                "on-surface": "#201b13",
+                "on-surface-variant": "#564337",
+                "inverse-surface": "#353027",
+                "inverse-on-surface": "#faefe1",
+                "outline-variant": "#ddc1b1",
+                outline: "#897265",
+                "surface-container-lowest": "#ffffff",
+                "surface-container-highest": "#ece1d3",
+                "brand-gold": "#c9a96e",
+                secondary: "#5f5e5e"
+            },
+            spacing: {
+                "margin-mobile": "24px",
+                "margin-desktop": "80px",
+                "section-gap": "160px",
+                "stack-md": "24px",
+                "stack-lg": "48px",
+                gutter: "32px"
+            },
+            fontFamily: {
+                "headline-md": ["Playfair Display"],
+                "headline-lg": ["Playfair Display"],
+                "display-lg": ["Playfair Display"],
+                "body-md": ["Inter"],
+                "label-caps": ["Inter"]
+            },
+            fontSize: {
+                "headline-md": ["32px", { lineHeight: "40px", fontWeight: "500" }],
+                "headline-lg": ["48px", { lineHeight: "56px", fontWeight: "500" }],
+                "display-lg": ["80px", { lineHeight: "96px", fontWeight: "600" }],
+                "body-md": ["16px", { lineHeight: "24px" }],
+                "label-caps": ["12px", { lineHeight: "16px", letterSpacing: "0.1em", fontWeight: "600" }]
+            }
+        }
+    }
+};
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/@studio-freight/lenis@1.0.39/dist/lenis.min.js"></script>
+<link rel="stylesheet" href="../assets/site.css"/>
+<style>
+    /* Lenis */
+    html.lenis { height: auto; }
+    .lenis.lenis-smooth { scroll-behavior: auto; }
+    .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+    .lenis.lenis-stopped { overflow: hidden; }
+    .lenis.lenis-scrolling iframe { pointer-events: none; }
+
+    /* Hide scrollbar */
+    ::-webkit-scrollbar { display: none; }
+    html, body { scrollbar-width: none; -ms-overflow-style: none; }
+
+    body { background-color: #fff8f3; color: #201b13; overflow-x: hidden; }
+
+    .glass-nav {
+        transition: background-color 0.5s ease, backdrop-filter 0.5s ease, padding 0.5s ease, border-color 0.5s ease, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        background-color: transparent;
+        border-bottom: 1px solid transparent;
+    }
+    .glass-nav.scrolled {
+        background-color: rgba(255, 248, 243, 0.85);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border-bottom: 1px solid rgba(221, 193, 177, 0.4);
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+    }
+    .glass-nav.hidden-nav { transform: translateY(-100%); }
+
+    /* GSAP Initial States */
+    .reveal-up { visibility: hidden; }
+    .page-hero-el { opacity: 0; transform: translateY(30px); }
+
+    .magnetic-link { display: inline-block; }
+
+    /* Product card hover */
+    .product-card-img { transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1); }
+    .product-card:hover .product-card-img { transform: scale(1.04); }
+
+    /* Accordion styles */
+    .acc-panel {
+        flex: 1;
+        transition: flex 0.7s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+    .acc-container:hover .acc-panel { flex: 1; }
+    .acc-container .acc-panel:hover { flex: 4; }
+    .acc-panel:hover .acc-overlay { background-color: rgba(0,0,0,0.1) !important; }
+    .acc-title {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 0.7s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+    .acc-panel:hover .acc-title { opacity: 1 !important; transform: translateY(0) !important; }
+    @media (max-width: 768px) {
+        .acc-panel { flex: 1 !important; }
+        .acc-container { flex-direction: column; }
+        .acc-title { opacity: 1 !important; transform: translateY(0) !important; }
+        .acc-overlay { background-color: rgba(0,0,0,0.3) !important; }
+    }
+</style>
+</head>
+<body class="bg-background text-on-background font-body-md antialiased selection:bg-primary-container selection:text-on-primary-container">
+<nav class="fixed top-0 w-full z-50 glass-nav flex justify-between items-center px-margin-mobile md:px-margin-desktop py-6 transition-all duration-500" id="main-nav">
+    <div class="hidden md:flex gap-8 items-center">
+        <a class="font-label-caps text-label-caps tracking-[0.1em] uppercase text-on-surface-variant hover:text-primary transition-colors duration-300" href="../index.html">Accueil</a>
+        <a class="font-label-caps text-label-caps tracking-[0.1em] uppercase text-on-surface-variant hover:text-primary transition-colors duration-300" href="../produits/">Collections</a>
+        <a class="font-label-caps text-label-caps tracking-[0.1em] uppercase text-primary border-b border-primary pb-1" href="./">Compositions</a>
+    </div>
+    <a class="font-headline-md text-headline-md font-bold tracking-tighter text-primary hover:opacity-80 transition-opacity" href="../index.html">LE CANAPÉ</a>
+    <div class="flex items-center gap-6">
+        <div class="hidden md:flex gap-8 items-center">
+            <a class="font-label-caps text-label-caps tracking-[0.1em] uppercase text-on-surface-variant hover:text-primary transition-colors duration-300" href="../index.html#services">Services</a>
+            <a class="font-label-caps text-label-caps tracking-[0.1em] uppercase text-on-surface-variant hover:text-primary transition-colors duration-300" href="../index.html#a-propos">About</a>
+            <a class="font-label-caps text-label-caps tracking-[0.1em] uppercase text-on-surface-variant hover:text-primary transition-colors duration-300" href="../index.html#contact">Contacts</a>
+        </div>
+        <button id="mobile-menu-toggle" aria-label="Menu Principal" class="md:hidden text-on-surface-variant hover:text-primary transition-colors duration-300 relative z-[60]">
+            <span class="material-symbols-outlined" id="mobile-menu-icon" aria-hidden="true">menu</span>
+        </button>
+    </div>
+    <div id="mobile-menu" class="fixed inset-0 bg-surface-container-lowest z-[55] flex flex-col items-center justify-center gap-8 translate-x-full transition-transform duration-500 md:hidden">
+        <a class="font-headline-md text-headline-md text-on-surface-variant" href="../index.html">Accueil</a>
+        <a class="font-headline-md text-headline-md text-on-surface-variant" href="../produits/">Collections</a>
+        <a class="font-headline-md text-headline-md text-primary" href="./">Compositions</a>
+        <a class="font-headline-md text-headline-md text-on-surface-variant" href="../index.html#services">Services</a>
+        <a class="font-headline-md text-headline-md text-on-surface-variant" href="../index.html#a-propos">About</a>
+        <a class="font-headline-md text-headline-md text-on-surface-variant" href="../index.html#contact">Contacts</a>
+    </div>
+</nav>
+
+<header class="bg-inverse-surface w-full pt-32 md:pt-40 pb-20 rounded-b-[2.5rem] relative z-10 mb-16 shadow-2xl">
+    <!-- Page Hero Title -->
+    <section class="text-center pb-8 flex flex-col items-center justify-center gap-6">
+        <p class="font-label-caps text-label-caps tracking-[0.2em] uppercase text-brand-gold page-hero-el">Collection 2024</p>
+        <h1 class="font-display-lg md:text-display-lg text-headline-lg text-inverse-on-surface page-hero-el" style="font-family: 'Playfair Display', serif;">Nos Compositions</h1>
+    </section>
+
+    <!-- Interactive Image Accordion Hero -->
+    <section class="w-full px-margin-mobile md:px-margin-desktop mb-10 page-hero-el max-w-[1400px] mx-auto">
+        <div class="w-full h-[60vh] md:h-[65vh] flex flex-col md:flex-row gap-2 rounded-xl overflow-hidden group acc-container" id="acc-container">
+
+            <!-- Panel 1: Salon -->
+            <div class="relative overflow-hidden cursor-pointer acc-panel" id="acc-salon" onclick="filterPacks('salon')">
+                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDBHgN2Sq9CZxizNdU7hN0CgsuEaQPgm1BlGLCUsGrdFYp9AusbN8tPlyTS9uWSPnZQolAzCWlZFiupy687QTGn_rqv7Uajjg3LvZEbC1QLD3GprWg1opulN-yQ-CPxbwdbkIuynY-H-ADDcYdrn7GdaVi3rGtuRR0y_KoVQsR1AQZVpv58ehzr7LldpJykR4Fdx9qLN2NRLPyq69G0HQiTcV2_AxfmLtDHpSdz5stWTICpFUl9TmFsm8PBQGXiqagRZdiycQfFeg" alt="Salon" class="absolute inset-0 w-full h-full object-cover"/>
+                <div class="absolute inset-0 bg-black/40 group-hover:bg-black/60 transition-colors duration-700 acc-overlay"></div>
+                <div class="absolute inset-0 p-6 flex flex-col justify-end md:items-center md:pb-10">
+                    <h2 class="text-white font-headline-md text-2xl md:text-3xl tracking-wide acc-title" style="font-family: 'Playfair Display', serif;">Salon</h2>
+                </div>
+            </div>
+
+            <!-- Panel 2: Chambre -->
+            <div class="relative overflow-hidden cursor-pointer acc-panel" id="acc-chambre" onclick="filterPacks('chambre')">
+                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCWB40VUi4UaIGz-n-pMC2xkXgqcnPeyS6yf9faXgTzX252eV-SzSGYzbIqsqgPdZtHlPdZeLWVD0eUI1QRDGUZ6pAjOAoHntfScVkYGl5rH3uZSlldsp4S4RQnyAk27t2Q7vzudZOXh5PomajAqtVAKLQbu37liHSbKtKPYFGBuxlyFwwuDdZCKUVv8PeJe7itDMDuHpf0yA0QzaqSPZFcouVLXuJUkSlYgEvfVn2i0c7xBtDNtXBVRKse83w05Ad_9lSfGRjAKw" alt="Chambre" class="absolute inset-0 w-full h-full object-cover"/>
+                <div class="absolute inset-0 bg-black/40 group-hover:bg-black/60 transition-colors duration-700 acc-overlay"></div>
+                <div class="absolute inset-0 p-6 flex flex-col justify-end md:items-center md:pb-10">
+                    <h2 class="text-white font-headline-md text-2xl md:text-3xl tracking-wide acc-title" style="font-family: 'Playfair Display', serif;">Chambre</h2>
+                </div>
+            </div>
+
+            <!-- Panel 3: Salle à manger -->
+            <div class="relative overflow-hidden cursor-pointer acc-panel" id="acc-salle-a-manger" onclick="filterPacks('salle-a-manger')">
+                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCuHLnZdu-Q3JwSRXukJsCjgCOyP9osk3u9ayDoX6RuY50o9bm3Zzfc5YhX_POg37lHvEL2E3GTKF9Ky3b5iQlWFpaiY4tAKNrLOQeyC_W_BpoOqCLxR9hVKrWnVeAGH7wO-uTtCXVPfXk0O4YcB2XBVSAj1aZ8ywp029DX_s8h-bCJE3iFp8qsxutQEvZm2IypLaQ5rRFUK-DaLHbiiSVh5LDR8P9zNN8nSnG4IYHVHsNRH4mGqxOeApPgRFTsdRcxD1ig6wORvw" alt="Salle à manger" class="absolute inset-0 w-full h-full object-cover"/>
+                <div class="absolute inset-0 bg-black/40 group-hover:bg-black/60 transition-colors duration-700 acc-overlay"></div>
+                <div class="absolute inset-0 p-6 flex flex-col justify-end md:items-center md:pb-10">
+                    <h2 class="text-white font-headline-md text-2xl md:text-3xl tracking-wide acc-title" style="font-family: 'Playfair Display', serif;">Salle à manger</h2>
+                </div>
+            </div>
+
+            <!-- Panel 4: Bureau -->
+            <div class="relative overflow-hidden cursor-pointer acc-panel" id="acc-bureau" onclick="filterPacks('bureau')">
+                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuD5opXv6-RMurrgMJNzh9vH9jriMKgX75JdH930pZcENzzUcAXzRaEBmPTxIhxLbq7_LPiQgY3PQSn3v90hjlx1NSr9_BuH5ulxoa0xenWTF7YzpFbgnFVlBMm9FcRIYPDcn1WeLOXWTrRd-JIYUVr8vrN5xiVcJuO4iDbe9_U1WhgO8XDav4sdQfnAAtxr5OKa778X15OhWk3fdm72dfoUrLaEunTLTWKi1gffBmLoUY7mqG-AXzcxP4nLodTR9DHqO7Cp840E7g" alt="Bureau" class="absolute inset-0 w-full h-full object-cover"/>
+                <div class="absolute inset-0 bg-black/40 group-hover:bg-black/60 transition-colors duration-700 acc-overlay"></div>
+                <div class="absolute inset-0 p-6 flex flex-col justify-end md:items-center md:pb-10">
+                    <h2 class="text-white font-headline-md text-2xl md:text-3xl tracking-wide acc-title" style="font-family: 'Playfair Display', serif;">Bureau</h2>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Description below accordion -->
+    <div class="page-hero-el max-w-2xl mx-auto text-center px-margin-mobile">
+        <p class="font-body-lg text-body-lg text-inverse-on-surface opacity-80">
+            Des ensembles curés avec précision pour harmoniser vos espaces de vie. Chaque pièce est pensée en dialogue avec les autres, créant une narration visuelle cohérente et intemporelle.
+        </p>
+    </div>
+</header>
+
+<main class="pb-section-gap px-margin-mobile md:px-margin-desktop min-h-screen">
+    <!-- Filters -->
+    <section id="packs-filters" class="flex flex-wrap justify-center gap-6 md:gap-12 mb-16 border-b pb-4 max-w-4xl mx-auto reveal-up" style="border-color: rgba(201,169,110,0.3);"></section>
+
+    <!-- Grid -->
+    <section id="packs-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter min-h-[400px]"></section>
+</main>
+
+<footer class="bg-surface-container-highest w-full pt-stack-lg pb-stack-md border-t border-outline-variant">
+    <div class="flex flex-col md:flex-row justify-between items-start px-margin-mobile md:px-margin-desktop max-w-7xl mx-auto gap-stack-md mb-16 reveal-up">
+        <div class="max-w-xs">
+            <a class="font-headline-lg text-headline-lg text-primary block mb-6 hover:opacity-80 transition-opacity" href="../index.html" style="font-family:'Playfair Display',serif; font-size:48px; line-height:56px;">LE CANAPÉ</a>
+            <p class="font-body-md text-body-md text-on-surface-variant">Élever le quotidien grâce à un confort sans compromis et un design intemporel.</p>
+        </div>
+        <div class="flex flex-col gap-4">
+            <span class="font-label-caps text-label-caps tracking-[0.1em] uppercase text-on-surface">Navigation</span>
+            <a class="font-body-md text-body-md text-on-surface-variant hover:text-primary hover:translate-x-1 transition-all duration-300" href="../index.html">Accueil</a>
+            <a class="font-body-md text-body-md text-on-surface-variant hover:text-primary hover:translate-x-1 transition-all duration-300" href="../produits/">Catalogue</a>
+            <a class="font-body-md text-body-md text-on-surface-variant hover:text-primary hover:translate-x-1 transition-all duration-300" href="./">Compositions</a>
+        </div>
+        <div class="flex flex-col gap-4">
+            <span class="font-label-caps text-label-caps tracking-[0.1em] uppercase text-on-surface">Information</span>
+            <a class="font-body-md text-body-md text-on-surface-variant hover:text-primary hover:translate-x-1 transition-all duration-300" href="#">Compte</a>
+            <a class="font-body-md text-body-md text-on-surface-variant hover:text-primary hover:translate-x-1 transition-all duration-300" href="#">Liste de souhaits</a>
+            <a class="font-body-md text-body-md text-on-surface-variant hover:text-primary hover:translate-x-1 transition-all duration-300" href="#">Commandes</a>
+            <a class="font-body-md text-body-md text-on-surface-variant hover:text-primary hover:translate-x-1 transition-all duration-300" href="#">Termes et conditions</a>
+        </div>
+    </div>
+    <div class="px-margin-mobile md:px-margin-desktop max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center pt-8 border-t border-outline-variant/50 reveal-up">
+        <p class="font-body-md text-body-md text-on-surface-variant text-sm">© <span data-year>2026</span> LE CANAPÉ. Tous droits réservés.</p>
+    </div>
+</footer>
+
+<script src="../assets/site.js"></script>
+<script>
+    // Page hero entrance animation
+    if (typeof gsap !== 'undefined') {
+        gsap.to('.page-hero-el', {
+            opacity: 1, y: 0, duration: 1.2, stagger: 0.15, ease: 'expo.out', delay: 0.3
+        });
+    }
+
+    // Accordion panel → filter grid
+    function filterPacks(category) {
+        // Scroll to grid
+        const grid = document.getElementById('packs-grid');
+        if (grid) {
+            const top = grid.getBoundingClientRect().top + window.scrollY - 120;
+            window.lenis ? window.lenis.scrollTo(top, { duration: 1.2 }) : window.scrollTo({ top, behavior: 'smooth' });
+        }
+        // Trigger the filter button in packs-grid.js
+        setTimeout(() => {
+            const btn = document.querySelector(`[data-category="${category}"]`);
+            if (btn) btn.click();
+        }, 400);
+    }
+</script>
+<script src="../assets/packs-grid.js"></script>
+<script type="application/json" id="packs-data">[{"slug":"salon-meridien","name":"Le Salon Méridien","category":"salon","categoryLabel":"SALON","pieceCount":3,"price":185000,"oldPrice":218000,"currency":"DZD","discountLabel":"Économisez 15%","shortDescription":"Une composition sculpturale pensée pour l'art de recevoir.","description":"L'alliance parfaite entre l'assise profonde en cuir pleine fleur et les lignes architecturales du noyer massif, créant un espace d'une élégance intemporelle.","heroImage":"https://lh3.googleusercontent.com/aida-public/AB6AXuDBHgN2Sq9CZxizNdU7hN0CgsuEaQPgm1BlGLCUsGrdFYp9AusbN8tPlyTS9uWSPnZQolAzCWlZFiupy687QTGn_rqv7Uajjg3LvZEbC1QLD3GprWg1opulN-yQ-CPxbwdbkIuynY-H-ADDcYdrn7GdaVi3rGtuRR0y_KoVQsR1AQZVpv58ehzr7LldpJykR4Fdx9qLN2NRLPyq69G0HQiTcV2_AxfmLtDHpSdz5stWTICpFUl9TmFsm8PBQGXiqagRZdiycQfFeg","status":"published","includedProducts":[{"name":"Canapé Méridien 3 Places","material":"Cuir Italien","price":115000,"image":"https://lh3.googleusercontent.com/aida-public/AB6AXuAa5jwxH1X4eUZCMQry8bv3bTF50XqQC-mqYvHxlmYarGkvQaCSlCXpryai_4mhYLg1GgvK4E2rn2Zvw_gemOTmI1_RwEHuhv5A_Rz8bcvD00tr9MKwZzGLlHeAUy7Tcqeb0EIykoDb1jqMnCtbJMHQA_PaGc1cT89KCkM9bh_p5vdWGkjujPFC0hdwHmk6Hd5LfbRWq9nKYLi44NKIUZlNlje9eunNg122JMGlBym3MDan4eARHeGNjbzw0snJKwZJ3duRKeDZ5Q","productSlug":"canape-cuir"},{"name":"Table Basse Oblique","material":"Noyer Massif","price":55000,"image":"https://lh3.googleusercontent.com/aida-public/AB6AXuCXw0K8rY7bK2Hj144Nhc-E3p8F_qnZ4OqTpAPm5GcrKTx0kmdLrKsA-aGLhy3dSzIDmolDmXrved_qnHryRADaipqnYPQfNtrgs5FuRRMObi9sP9sr3_vUH3pdVFHG3A98KOHte8VFfRgVDnhwqyuBTWALzr2ioRtNwFFJ54e24SpopWOuIT0JTUBlP6-kvSZDmkR9zR6WpiS77HHy5ydIaassZuyWHy0k4jBRWR_bnvhqjnLBIeb0O-caEitTee66U-1gvUO52w"},{"name":"Lampadaire Arc","material":"Laiton Brossé","price":48000,"image":"https://lh3.googleusercontent.com/aida-public/AB6AXuAHll-nvuZSZ4kqvCRHrreHz5Z3AJkCAqd71qsoOXh5PvjRBVKutkbh-ZLM9ol_LHS8XXOKdxgnBpA5yE2sP54uI3CA2ls0LWkwDZrHOasynSi4fY_RMe39iOWfajjBrnvCbravMPeVTsjsYtZDPKGCaDThyBffPv0vqi3hY-YAyGlB4v0uPwOe1Zf_CYkWpXpnK0fgbIpnrXeLNDrkZDkMRgRLd6ANCSXbzvrXKmNMmFCNqpEl5HNiPA5lL1jEADgJ0eREdMX_UQ","productSlug":"lampe-bronze"}]},{"slug":"chambre-nocturne","name":"La Chambre Nocturne","category":"chambre","categoryLabel":"CHAMBRE","pieceCount":4,"price":210000,"currency":"DZD","shortDescription":"Une chambre calme et architecturale, pensée comme un refuge nocturne.","description":"Un lit bas capitonné, des tables sculpturales et un éclairage doux composent une atmosphère enveloppante et précise.","heroImage":"https://lh3.googleusercontent.com/aida-public/AB6AXuCWB40VUi4UaIGz-n-pMC2xkXgqcnPeyS6yf9faXgTzX252eV-SzSGYzbIqsqgPdZtHlPdZeLWVD0eUI1QRDGUZ6pAjOAoHntfScVkYGl5rH3uZSlldsp4S4RQnyAk27t2Q7vzudZOXh5PomajAqtVAKLQbu37liHSbKtKPYFGBuxlyFwwuDdZCKUVv8PeJe7itDMDuHpf0yA0QzaqSPZFcouVLXuJUkSlYgEvfVn2i0c7xBtDNtXBVRKse83w05Ad_9lSfGRjAKw","status":"published","includedProducts":[{"name":"Lit Nocturne Capitonné","material":"Lin Anthracite","price":98000,"image":"https://lh3.googleusercontent.com/aida-public/AB6AXuCWB40VUi4UaIGz-n-pMC2xkXgqcnPeyS6yf9faXgTzX252eV-SzSGYzbIqsqgPdZtHlPdZeLWVD0eUI1QRDGUZ6pAjOAoHntfScVkYGl5rH3uZSlldsp4S4RQnyAk27t2Q7vzudZOXh5PomajAqtVAKLQbu37liHSbKtKPYFGBuxlyFwwuDdZCKUVv8PeJe7itDMDuHpf0yA0QzaqSPZFcouVLXuJUkSlYgEvfVn2i0c7xBtDNtXBVRKse83w05Ad_9lSfGRjAKw","productSlug":"lit-minimaliste"},{"name":"Table de Nuit Cylindre","material":"Chêne Fumé","price":36000,"image":"https://lh3.googleusercontent.com/aida-public/AB6AXuCXw0K8rY7bK2Hj144Nhc-E3p8F_qnZ4OqTpAPm5GcrKTx0kmdLrKsA-aGLhy3dSzIDmolDmXrved_qnHryRADaipqnYPQfNtrgs5FuRRMObi9sP9sr3_vUH3pdVFHG3A98KOHte8VFfRgVDnhwqyuBTWALzr2ioRtNwFFJ54e24SpopWOuIT0JTUBlP6-kvSZDmkR9zR6WpiS77HHy5ydIaassZuyWHy0k4jBRWR_bnvhqjnLBIeb0O-caEitTee66U-1gvUO52w"},{"name":"Lampe de Chevet Halo","material":"Laiton & Lin","price":24000,"image":"https://lh3.googleusercontent.com/aida-public/AB6AXuAfOSO-kkT85iezoqN_27BS1y3sBmUF8PocV8FQL49tCM-iZ3lcYri_SDWhVshCtAWqa7fwcTz5jToLDj61kXyASkxjB6nlNW-15xzYbEAPrnouH68Yzm9Ie_7TyOvasFQXWPTdAxQhopRp8B3qL9kQh7vgMEbhdy_8rPiydcT3-_lyzFz7pkhB_yYBxtK9uWjSwG7wVVC4UyLB4jdW8nMe7F3oEpWAfsCKP-eER54xqpmDRSdLcw1295EQcIfYV678KXn3tpeYhPSW"},{"name":"Miroir Aube","material":"Laiton Brossé","price":52000,"image":"https://lh3.googleusercontent.com/aida-public/AB6AXuDX75eFEc55Q6_Qd6K0EVSDNB73kSgJJr8JXZsMSQJvMP4dfra5uddJ3qTu__9L7cpijKOAq2acmV3847faNPBZedMiPnYWJixadfRMznDz2nxRs8GH4I1hol6NEi5MW6wiIbL4xO_eqzZQ35Krw2PCTekxnrkt5OGkq1TkXRNY-iKNyApnVU7h1h75f_KFG3Kf8CBG99QNrPK5GuiFe1xaKfuuU-pHxX2EyRE26Zd7rZ87ED9giTv6zSwBqRc3FZqUM8hmg2GiLuHs","productSlug":"miroir-ovale"}]},{"slug":"espace-dinatoire","name":"L'Espace Dînatoire","category":"salle-a-manger","categoryLabel":"SALLE À MANGER","pieceCount":7,"price":340000,"currency":"DZD","shortDescription":"Une salle à manger formelle, dessinée pour les longues réceptions.","description":"Table sculpturale, assises généreuses et lumière verticale composent un espace de repas élégant et durable.","heroImage":"https://lh3.googleusercontent.com/aida-public/AB6AXuCuHLnZdu-Q3JwSRXukJsCjgCOyP9osk3u9ayDoX6RuY50o9bm3Zzfc5YhX_POg37lHvEL2E3GTKF9Ky3b5iQlWFpaiY4tAKNrLOQeyC_W_BpoOqCLxR9hVKrWnVeAGH7wO-uTtCXVPfXk0O4YcB2XBVSAj1aZ8ywp029DX_s8h-bCJE3iFp8qsxutQEvZm2IypLaQ5rRFUK-DaLHbiiSVh5LDR8P9zNN8nSnG4IYHVHsNRH4mGqxOeApPgRFTsdRcxD1ig6wORvw","status":"published","includedProducts":[{"name":"Table Monolithe","material":"Chêne & Marbre","price":155000,"image":"https://lh3.googleusercontent.com/aida-public/AB6AXuA0Z-EhelDaeLPLKadJobSWHdG91mvxFoYp1bTl5i3XWIa1h-SeTpAewAhx9S7IPckW0dqjDYVEDzOQW3kP9F6EheME2GB8QIWUn4fPWRHlZsq3_T-DBGXwRS9telozYKp9hLB0oHE4syWiciNRKPz8xd-RUBf-6FeQE6jTndaVy090sbkfQZK_ZJcjMldBzW9xZ3bcSz6Pf8hnR2mq-7HHIqlTKbjgncZr6JVokmT1aCAxtSd4yTCwyvrlJIfY7RWkXxVb01mUOPrZ","productSlug":"table-chene"},{"name":"Chaise Courbe","material":"Noyer & Cuir","price":28000,"image":"https://lh3.googleusercontent.com/aida-public/AB6AXuCuHLnZdu-Q3JwSRXukJsCjgCOyP9osk3u9ayDoX6RuY50o9bm3Zzfc5YhX_POg37lHvEL2E3GTKF9Ky3b5iQlWFpaiY4tAKNrLOQeyC_W_BpoOqCLxR9hVKrWnVeAGH7wO-uTtCXVPfXk0O4YcB2XBVSAj1aZ8ywp029DX_s8h-bCJE3iFp8qsxutQEvZm2IypLaQ5rRFUK-DaLHbiiSVh5LDR8P9zNN8nSnG4IYHVHsNRH4mGqxOeApPgRFTsdRcxD1ig6wORvw"},{"name":"Suspension Ligne","material":"Laiton Satiné","price":52000,"image":"https://lh3.googleusercontent.com/aida-public/AB6AXuAHll-nvuZSZ4kqvCRHrreHz5Z3AJkCAqd71qsoOXh5PvjRBVKutkbh-ZLM9ol_LHS8XXOKdxgnBpA5yE2sP54uI3CA2ls0LWkwDZrHOasynSi4fY_RMe39iOWfajjBrnvCbravMPeVTsjsYtZDPKGCaDThyBffPv0vqi3hY-YAyGlB4v0uPwOe1Zf_CYkWpXpnK0fgbIpnrXeLNDrkZDkMRgRLd6ANCSXbzvrXKmNMmFCNqpEl5HNiPA5lL1jEADgJ0eREdMX_UQ"}]},{"slug":"bureau-executif","name":"Le Bureau Exécutif","category":"bureau","categoryLabel":"BUREAU","pieceCount":3,"price":120000,"currency":"DZD","shortDescription":"Un espace de travail sobre, précis et statutaire.","description":"Bureau en bois, fauteuil en cuir et éclairage focalisé créent un environnement de concentration haut de gamme.","heroImage":"https://lh3.googleusercontent.com/aida-public/AB6AXuD5opXv6-RMurrgMJNzh9vH9jriMKgX75JdH930pZcENzzUcAXzRaEBmPTxIhxLbq7_LPiQgY3PQSn3v90hjlx1NSr9_BuH5ulxoa0xenWTF7YzpFbgnFVlBMm9FcRIYPDcn1WeLOXWTrRd-JIYUVr8vrN5xiVcJuO4iDbe9_U1WhgO8XDav4sdQfnAAtxr5OKa778X15OhWk3fdm72dfoUrLaEunTLTWKi1gffBmLoUY7mqG-AXzcxP4nLodTR9DHqO7Cp840E7g","status":"published","includedProducts":[{"name":"Bureau Directeur","material":"Noyer Fumé","price":76000,"image":"https://lh3.googleusercontent.com/aida-public/AB6AXuD5opXv6-RMurrgMJNzh9vH9jriMKgX75JdH930pZcENzzUcAXzRaEBmPTxIhxLbq7_LPiQgY3PQSn3v90hjlx1NSr9_BuH5ulxoa0xenWTF7YzpFbgnFVlBMm9FcRIYPDcn1WeLOXWTrRd-JIYUVr8vrN5xiVcJuO4iDbe9_U1WhgO8XDav4sdQfnAAtxr5OKa778X15OhWk3fdm72dfoUrLaEunTLTWKi1gffBmLoUY7mqG-AXzcxP4nLodTR9DHqO7Cp840E7g"},{"name":"Fauteuil Focus","material":"Cuir Cognac","price":34000,"image":"https://lh3.googleusercontent.com/aida-public/AB6AXuCp2qam1FuXPhnjMgoHygJtHt8aLOWnSVWEENJRrwmlkPtONQQzBrrJ6XMhASequpBFJna1g88G2g5G1vb79ZDwnQ6q4_KO4QhNLAWb8hHHyL6B7W9mW6OvJDFGXRqc2JuQGmPZthDILDZlq0TdCtzJ46PYTd1aWvwI6SA13VjjGehpu_zH7gr9XbcFEwiFRzWlLbDzvIX0RLEjWJ1q3mQPTY8pMT8WVz7QEfOVURd_fkyy9JySWDhQK9XkDXQEHkYuuTtEUvqjYcBT","productSlug":"fauteuil-velours"},{"name":"Lampe Atelier","material":"Bronze Patiné","price":10000,"image":"https://lh3.googleusercontent.com/aida-public/AB6AXuAfOSO-kkT85iezoqN_27BS1y3sBmUF8PocV8FQL49tCM-iZ3lcYri_SDWhVshCtAWqa7fwcTz5jToLDj61kXyASkxjB6nlNW-15xzYbEAPrnouH68Yzm9Ie_7TyOvasFQXWPTdAxQhopRp8B3qL9kQh7vgMEbhdy_8rPiydcT3-_lyzFz7pkhB_yYBxtK9uWjSwG7wVVC4UyLB4jdW8nMe7F3oEpWAfsCKP-eER54xqpmDRSdLcw1295EQcIfYV678KXn3tpeYhPSW","productSlug":"lampe-bronze"}]},{"slug":"salon-horizon","name":"Le Salon Horizon","category":"salon","categoryLabel":"SALON","pieceCount":5,"price":275000,"currency":"DZD","shortDescription":"Un salon ample, lumineux et ancré par des matières minérales.","description":"Un canapé généreux, une table monolithique et des tons ivoire composent un séjour calme et contemporain.","heroImage":"https://lh3.googleusercontent.com/aida-public/AB6AXuAtNpB1cWnyf5YGTFYVnRNunWMrINCIKmPwIaXsH4jN6xFVSOCch-4QGlAgRBmEYupetARj2-vcbMVs5N3jRpbX4TPjAz25vkDQi4E6kigXkGn54vfF8cVFJCYH0mk6_NEm8WmOWjcI43QbrvoqT18o0bJHmzDuJLaIygaLGaa3-o6U4pq0qOV6xld5oEjw8VnHsZqU4B48ekwyhn2G1mv9PiAdUFiiTAA6Ss1SyscPffeo100zJ1sg-1eq7f9o9Rw96m6Fy_gbTQ","status":"published","includedProducts":[{"name":"Canapé Horizon L","material":"Tissu Ivoire","price":162000,"image":"https://lh3.googleusercontent.com/aida-public/AB6AXuAtNpB1cWnyf5YGTFYVnRNunWMrINCIKmPwIaXsH4jN6xFVSOCch-4QGlAgRBmEYupetARj2-vcbMVs5N3jRpbX4TPjAz25vkDQi4E6kigXkGn54vfF8cVFJCYH0mk6_NEm8WmOWjcI43QbrvoqT18o0bJHmzDuJLaIygaLGaa3-o6U4pq0qOV6xld5oEjw8VnHsZqU4B48ekwyhn2G1mv9PiAdUFiiTAA6Ss1SyscPffeo100zJ1sg-1eq7f9o9Rw96m6Fy_gbTQ"},{"name":"Table Pierre Basse","material":"Pierre Travertin","price":62000,"image":"https://lh3.googleusercontent.com/aida-public/AB6AXuCXw0K8rY7bK2Hj144Nhc-E3p8F_qnZ4OqTpAPm5GcrKTx0kmdLrKsA-aGLhy3dSzIDmolDmXrved_qnHryRADaipqnYPQfNtrgs5FuRRMObi9sP9sr3_vUH3pdVFHG3A98KOHte8VFfRgVDnhwqyuBTWALzr2ioRtNwFFJ54e24SpopWOuIT0JTUBlP6-kvSZDmkR9zR6WpiS77HHy5ydIaassZuyWHy0k4jBRWR_bnvhqjnLBIeb0O-caEitTee66U-1gvUO52w"},{"name":"Tapis Horizon","material":"Laine Naturelle","price":28000,"image":"https://lh3.googleusercontent.com/aida-public/AB6AXuCUALO64EmnEb2tFNUpBURGbYgFND21GR08wA3XPZsAB566doURdkGqn3DCWGblZWOoaoVwT6n8ABIeyrAu2tzeRZ6kKfeq4wCGZexr8wQ8UXB6MJTIyTU6AEmtgq71-nzux4Hc_ph1cNm2k42kuSTtWyP7rCrDCEd9AmtaYBKGT4_6jh9Kh7IMBhmdBLdSJMiPDb3u-cuoBDuUdO_6kwsZj56-a4f6BrxpzbhWGDr9y59RzEA3vtbZ74aYE59VjJPJcxD5UnomeA"},{"name":"Pouf Galet","material":"Bouclé Crème","price":23000,"image":"https://lh3.googleusercontent.com/aida-public/AB6AXuAa5jwxH1X4eUZCMQry8bv3bTF50XqQC-mqYvHxlmYarGkvQaCSlCXpryai_4mhYLg1GgvK4E2rn2Zvw_gemOTmI1_RwEHuhv5A_Rz8bcvD00tr9MKwZzGLlHeAUy7Tcqeb0EIykoDb1jqMnCtbJMHQA_PaGc1cT89KCkM9bh_p5vdWGkjujPFC0hdwHmk6Hd5LfbRWq9nKYLi44NKIUZlNlje9eunNg122JMGlBym3MDan4eARHeGNjbzw0snJKwZJ3duRKeDZ5Q"}]},{"slug":"table-circulaire","name":"La Table Circulaire","category":"salle-a-manger","categoryLabel":"SALLE À MANGER","pieceCount":5,"price":150000,"currency":"DZD","shortDescription":"Une composition de repas ronde, douce et conviviale.","description":"Table ronde, chaises sculpturales et suspensions claires forment un ensemble équilibré pour les espaces plus intimes.","heroImage":"https://lh3.googleusercontent.com/aida-public/AB6AXuCiViP-oQq12b3mv3NRCcOILyjt6WCHIc4TCoJmqNIrNlJLECheYsnFWfJ5e6JW7sskNSedNoyJPnbWmvjhLDEl9TktNImW3mDB7Co1Jf3qbHs7widl-JV_zeA02FZJBmgB7-eo0rsgs4XOhnsHQxoGGzdGfUqOjbKNIypOYsRl7U0ycOZ0GkAdXRCyQpVBT5yk0zXEEfo83-GX0LDIPknsp4nJEsW_CsdQVDZYkwqTyak91LEpQEdl1dxVOei5a8DxYCt9L13_Rw","status":"published","includedProducts":[{"name":"Table Ronde Circulaire","material":"Chêne Sombre","price":78000,"image":"https://lh3.googleusercontent.com/aida-public/AB6AXuCiViP-oQq12b3mv3NRCcOILyjt6WCHIc4TCoJmqNIrNlJLECheYsnFWfJ5e6JW7sskNSedNoyJPnbWmvjhLDEl9TktNImW3mDB7Co1Jf3qbHs7widl-JV_zeA02FZJBmgB7-eo0rsgs4XOhnsHQxoGGzdGfUqOjbKNIypOYsRl7U0ycOZ0GkAdXRCyQpVBT5yk0zXEEfo83-GX0LDIPknsp4nJEsW_CsdQVDZYkwqTyak91LEpQEdl1dxVOei5a8DxYCt9L13_Rw","productSlug":"table-chene"},{"name":"Chaise Alba","material":"Bois & Lin","price":18000,"image":"https://lh3.googleusercontent.com/aida-public/AB6AXuCuHLnZdu-Q3JwSRXukJsCjgCOyP9osk3u9ayDoX6RuY50o9bm3Zzfc5YhX_POg37lHvEL2E3GTKF9Ky3b5iQlWFpaiY4tAKNrLOQeyC_W_BpoOqCLxR9hVKrWnVeAGH7wO-uTtCXVPfXk0O4YcB2XBVSAj1aZ8ywp029DX_s8h-bCJE3iFp8qsxutQEvZm2IypLaQ5rRFUK-DaLHbiiSVh5LDR8P9zNN8nSnG4IYHVHsNRH4mGqxOeApPgRFTsdRcxD1ig6wORvw"},{"name":"Suspension Duo","material":"Céramique Mate","price":22000,"image":"https://lh3.googleusercontent.com/aida-public/AB6AXuAHll-nvuZSZ4kqvCRHrreHz5Z3AJkCAqd71qsoOXh5PvjRBVKutkbh-ZLM9ol_LHS8XXOKdxgnBpA5yE2sP54uI3CA2ls0LWkwDZrHOasynSi4fY_RMe39iOWfajjBrnvCbravMPeVTsjsYtZDPKGCaDThyBffPv0vqi3hY-YAyGlB4v0uPwOe1Zf_CYkWpXpnK0fgbIpnrXeLNDrkZDkMRgRLd6ANCSXbzvrXKmNMmFCNqpEl5HNiPA5lL1jEADgJ0eREdMX_UQ"},{"name":"Vase Central","material":"Grès Ivoire","price":14000,"image":"https://lh3.googleusercontent.com/aida-public/AB6AXuDX75eFEc55Q6_Qd6K0EVSDNB73kSgJJr8JXZsMSQJvMP4dfra5uddJ3qTu__9L7cpijKOAq2acmV3847faNPBZedMiPnYWJixadfRMznDz2nxRs8GH4I1hol6NEi5MW6wiIbL4xO_eqzZQ35Krw2PCTekxnrkt5OGkq1TkXRNY-iKNyApnVU7h1h75f_KFG3Kf8CBG99QNrPK5GuiFe1xaKfuuU-pHxX2EyRE26Zd7rZ87ED9giTv6zSwBqRc3FZqUM8hmg2GiLuHs"}]}]</script>
+</body>
+</html>
