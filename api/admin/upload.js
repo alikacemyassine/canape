@@ -61,11 +61,14 @@ export default async function handler(req, res) {
             });
         }
 
-        // Forward to cPanel PHP bridge if configured
+        // Bypass DNS loop: Hit the cPanel IP directly and tell Apache it's for lecanape-dz.com
         if (process.env.CPANEL_UPLOAD_URL) {
-            const res = await fetch(process.env.CPANEL_UPLOAD_URL, {
+            const res = await fetch('http://65.21.166.135/api/upload.php', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Host': 'lecanape-dz.com'
+                },
                 body: JSON.stringify({
                     secret: process.env.UPLOAD_SECRET || '',
                     fileName: fileName,
@@ -75,7 +78,7 @@ export default async function handler(req, res) {
 
             if (!res.ok) {
                 const text = await res.text();
-                throw new Error(`Erreur cPanel: ${text}`);
+                throw new Error(`Erreur cPanel (${res.status}): ${text}`);
             }
 
             const cpanelResult = await res.json();
@@ -98,6 +101,6 @@ export default async function handler(req, res) {
         throw new Error('Aucun serveur de stockage configuré (ni cPanel ni Vercel Blob).');
     } catch (err) {
         console.error(err);
-        return res.status(500).json({ error: 'Impossible d envoyer l image.' });
+        return res.status(500).json({ error: err.message || 'Impossible d envoyer l image.' });
     }
 }

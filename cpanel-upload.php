@@ -21,7 +21,7 @@ $EXPECTED_SECRET = '7+zA:1(67ao@z6Ki:z';
 
 // ⚠️ IMPORTANT: Set your cPanel domain or subdomain here (must end with a slash /)
 // For example: 'https://cdn.canape-algerie.com/' or 'http://65.21.166.135/~yourusername/'
-$BASE_URL = 'https://lecanape-dz.com/';
+$BASE_URL = 'http://65.21.166.135/~lecanape/';
 
 $rawInput = file_get_contents('php://input');
 $data = json_decode($rawInput, true);
