@@ -61,14 +61,41 @@ export default async function handler(req, res) {
             });
         }
 
-        const { put } = await import('@vercel/blob');
-        const pathname = `products/${fileName}`;
-        const blob = await put(pathname, parsed.buffer, {
-            access: 'public',
-            contentType: parsed.contentType,
-        });
+        // Forward to cPanel PHP bridge if configured
+        if (process.env.CPANEL_UPLOAD_URL) {
+            const res = await fetch(process.env.CPANEL_UPLOAD_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    secret: process.env.UPLOAD_SECRET || '',
+                    fileName: fileName,
+                    dataUrl: req.body?.dataUrl
+                })
+            });
 
-        return res.status(201).json({ url: blob.url, pathname: blob.pathname });
+            if (!res.ok) {
+                const text = await res.text();
+                throw new Error(`Erreur cPanel: ${text}`);
+            }
+
+            const cpanelResult = await res.json();
+            if (cpanelResult.error) throw new Error(cpanelResult.error);
+            
+            return res.status(201).json({ url: cpanelResult.url, pathname: fileName });
+        }
+
+        // Fallback to Vercel Blob if no cPanel is configured
+        if (process.env.BLOB_READ_WRITE_TOKEN) {
+            const { put } = await import('@vercel/blob');
+            const pathname = `products/${fileName}`;
+            const blob = await put(pathname, parsed.buffer, {
+                access: 'public',
+                contentType: parsed.contentType,
+            });
+            return res.status(201).json({ url: blob.url, pathname: blob.pathname });
+        }
+
+        throw new Error('Aucun serveur de stockage configuré (ni cPanel ni Vercel Blob).');
     } catch (err) {
         console.error(err);
         return res.status(500).json({ error: 'Impossible d envoyer l image.' });

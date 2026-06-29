@@ -3,3 +3,11 @@ node_modules/
 .env
 .env.local
 .env*.local
+
+# OS artifacts
+.DS_Store
+**/.DS_Store
+Thumbs.db
+
+# Dev/design artifacts
+*.zip

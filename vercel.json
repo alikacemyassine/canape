@@ -1,6 +1,18 @@
 {
   "version": 2,
   "installCommand": "npm install",
+  "redirects": [
+    {
+      "source": "/article",
+      "destination": "/produits",
+      "permanent": true
+    },
+    {
+      "source": "/article/",
+      "destination": "/produits/",
+      "permanent": true
+    }
+  ],
   "headers": [
     {
       "source": "/admin/(.*)",
@@ -13,3 +25,4 @@
     }
   ]
 }
+

@@ -11,7 +11,7 @@
     "currency": "DZD",
     "shortDescription": "Une table de repas en chêne massif aux lignes épurées, conçue pour rassembler famille et amis autour d'un centre de table d'exception.",
     "description": "Plateau en chêne massif huilé, piètement sculpté et finitions artisanales. Un morceau central intemporel pour la salle à manger contemporaine.",
-    "status": "draft",
+    "status": "published",
     "archived": false,
     "createdAt": "2026-06-25",
     "updatedAt": "2026-06-28",
@@ -306,5 +306,54 @@
     "archived": false,
     "createdAt": "2026-06-25",
     "updatedAt": "2026-06-25"
+  },
+  {
+    "slug": "fauteuil-velours",
+    "name": "Fauteuil Velours",
+    "nameDisplay": "FAUTEUIL VELOURS",
+    "category": "salle-a-manger",
+    "categoryLabel": "SALLE À MANGER",
+    "subcategory": "fauteuils",
+    "subcategoryLabel": "SALLE À MANGER",
+    "price": 2850,
+    "currency": "DZD",
+    "shortDescription": "Une silhouette sculpturale qui épouse l'espace, avec une assise profonde et un velours lumineux.",
+    "description": "Fauteuil avec dossier haut, accoudoirs élégants et structure en chêne massif. Une pièce d'accent confortable pour le séjour.",
+    "status": "published",
+    "archived": false,
+    "createdAt": "2026-06-25",
+    "updatedAt": "2026-06-25",
+    "images": {
+      "hero": "https://lh3.googleusercontent.com/aida-public/AB6AXuCp2qam1FuXPhnjMgoHygJtHt8aLOWnSVWEENJRrwmlkPtONQQzBrrJ6XMhASequpBFJna1g88G2g5G1vb79ZDwnQ6q4_KO4QhNLAWb8hHHyL6B7W9mW6OvJDFGXRqc2JuQGmPZthDILDZlq0TdCtzJ46PYTd1aWvwI6SA13VjjGehpu_zH7gr9XbcFEwiFRzWlLbDzvIX0RLEjWJ1q3mQPTY8pMT8WVz7QEfOVURd_fkyy9JySWDhQK9XkDXQEHkYuuTtEUvqjYcBT",
+      "gallery": [
+        "https://lh3.googleusercontent.com/aida-public/AB6AXuCp2qam1FuXPhnjMgoHygJtHt8aLOWnSVWEENJRrwmlkPtONQQzBrrJ6XMhASequpBFJna1g88G2g5G1vb79ZDwnQ6q4_KO4QhNLAWb8hHHyL6B7W9mW6OvJDFGXRqc2JuQGmPZthDILDZlq0TdCtzJ46PYTd1aWvwI6SA13VjjGehpu_zH7gr9XbcFEwiFRzWlLbDzvIX0RLEjWJ1q3mQPTY8pMT8WVz7QEfOVURd_fkyy9JySWDhQK9XkDXQEHkYuuTtEUvqjYcBT"
+      ]
+    },
+    "colors": [
+      { "hex": "#3b2f2f", "label": "Noir profond" },
+      { "hex": "#8b5a2b", "label": "Cognac" },
+      { "hex": "#d2b48c", "label": "Ivoire" }
+    ],
+    "dimensions": {
+      "largeur": "78 cm",
+      "profondeur": "85 cm",
+      "hauteur": "92 cm",
+      "assise": "42 cm"
+    },
+    "specs": [
+      { "label": "Structure", "value": "Chêne massif" },
+      { "label": "Rembourrage", "value": "Mousse haute résilience" },
+      { "label": "Fabrication", "value": "Europe" }
+    ],
+    "materials": [
+      {
+        "tag": "REVÊTEMENT",
+        "title": "Velours ambré",
+        "text": "Un velours dense et doux qui accroche subtilement la lumière.",
+        "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuCp2qam1FuXPhnjMgoHygJtHt8aLOWnSVWEENJRrwmlkPtONQQzBrrJ6XMhASequpBFJna1g88G2g5G1vb79ZDwnQ6q4_KO4QhNLAWb8hHHyL6B7W9mW6OvJDFGXRqc2JuQGmPZthDILDZlq0TdCtzJ46PYTd1aWvwI6SA13VjjGehpu_zH7gr9XbcFEwiFRzWlLbDzvIX0RLEjWJ1q3mQPTY8pMT8WVz7QEfOVURd_fkyy9JySWDhQK9XkDXQEHkYuuTtEUvqjYcBT",
+        "aspect": "square",
+        "offset": false
+      }
+    ]
   }
 ]
