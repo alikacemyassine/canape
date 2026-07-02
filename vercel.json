@@ -33,10 +33,9 @@
     }
   ],
   "rewrites": [
-    { "source": "/api/admin/packs", "destination": "/api/admin/packs.js" },
-    { "source": "/api/admin/packs/:slug", "destination": "/api/admin/packs/[slug].js" },
-    { "source": "/api/admin/orders", "destination": "/api/admin/orders.js" },
-    { "source": "/api/admin/orders/:id", "destination": "/api/admin/orders/[id].js" }
+    { "source": "/api/admin/packs/:slug", "destination": "/api/admin/packs.js" },
+    { "source": "/api/admin/products/:slug", "destination": "/api/admin/products.js" },
+    { "source": "/api/admin/orders/:id", "destination": "/api/admin/orders.js" }
   ]
 }
 

@@ -46,26 +46,65 @@ function buildPack(body, existing = null) {
 export default async function handler(req, res) {
     if (!(await requireAdmin(req, res))) return;
 
-    try {
-        if (req.method === 'GET') {
-            const { data, error } = await supabase.from('packs').select('*');
-            if (error) throw error;
-            return res.status(200).json(data.filter((p) => !p.archived));
-        }
+    const { slug } = req.query || {};
 
-        if (req.method === 'POST') {
-            const pack = buildPack(req.body || {});
-            if (!pack.name) return res.status(400).json({ error: 'Le nom du pack est requis' });
-            if (!pack.slug) return res.status(400).json({ error: 'Slug invalide' });
-            
-            const { data: existing } = await supabase.from('packs').select('id').eq('slug', pack.slug);
-            if (existing && existing.length > 0) {
-                return res.status(409).json({ error: 'Un pack avec ce slug existe déjà' });
+    try {
+        if (!slug) {
+            // General routes (no slug)
+            if (req.method === 'GET') {
+                const { data, error } = await supabase.from('packs').select('*');
+                if (error) throw error;
+                return res.status(200).json(data.filter((p) => !p.archived));
             }
-            
-            const { data, error } = await supabase.from('packs').insert([pack]).select();
-            if (error) throw error;
-            return res.status(201).json(data[0]);
+
+            if (req.method === 'POST') {
+                const pack = buildPack(req.body || {});
+                if (!pack.name) return res.status(400).json({ error: 'Le nom du pack est requis' });
+                if (!pack.slug) return res.status(400).json({ error: 'Slug invalide' });
+                
+                const { data: existing } = await supabase.from('packs').select('id').eq('slug', pack.slug);
+                if (existing && existing.length > 0) {
+                    return res.status(409).json({ error: 'Un pack avec ce slug existe déjà' });
+                }
+                
+                const { data, error } = await supabase.from('packs').insert([pack]).select();
+                if (error) throw error;
+                return res.status(201).json(data[0]);
+            }
+        } else {
+            // Specific routes (with slug)
+            const { data: existing, error: findError } = await supabase.from('packs').select('*').eq('slug', slug).single();
+
+            if (req.method === 'GET') {
+                if (findError || !existing) return res.status(404).json({ error: 'Pack introuvable' });
+                return res.status(200).json(existing);
+            }
+
+            if (req.method === 'PUT') {
+                if (findError || !existing) return res.status(404).json({ error: 'Pack introuvable' });
+                
+                const updated = buildPack(req.body || {}, existing);
+                const { data, error } = await supabase.from('packs').update({
+                    name: updated.name,
+                    description: updated.description,
+                    price: updated.price,
+                    old_price: updated.old_price || null,
+                    status: updated.status,
+                    items: updated.items || [],
+                    images: updated.images || {},
+                    archived: updated.archived || false
+                }).eq('slug', slug).select().single();
+
+                if (error) throw error;
+                return res.status(200).json(data);
+            }
+
+            if (req.method === 'DELETE') {
+                if (findError || !existing) return res.status(404).json({ error: 'Pack introuvable' });
+                const { error } = await supabase.from('packs').delete().eq('slug', slug);
+                if (error) throw error;
+                return res.status(200).json({ ok: true });
+            }
         }
 
         return res.status(405).json({ error: 'Method not allowed' });

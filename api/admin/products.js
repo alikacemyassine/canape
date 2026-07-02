@@ -53,26 +53,58 @@ function buildProduct(body, existing = null) {
 export default async function handler(req, res) {
     if (!requireAdmin(req, res)) return;
 
-    try {
-        if (req.method === 'GET') {
-            const products = await getProducts();
-            return res.status(200).json(products.filter(p => !p.archived));
-        }
+    const { slug } = req.query || {};
 
-        if (req.method === 'POST') {
-            const products = await getProducts();
-            const product = buildProduct(req.body || {});
-            
-            if (!product.name) return res.status(400).json({ error: 'Le nom du produit est requis' });
-            if (!product.slug) return res.status(400).json({ error: 'Slug invalide' });
-            
-            if (products.some(p => p.slug === product.slug)) {
-                return res.status(409).json({ error: 'Un produit avec ce slug existe déjà' });
+    try {
+        const products = await getProducts();
+
+        if (!slug) {
+            // General routes (no slug)
+            if (req.method === 'GET') {
+                return res.status(200).json(products.filter(p => !p.archived));
             }
 
-            products.push(product);
-            await setProducts(products);
-            return res.status(201).json(product);
+            if (req.method === 'POST') {
+                const product = buildProduct(req.body || {});
+                
+                if (!product.name) return res.status(400).json({ error: 'Le nom du produit est requis' });
+                if (!product.slug) return res.status(400).json({ error: 'Slug invalide' });
+                
+                if (products.some(p => p.slug === product.slug)) {
+                    return res.status(409).json({ error: 'Un produit avec ce slug existe déjà' });
+                }
+
+                products.push(product);
+                await setProducts(products);
+                return res.status(201).json(product);
+            }
+        } else {
+            // Specific routes (with slug)
+            const index = products.findIndex(p => p.slug === slug);
+            
+            if (index === -1) {
+                return res.status(404).json({ error: 'Produit non trouvé' });
+            }
+
+            const existing = products[index];
+
+            if (req.method === 'GET') {
+                return res.status(200).json(existing);
+            }
+
+            if (req.method === 'PUT') {
+                const updated = buildProduct(req.body || {}, existing);
+                products[index] = updated;
+                await setProducts(products);
+                return res.status(200).json(updated);
+            }
+
+            if (req.method === 'DELETE') {
+                existing.archived = true;
+                existing.updatedAt = new Date().toISOString().slice(0, 10);
+                await setProducts(products);
+                return res.status(200).json({ success: true, message: 'Produit archivé' });
+            }
         }
 
         return res.status(405).json({ error: 'Method not allowed' });
