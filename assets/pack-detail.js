@@ -11,17 +11,21 @@
     if (!slug) return;
 
     const escapeHtml = (value) => {
-        const el = document.createElement('div');
-        el.textContent = value || '';
-        return el.innerHTML;
+        return String(value || '')
+            .replace(/&/g, '&amp;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;');
     };
 
     const formatPrice = (value, currency = 'DZD') =>
         `${Number(value || 0).toLocaleString('fr-FR')} ${currency}`;
 
     const loadPacks = async () => {
+        const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
         const inline = document.getElementById('packs-data');
-        if (inline) return JSON.parse(inline.textContent);
+        if (inline && !isLocal) return JSON.parse(inline.textContent);
         try {
             const res = await fetch('../../data/packs.json', { cache: 'no-store' });
             if (res.ok) return res.json();
@@ -61,6 +65,13 @@
         document.title = `${pack.name} | LE CANAPÉ`;
         const pieceCount = Number(pack.includedProducts?.length || pack.pieceCount || 0);
 
+        // Auto-compute discount % from price vs oldPrice
+        let discountBadge = '';
+        if (pack.oldPrice && pack.price && pack.oldPrice > pack.price) {
+            const pct = Math.round((1 - pack.price / pack.oldPrice) * 100);
+            if (pct > 0) discountBadge = `Économisez ${pct}%`;
+        }
+
         root.innerHTML = `
             <!-- Hero split: image left, info right — identical pattern to produits PDP -->
             <section class="min-h-[85vh] flex flex-col lg:flex-row px-margin-mobile md:px-margin-desktop gap-12 lg:gap-24 mb-section-gap pt-8 relative">
@@ -97,7 +108,7 @@
                                 ${pack.oldPrice ? `<span class="font-body-md text-secondary line-through">${formatPrice(pack.oldPrice, pack.currency)}</span>` : ''}
                                 <span class="font-body-md text-secondary block">Taxes incluses</span>
                             </div>
-                            ${pack.discountLabel ? `<span class="font-label-caps text-label-caps bg-primary text-on-primary px-3 py-1 uppercase tracking-widest">${escapeHtml(pack.discountLabel)}</span>` : ''}
+                            ${discountBadge ? `<span class="font-label-caps text-label-caps bg-primary text-on-primary px-3 py-1 uppercase tracking-widest">${escapeHtml(discountBadge)}</span>` : ''}
                         </div>
                         <div class="flex flex-col sm:flex-row gap-4">
                             <button type="button" id="pack-cta" class="flex-1 bg-primary text-on-primary font-label-caps py-4 px-8 hover:bg-primary-container hover:text-on-primary-container transition-colors duration-500 tracking-widest uppercase text-label-caps">Réserver la composition</button>
@@ -128,13 +139,6 @@
                 </div>
             </section>`;
 
-        document.getElementById('pack-cta')?.addEventListener('click', (event) => {
-            const btn = event.currentTarget;
-            btn.textContent = 'Demande envoyée ✓';
-            btn.setAttribute('aria-live', 'polite');
-            setTimeout(() => { btn.textContent = 'Réserver la composition'; }, 2500);
-        });
-
         if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
     };
 
@@ -146,6 +150,9 @@
                 return;
             }
             renderPack(pack);
+            if (window.initializeWishlistState) {
+                window.initializeWishlistState(slug);
+            }
         })
         .catch(() => {
             root.innerHTML = '<p class="text-center py-24 font-body-lg text-error">Impossible de charger la composition.</p>';

@@ -14,17 +14,23 @@
         `${Number(value || 0).toLocaleString('fr-FR')} ${currency}`;
 
     const escapeHtml = (value) => {
-        const el = document.createElement('div');
-        el.textContent = value || '';
-        return el.innerHTML;
+        return String(value || '')
+            .replace(/&/g, '&amp;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;');
     };
 
     const renderColors = (colors = []) => {
         if (!colors.length) return '';
-        const swatches = colors.map((color, index) => `
-            <button type="button" class="color-swatch w-10 h-10 rounded-full border-2 p-1 ${index === 0 ? 'active border-primary' : 'border-transparent hover:border-outline-variant'}" data-hex="${escapeHtml(color.hex)}" aria-label="${escapeHtml(color.label)}" aria-pressed="${index === 0}">
+        const swatches = colors.map((color, index) => {
+            const galleryData = (color.gallery && color.gallery.length > 0) ? color.gallery : [color.image].filter(Boolean);
+            return `
+            <button type="button" class="color-swatch w-10 h-10 rounded-full border-2 p-1 ${index === 0 ? 'active border-primary' : 'border-transparent hover:border-outline-variant'}" data-hex="${escapeHtml(color.hex)}" data-gallery='${escapeHtml(JSON.stringify(galleryData))}' aria-label="${escapeHtml(color.label)}" aria-pressed="${index === 0}">
                 <span class="color-swatch-inner block w-full h-full rounded-full" style="background-color:${escapeHtml(color.hex)}"></span>
-            </button>`).join('');
+            </button>`;
+        }).join('');
         return `
             <div class="border-t thin-border pt-6 reveal-up">
                 <span class="font-label-caps text-secondary block mb-4 tracking-widest">COULEURS</span>
@@ -32,20 +38,28 @@
             </div>`;
     };
 
-    const renderGallery = (images, name) => {
-        const hero = images?.hero || '../images/sejour.png';
-        const gallery = images?.gallery?.length ? images.gallery : [hero];
+    const getGalleryHtml = (gallery, name) => {
+        const hero = gallery.length ? gallery[0] : '../images/sejour.png';
         const thumbs = gallery.map((src, index) => `
             <button type="button" class="pdp-thumb relative overflow-hidden h-full w-full ${index === 0 ? 'active' : ''}" data-src="${escapeHtml(src)}" aria-label="Vue ${index + 1}">
                 <img alt="${escapeHtml(name)} - vue ${index + 1}" class="pdp-hero-img w-full h-full object-cover" src="${escapeHtml(src)}"/>
             </button>`).join('');
 
         return `
-            <div class="w-full lg:w-7/12 flex flex-col gap-4 reveal-up">
-                <div class="pdp-hero-img-wrap relative h-[50vh] lg:h-[60vh] overflow-hidden bg-surface-container">
-                    <img id="pdp-main-image" alt="${escapeHtml(name)}" class="pdp-hero-img w-full h-full object-cover" src="${escapeHtml(hero)}"/>
-                </div>
-                ${gallery.length > 1 ? `<div class="grid grid-cols-2 h-[25vh] lg:h-[35vh] gap-4">${thumbs}</div>` : ''}
+            <div class="pdp-hero-img-wrap relative h-[50vh] lg:h-[60vh] overflow-hidden bg-surface-container mb-4">
+                <img id="pdp-main-image" alt="${escapeHtml(name)}" class="pdp-hero-img w-full h-full object-cover" src="${escapeHtml(hero)}"/>
+            </div>
+            ${gallery.length > 1 ? `<div class="grid grid-cols-2 h-[25vh] lg:h-[35vh] gap-4">${thumbs}</div>` : ''}
+        `;
+    };
+
+    const renderGallery = (images, name) => {
+        const hero = images?.hero || '../images/sejour.png';
+        const gallery = images?.gallery?.length ? images.gallery : [hero];
+        
+        return `
+            <div id="gallery-container" class="w-full lg:w-7/12 flex flex-col gap-4 reveal-up" data-name="${escapeHtml(name)}">
+                ${getGalleryHtml(gallery, name)}
             </div>`;
     };
 
@@ -123,14 +137,28 @@
     };
 
     const renderPage = (product, all) => {
+        const breadcrumbs = [];
+        if (product.categoryLabel) breadcrumbs.push(`<a class="font-label-caps text-secondary hover:text-primary transition-colors tracking-widest" href="../?category=${encodeURIComponent(product.category)}">${escapeHtml(product.categoryLabel)}</a>`);
+        if (product.subcategoryLabel && product.subcategory !== 'general') breadcrumbs.push(`<span class="font-label-caps text-secondary tracking-widest">${escapeHtml(product.subcategoryLabel)}</span>`);
+        if (product.subsubcategoryLabel) breadcrumbs.push(`<span class="font-label-caps text-primary tracking-widest">${escapeHtml(product.subsubcategoryLabel)}</span>`);
+        else if (breadcrumbs.length > 0) breadcrumbs[breadcrumbs.length - 1] = breadcrumbs[breadcrumbs.length - 1].replace('text-secondary', 'text-primary');
+        const breadcrumbHtml = breadcrumbs.join(' <span class="text-secondary text-xs">/</span> ');
+
+        // Auto-compute discount % from price vs oldPrice
+        let discountBadge = '';
+        if (product.oldPrice && product.price && product.oldPrice > product.price) {
+            const pct = Math.round((1 - product.price / product.oldPrice) * 100);
+            if (pct > 0) discountBadge = `Économisez ${pct}%`;
+        }
+
         root.innerHTML = `
             <section class="min-h-[85vh] flex flex-col lg:flex-row px-margin-mobile md:px-margin-desktop gap-12 lg:gap-24 mb-section-gap pt-8 relative">
                 ${renderGallery(product.images, product.name)}
                 <div class="w-full lg:w-5/12 flex flex-col py-8 lg:py-16 lg:pt-0 reveal-up">
                     <div class="flex items-center gap-2 mb-8 flex-wrap">
-                        <a class="font-label-caps text-secondary hover:text-primary transition-colors tracking-widest" href="../?category=${encodeURIComponent(product.category)}">COLLECTIONS</a>
+                        <a class="font-label-caps text-secondary hover:text-primary transition-colors tracking-widest" href="../">COLLECTIONS</a>
                         <span class="text-secondary text-xs">/</span>
-                        <span class="font-label-caps text-primary tracking-widest">${escapeHtml(product.subcategoryLabel)}</span>
+                        ${breadcrumbHtml}
                     </div>
                     <h1 class="font-headline-lg md:text-display-lg text-primary mb-6 uppercase tracking-wide" style="font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,4rem);line-height:1.1">${escapeHtml(product.nameDisplay)}</h1>
                     <p class="font-body-lg text-on-surface-variant mb-12 max-w-md leading-relaxed">${escapeHtml(product.shortDescription)}</p>
@@ -139,12 +167,16 @@
                         <div class="flex justify-between items-end mb-8">
                             <div>
                                 <span class="font-headline-md text-primary block" style="font-family:'Playfair Display',serif">${formatPrice(product.price, product.currency)}</span>
-                                <span class="font-body-md text-secondary">Taxes incluses</span>
+                                ${product.oldPrice ? `<span class="font-body-md text-secondary line-through">${formatPrice(product.oldPrice, product.currency)}</span>` : ''}
+                                <span class="font-body-md text-secondary block">Taxes incluses</span>
                             </div>
+                            ${discountBadge ? `<span class="font-label-caps text-label-caps bg-primary text-on-primary px-3 py-1 uppercase tracking-widest">${escapeHtml(discountBadge)}</span>` : ''}
                         </div>
-                        <div class="flex flex-col sm:flex-row gap-4">
+                        <div class="flex flex-col sm:flex-row gap-4 relative">
                             <button type="button" class="flex-1 bg-primary text-on-primary font-label-caps py-4 px-8 hover:bg-primary-container hover:text-on-primary-container transition-colors duration-500 tracking-widest uppercase text-label-caps" id="btn-cart">Ajouter au panier</button>
-                            <button type="button" class="flex-1 border thin-border text-primary font-label-caps py-4 px-8 hover:bg-surface-variant transition-colors duration-500 tracking-widest uppercase text-label-caps" id="btn-reserve">Réserver</button>
+                            <button type="button" id="btn-wishlist" class="absolute -top-16 right-0 sm:static sm:flex-none border thin-border p-4 text-primary hover:bg-surface-variant transition-colors duration-500" aria-label="Ajouter aux favoris">
+                                <span class="material-symbols-outlined pointer-events-none">favorite_border</span>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -177,14 +209,17 @@
     };
 
     const bindInteractions = () => {
-        const mainImg = document.getElementById('pdp-main-image');
-        document.querySelectorAll('.pdp-thumb').forEach((thumb) => {
-            thumb.addEventListener('click', () => {
-                document.querySelectorAll('.pdp-thumb').forEach((item) => item.classList.remove('active'));
-                thumb.classList.add('active');
-                if (mainImg) mainImg.src = thumb.dataset.src;
+        const bindThumbs = () => {
+            const mainImg = document.getElementById('pdp-main-image');
+            document.querySelectorAll('.pdp-thumb').forEach((thumb) => {
+                thumb.addEventListener('click', () => {
+                    document.querySelectorAll('.pdp-thumb').forEach((item) => item.classList.remove('active'));
+                    thumb.classList.add('active');
+                    if (mainImg) mainImg.src = thumb.dataset.src;
+                });
             });
-        });
+        };
+        bindThumbs();
 
         document.querySelectorAll('.color-swatch').forEach((btn) => {
             btn.addEventListener('click', () => {
@@ -196,26 +231,30 @@
                 btn.classList.add('active', 'border-primary');
                 btn.classList.remove('border-transparent');
                 btn.setAttribute('aria-pressed', 'true');
+                
+                const galleryDataStr = btn.dataset.gallery;
+                if (galleryDataStr) {
+                    try {
+                        const gallery = JSON.parse(galleryDataStr);
+                        if (gallery && gallery.length > 0) {
+                            const container = document.getElementById('gallery-container');
+                            if (container) {
+                                container.innerHTML = getGalleryHtml(gallery, container.dataset.name);
+                                bindThumbs();
+                            }
+                        }
+                    } catch (err) {
+                        console.error('Invalid gallery data', err);
+                    }
+                }
             });
-        });
-
-        const cartBtn = document.getElementById('btn-cart');
-        const reserveBtn = document.getElementById('btn-reserve');
-        cartBtn?.addEventListener('click', () => {
-            cartBtn.textContent = 'Ajouté ✓';
-            cartBtn.setAttribute('aria-live', 'polite');
-            setTimeout(() => { cartBtn.textContent = 'Ajouter au panier'; }, 2000);
-        });
-        reserveBtn?.addEventListener('click', () => {
-            reserveBtn.textContent = 'Demande envoyée';
-            reserveBtn.setAttribute('aria-live', 'polite');
-            setTimeout(() => { reserveBtn.textContent = 'Réserver'; }, 2500);
         });
     };
 
     const loadCatalog = async () => {
+        const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
         const inline = document.getElementById('catalog-data');
-        if (inline) return JSON.parse(inline.textContent);
+        if (inline && !isLocal) return JSON.parse(inline.textContent);
 
         try {
             const res = await fetch('../../data/products.json', { cache: 'no-store' });
@@ -237,6 +276,9 @@
             renderPage(product, products);
             document.title = `${product.name} | LE CANAPÉ - Mobilier de luxe à Oran`;
             bindInteractions();
+            if (window.initializeWishlistState) {
+                window.initializeWishlistState(slug);
+            }
             if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
         })
         .catch(() => {

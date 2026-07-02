@@ -1,11 +1,13 @@
-import { slugify, CATEGORIES } from './storage.js';
+import { slugify, CATEGORIES_TREE } from './storage.js';
 
 export function buildProduct(body, existing = null) {
     const now = new Date().toISOString().slice(0, 10);
-    const category = body.category || existing?.category || 'sejour';
-    const catMeta = CATEGORIES[category] || CATEGORIES.sejour;
-    const subcategory = body.subcategory || existing?.subcategory || 'general';
-    const subLabel = catMeta.subcategories[subcategory] || catMeta.subcategories.general;
+    const category = body.category !== undefined ? body.category : (existing?.category || 'sejour');
+    const catMeta = CATEGORIES_TREE[category] || CATEGORIES_TREE.sejour;
+    const subcategory = body.subcategory !== undefined ? body.subcategory : (existing?.subcategory || 'general');
+    const subMeta = catMeta.subcategories?.[subcategory] || catMeta.subcategories?.general || { label: '' };
+    const subsubcategory = body.subsubcategory !== undefined ? body.subsubcategory : (existing?.subsubcategory || '');
+    const subsubLabel = subsubcategory ? (subMeta.subsubcategories?.[subsubcategory]?.label || '') : '';
 
     const name = (body.name || existing?.name || '').trim();
     const slug = existing?.slug || slugify(body.slug || name);
@@ -29,7 +31,9 @@ export function buildProduct(body, existing = null) {
         category,
         categoryLabel: catMeta.label,
         subcategory,
-        subcategoryLabel: subLabel,
+        subcategoryLabel: subMeta.label,
+        subsubcategory,
+        subsubcategoryLabel: subsubLabel,
         price: Number(body.price ?? existing?.price ?? 0) || 0,
         currency: body.currency || existing?.currency || 'DZD',
         shortDescription: body.shortDescription || existing?.shortDescription || '',

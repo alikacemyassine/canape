@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Packs — LE CANAPÉ Admin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config = { theme: { extend: { colors: { primary: '#964900', secondary: '#5f5e5e', background: '#fff8f3', 'on-surface-variant': '#564337', 'outline-variant': '#ddc1b1', error: '#ba1a1a' } } } }</script>
+    <link rel="stylesheet" href="../assets/admin.css" />
+</head>
+<body class="bg-background text-on-background font-body-md">
+<div class="admin-shell">
+    <aside class="admin-sidebar">
+        <div class="admin-sidebar-brand">LE CANAPÉ<br/><span class="text-xs tracking-[0.3em] text-on-surface-variant">ADMIN SUITE</span></div>
+        <nav class="flex flex-col gap-2">
+            <a href="./catalog.html" class="admin-nav-link">Catalogue</a>
+            <a href="./packs.html" class="admin-nav-link active">Packs</a>
+            <a href="./orders.html" class="admin-nav-link">Commandes</a>
+            <span class="admin-nav-link opacity-40 cursor-not-allowed">Paramètres</span>
+        </nav>
+        <button id="logout-btn" class="admin-btn-ghost mt-auto text-left">Déconnexion</button>
+    </aside>
+    <div class="admin-main">
+        <header class="admin-topbar">
+            <div class="admin-search">
+                <span class="material-symbols-outlined text-on-surface-variant text-xl">search</span>
+                <input type="search" id="search-input" placeholder="Rechercher un pack..." />
+            </div>
+            <a href="../index.html" target="_blank" class="text-on-surface-variant hover:text-primary" title="Voir le site">
+                <span class="material-symbols-outlined">open_in_new</span>
+            </a>
+        </header>
+        <main class="admin-content">
+            <div class="flex flex-wrap items-end justify-between gap-4 mb-8">
+                <div>
+                    <h1 class="text-3xl mb-2" style="font-family:'Playfair Display',serif">Packs</h1>
+                    <p class="text-sm text-on-surface-variant">Gérez les compositions d'articles vendues en pack.</p>
+                </div>
+                <a href="./pack/new.html" class="admin-btn-primary inline-flex items-center gap-2">
+                    <span class="material-symbols-outlined text-lg">add</span> Nouveau pack
+                </a>
+            </div>
+            <div id="packs-grid" class="admin-product-grid">
+                <p class="text-on-surface-variant col-span-full text-center py-16">Chargement...</p>
+            </div>
+        </main>
+    </div>
+</div>
+<script type="module" src="../assets/admin-packs-catalog.js"></script>
+</body>
+</html>

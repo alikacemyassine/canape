@@ -2,19 +2,27 @@
  * Generates SEO-friendly product and composition pages from data/*.json.
  * Run: npm run generate
  */
-import { readFileSync, mkdirSync, writeFileSync } from 'fs';
+import { mkdirSync, writeFileSync, readFileSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
+import { createClient } from '@supabase/supabase-js';
+import dotenv from 'dotenv';
+
+dotenv.config();
+const supabaseUrl = process.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL;
+const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.VITE_SUPABASE_ANON_KEY;
+const supabase = createClient(supabaseUrl, supabaseKey);
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = join(__dirname, '..');
 const siteUrl = 'https://canape.vercel.app';
 const today = new Date().toISOString().slice(0, 10);
 
-const products = JSON.parse(readFileSync(join(root, 'data', 'products.json'), 'utf8'))
-    .filter((item) => item.status === 'published' && item.archived !== true);
-const packs = JSON.parse(readFileSync(join(root, 'data', 'packs.json'), 'utf8'))
-    .filter((item) => item.status === 'published' && item.archived !== true);
+const { data: rawProducts } = await supabase.from('products').select('*');
+const { data: rawPacks } = await supabase.from('packs').select('*');
+
+const products = (rawProducts || []).filter((item) => item.status === 'published' && item.archived !== true);
+const packs = (rawPacks || []).filter((item) => item.status === 'published' && item.archived !== true);
 
 const escapeAttr = (value = '') => String(value).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
 const jsonScript = (value) => JSON.stringify(value).replace(/</g, '\\u003c');
@@ -53,6 +61,13 @@ const headAssets = (depth) => `
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet"/>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <script id="tailwind-config">${tailwindConfig}</script>
+<script>
+    window.ENV = {
+        SUPABASE_URL: ${jsonScript(process.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL)},
+        SUPABASE_ANON_KEY: ${jsonScript(process.env.VITE_SUPABASE_ANON_KEY || process.env.SUPABASE_ANON_KEY)}
+    };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="https://unpkg.com/@studio-freight/lenis@1.0.39/dist/lenis.min.js"></script>
@@ -61,52 +76,87 @@ const headAssets = (depth) => `
 const nav = (depth, active) => `
 <nav class="fixed top-0 w-full z-50 glass-nav flex justify-between items-center px-margin-mobile md:px-margin-desktop py-6 transition-all duration-500" id="main-nav">
     <div class="hidden md:flex gap-8 items-center">
-        <a class="font-label-caps text-label-caps tracking-[0.1em] uppercase ${active === 'home' ? 'text-primary border-b border-primary pb-1' : 'text-on-surface-variant hover:text-primary transition-colors duration-300'}" href="${depth}index.html">Accueil</a>
-        <a class="font-label-caps text-label-caps tracking-[0.1em] uppercase ${active === 'products' ? 'text-primary border-b border-primary pb-1' : 'text-on-surface-variant hover:text-primary transition-colors duration-300'}" href="${depth}produits/">Collections</a>
-        <a class="font-label-caps text-label-caps tracking-[0.1em] uppercase ${active === 'packs' ? 'text-primary border-b border-primary pb-1' : 'text-on-surface-variant hover:text-primary transition-colors duration-300'}" href="${depth}packs/">Compositions</a>
+        <a class="font-label-caps text-label-caps tracking-[0.1em] uppercase ${active === 'home' ? 'text-primary border-b border-primary pb-1' : 'text-on-surface-variant hover:text-primary transition-colors duration-300'}" href="/index.html">Accueil</a>
+        <a class="font-label-caps text-label-caps tracking-[0.1em] uppercase ${active === 'products' ? 'text-primary border-b border-primary pb-1' : 'text-on-surface-variant hover:text-primary transition-colors duration-300'}" href="/produits/">Collections</a>
+        <a class="font-label-caps text-label-caps tracking-[0.1em] uppercase ${active === 'packs' ? 'text-primary border-b border-primary pb-1' : 'text-on-surface-variant hover:text-primary transition-colors duration-300'}" href="/packs/">Compositions</a>
     </div>
-    <a class="font-headline-md text-headline-md font-bold tracking-tighter text-primary hover:opacity-80 transition-opacity" href="${depth}index.html">LE CANAPÉ</a>
+    <a class="font-headline-md text-headline-md font-bold tracking-tighter text-primary hover:opacity-80 transition-opacity" href="/index.html">LE CANAPÉ</a>
     <div class="flex items-center gap-6">
         <div class="hidden md:flex gap-8 items-center">
-            <a class="font-label-caps text-label-caps tracking-[0.1em] uppercase text-on-surface-variant hover:text-primary transition-colors duration-300" href="${depth}index.html#services">Services</a>
-            <a class="font-label-caps text-label-caps tracking-[0.1em] uppercase text-on-surface-variant hover:text-primary transition-colors duration-300" href="${depth}index.html#a-propos">About</a>
-            <a class="font-label-caps text-label-caps tracking-[0.1em] uppercase text-on-surface-variant hover:text-primary transition-colors duration-300" href="${depth}index.html#contact">Contacts</a>
+            <a class="font-label-caps text-label-caps tracking-[0.1em] uppercase text-on-surface-variant hover:text-primary transition-colors duration-300" href="/orders.html">Panier</a>
+            <a class="font-label-caps text-label-caps tracking-[0.1em] uppercase text-on-surface-variant hover:text-primary transition-colors duration-300" href="/account.html">Account</a>
+            <a class="font-label-caps text-label-caps tracking-[0.1em] uppercase text-on-surface-variant hover:text-primary transition-colors duration-300" href="/about.html">About</a>
         </div>
         <button id="mobile-menu-toggle" aria-label="Menu Principal" class="md:hidden text-on-surface-variant hover:text-primary transition-colors duration-300 relative z-[60]">
             <span class="material-symbols-outlined" id="mobile-menu-icon" aria-hidden="true">menu</span>
         </button>
     </div>
     <div id="mobile-menu" class="fixed inset-0 bg-surface-container-lowest z-[55] flex flex-col items-center justify-center gap-8 translate-x-full transition-transform duration-500 md:hidden">
-        <a class="font-headline-md text-headline-md ${active === 'home' ? 'text-primary' : 'text-on-surface-variant'}" href="${depth}index.html">Accueil</a>
-        <a class="font-headline-md text-headline-md ${active === 'products' ? 'text-primary' : 'text-on-surface-variant'}" href="${depth}produits/">Collections</a>
-        <a class="font-headline-md text-headline-md ${active === 'packs' ? 'text-primary' : 'text-on-surface-variant'}" href="${depth}packs/">Compositions</a>
-        <a class="font-headline-md text-headline-md text-on-surface-variant" href="${depth}index.html#services">Services</a>
-        <a class="font-headline-md text-headline-md text-on-surface-variant" href="${depth}index.html#a-propos">About</a>
-        <a class="font-headline-md text-headline-md text-on-surface-variant" href="${depth}index.html#contact">Contacts</a>
+        <a class="font-headline-md text-headline-md ${active === 'home' ? 'text-primary' : 'text-on-surface-variant'}" href="/index.html">Accueil</a>
+        <a class="font-headline-md text-headline-md ${active === 'products' ? 'text-primary' : 'text-on-surface-variant'}" href="/produits/">Collections</a>
+        <a class="font-headline-md text-headline-md ${active === 'packs' ? 'text-primary' : 'text-on-surface-variant'}" href="/packs/">Compositions</a>
+        <a class="font-headline-md text-headline-md text-on-surface-variant" href="/orders.html">Panier</a>
+        <a class="font-headline-md text-headline-md text-on-surface-variant" href="/account.html">Account</a>
+        <a class="font-headline-md text-headline-md text-on-surface-variant" href="/about.html">About</a>
     </div>
 </nav>`;
 
 const footer = (depth) => `
-<footer class="bg-surface-container-highest w-full pt-stack-lg pb-stack-md border-t border-outline-variant reveal-up">
-    <div class="flex flex-col md:flex-row justify-between items-start px-margin-mobile md:px-margin-desktop max-w-7xl mx-auto gap-stack-md mb-16">
+<footer class="bg-surface-container-highest w-full pt-stack-lg pb-stack-md border-t border-outline-variant">
+    <div class="flex flex-col md:flex-row justify-between items-start px-margin-mobile md:px-margin-desktop max-w-7xl mx-auto gap-stack-md mb-16 reveal-up">
         <div class="max-w-xs">
-            <a class="font-headline-lg text-headline-lg text-primary block mb-6 hover:opacity-80 transition-opacity" href="${depth}index.html" style="font-family:'Playfair Display',serif">LE CANAPÉ</a>
+            <a class="font-headline-lg text-headline-lg text-primary block mb-6 hover:opacity-80 transition-opacity" href="/index.html" style="font-family:'Playfair Display',serif">LE CANAPÉ</a>
             <p class="font-body-md text-body-md text-on-surface-variant">Élever le quotidien grâce à un confort sans compromis et un design intemporel.</p>
+            <p class="font-body-md text-body-md text-on-surface-variant mt-4 text-sm opacity-80">
+                LE CANAPÉ est la référence en matière de mobilier de luxe à Oran. Découvrez notre sélection de
+                canapés haut de gamme, tables à manger, lits design et décoration d'intérieur en Algérie.
+            </p>
         </div>
         <div class="flex flex-col gap-4">
             <span class="font-label-caps text-label-caps tracking-[0.1em] uppercase text-on-surface">Navigation</span>
-            <a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" href="${depth}index.html">Accueil</a>
-            <a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" href="${depth}produits/">Collections</a>
-            <a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" href="${depth}packs/">Compositions</a>
+            <a class="font-body-md text-body-md text-on-surface-variant hover:text-primary hover:translate-x-1 transition-all duration-300" href="/index.html">Accueil</a>
+            <a class="font-body-md text-body-md text-on-surface-variant hover:text-primary hover:translate-x-1 transition-all duration-300" href="/produits/">Catalogue</a>
+            <a class="font-body-md text-body-md text-on-surface-variant hover:text-primary hover:translate-x-1 transition-all duration-300" href="/about.html">À propos de nous</a>
+            <a class="font-body-md text-body-md text-on-surface-variant hover:text-primary hover:translate-x-1 transition-all duration-300" href="/contact.html">Contact</a>
         </div>
         <div class="flex flex-col gap-4">
-            <span class="font-label-caps text-label-caps tracking-[0.1em] uppercase text-on-surface">Contact</span>
-            <a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" href="${depth}index.html#contact">Nous contacter</a>
-            <a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" href="${depth}index.html#a-propos">À propos</a>
+            <span class="font-label-caps text-label-caps tracking-[0.1em] uppercase text-on-surface">Information</span>
+            <a class="font-body-md text-body-md text-on-surface-variant hover:text-primary hover:translate-x-1 transition-all duration-300" href="/account.html">Compte</a>
+            <a class="font-body-md text-body-md text-on-surface-variant hover:text-primary hover:translate-x-1 transition-all duration-300" href="/wishlist.html">Liste de souhaits</a>
+            <a class="font-body-md text-body-md text-on-surface-variant hover:text-primary hover:translate-x-1 transition-all duration-300" href="/orders.html">Commandes</a>
+            <a class="font-body-md text-body-md text-on-surface-variant hover:text-primary hover:translate-x-1 transition-all duration-300" href="/terms.html">Termes et conditions</a>
+            <a class="font-body-md text-body-md text-on-surface-variant hover:text-primary hover:translate-x-1 transition-all duration-300" href="/privacy.html">Politique de confidentialité</a>
+        </div>
+        <div class="w-full md:w-auto">
+            <span class="font-label-caps text-label-caps tracking-[0.1em] uppercase text-on-surface block mb-4">Newsletter</span>
+            <p class="font-body-md text-on-surface-variant mb-4 text-sm max-w-xs">Abonnez-vous pour recevoir nos dernières collections et offres exclusives en avant-première.</p>
+            <form class="flex gap-2" onsubmit="event.preventDefault(); alert('Merci de votre inscription !');">
+                <input type="email" placeholder="Votre adresse email" required
+                    class="bg-transparent border-b border-outline-variant focus:border-primary outline-none font-body-md text-on-surface py-2 w-full max-w-[200px] transition-colors" />
+                <button type="submit" aria-label="S'abonner"
+                    class="text-primary hover:text-primary-container transition-colors p-2 transform group-hover:translate-x-1 duration-300">
+                    <span class="material-symbols-outlined">arrow_forward</span>
+                </button>
+            </form>
+            <div class="flex gap-6 mt-8">
+                <a href="https://www.facebook.com/lecanapeoran/" target="_blank" rel="noopener noreferrer" class="text-on-surface-variant hover:text-primary transition-colors" aria-label="Facebook">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd" />
+                    </svg>
+                </a>
+                <a href="https://www.instagram.com/lecanapeoran/" target="_blank" rel="noopener noreferrer" class="text-on-surface-variant hover:text-primary transition-colors" aria-label="Instagram">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clip-rule="evenodd" />
+                    </svg>
+                </a>
+            </div>
         </div>
     </div>
-    <div class="px-margin-mobile md:px-margin-desktop max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center pt-8 border-t border-outline-variant/50">
+    <div class="px-margin-mobile md:px-margin-desktop max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center pt-8 border-t border-outline-variant/50 reveal-up reveal-delay-1">
         <p class="font-body-md text-body-md text-on-surface-variant text-sm">© <span data-year>${new Date().getFullYear()}</span> LE CANAPÉ. Tous droits réservés.</p>
+        <div class="flex gap-4 mt-4 md:mt-0">
+            <a class="text-on-surface-variant hover:text-primary transition-colors hover:-translate-y-1 duration-300 transform inline-block" href="#"><span class="material-symbols-outlined">share</span></a>
+        </div>
     </div>
 </footer>`;
 
@@ -146,8 +196,8 @@ ${nav('../../', 'products')}
 <script type="application/json" id="catalog-data">${jsonScript(products)}</script>
 </main>
 ${footer('../../')}
-<script src="../../assets/site.js"></script>
-<script src="../../assets/pdp.js"></script>
+<script src="../../assets/site.js?v=3"></script>
+<script src="../../assets/pdp.js?v=3"></script>
 </body>
 </html>`;
 }
@@ -174,8 +224,8 @@ ${nav('../../', 'packs')}
 <main class="pack-detail-page" id="pack-root"></main>
 <script type="application/json" id="packs-data">${jsonScript(packs)}</script>
 ${footer('../../')}
-<script src="../../assets/site.js"></script>
-<script src="../../assets/pack-detail.js"></script>
+<script src="../../assets/site.js?v=3"></script>
+<script src="../../assets/pack-detail.js?v=2"></script>
 </body>
 </html>`;
 }
@@ -209,6 +259,370 @@ packsHtml = packsHtml.includes('id="packs-data"')
     ? packsHtml.replace(/<script type="application\/json" id="packs-data">[\s\S]*?<\/script>\s*/g, `${packCatalogScript}\n`)
     : packsHtml.replace('</body>', `${packCatalogScript}\n</body>`);
 writeFileSync(packsPath, packsHtml, 'utf8');
+
+const html404 = `<!DOCTYPE html>
+<html lang="fr" style="background-color:#fff8f3;">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>404 - Page introuvable | LE CANAPÉ</title>
+${headAssets('/')}
+</head>
+<body class="bg-background text-on-background font-body-md antialiased flex flex-col min-h-screen">
+${nav('/', '')}
+<main class="flex-grow flex flex-col items-center justify-center text-center px-margin-mobile md:px-margin-desktop py-32 reveal-up">
+    <h1 class="font-headline-lg md:text-display-lg text-primary mb-6 uppercase tracking-wide" style="font-family:'Playfair Display',serif">404</h1>
+    <h2 class="font-headline-md text-on-surface mb-6">Page introuvable</h2>
+    <p class="font-body-lg text-on-surface-variant max-w-md mx-auto mb-12">Il semblerait que la page que vous cherchez n'existe pas ou qu'elle soit en cours de création.</p>
+    <a href="/produits/" class="bg-primary text-on-primary font-label-caps py-4 px-8 hover:bg-primary-container hover:text-on-primary-container transition-colors duration-500 tracking-widest uppercase text-label-caps inline-block">Découvrir nos collections</a>
+</main>
+${footer('/')}
+<script src="/assets/site.js"></script>
+</body>
+</html>`;
+writeFileSync(join(root, '404.html'), html404, 'utf8');
+console.log('Generated 404.html');
+
+const genericPage = (slug, title, headline, subtitle, contentHtml) => `<!DOCTYPE html>
+<html lang="fr" style="background-color:#fff8f3;">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>${title} | LE CANAPÉ</title>
+${headAssets('/')}
+</head>
+<body class="bg-background text-on-background font-body-md antialiased flex flex-col min-h-screen">
+${nav('/', slug)}
+
+<header class="relative w-full h-[45vh] min-h-[350px] flex flex-col items-center justify-center overflow-hidden bg-inverse-surface">
+    <div class="absolute inset-0 w-full h-full parallax-wrapper" style="opacity:0.4;">
+        <img src="/homepage.png" class="parallax-element w-full h-full object-cover mix-blend-overlay" />
+    </div>
+    <div class="relative z-10 text-center px-margin-mobile reveal-up">
+        <h1 class="font-display-lg text-on-primary mb-4 uppercase tracking-widest drop-shadow-md" style="font-family:'Playfair Display',serif">${headline}</h1>
+        <div class="w-16 h-[2px] bg-brand-gold mx-auto mb-6"></div>
+        <h2 class="font-label-caps text-on-primary/80 tracking-[0.2em] uppercase">${subtitle}</h2>
+    </div>
+</header>
+
+<main class="relative z-20 -mt-16 mb-32 px-margin-mobile md:px-margin-desktop w-full max-w-5xl mx-auto flex-grow flex flex-col">
+    <div class="bg-surface/95 backdrop-blur-xl border border-outline-variant/30 p-8 md:p-16 shadow-2xl flex-grow reveal-up reveal-delay-1">
+        ${contentHtml}
+    </div>
+</main>
+${footer('/')}
+<script src="/assets/site.js"></script>
+</body>
+</html>`;
+
+const aboutContent = `
+    <div class="font-body-lg text-on-surface-variant leading-relaxed space-y-8">
+        <p class="text-xl md:text-2xl text-on-surface font-headline-md" style="font-family:'Playfair Display',serif">Fondée à Oran, <strong class="text-primary">LE CANAPÉ</strong> est née d'une passion inébranlable pour le mobilier de prestige et le design intemporel.</p>
+        <p>Nous parcourons le monde pour sélectionner les meilleures matières premières : cuirs pleine fleur d'Italie, bois massifs d'Europe, et tissus raffinés. Chaque pièce que nous vous proposons est le fruit d'un savoir-faire artisanal rigoureux, visant à vous offrir un confort absolu, sans aucun compromis sur l'élégance.</p>
+        <div class="w-8 h-8 mx-auto border-t border-brand-gold mt-12 mb-12"></div>
+        <p>Notre mission est claire : transformer chaque espace de vie en un véritable sanctuaire de bien-être et de beauté. Que vous cherchiez un grand canapé panoramique ou une table sculpturale, nous avons ce qu'il vous faut.</p>
+    </div>
+`;
+
+const contactContent = `
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-16">
+        <div>
+            <h3 class="font-headline-md text-primary mb-6" style="font-family:'Playfair Display',serif">Contactez-nous</h3>
+            <p class="font-body-md text-on-surface-variant mb-8">Besoin d'aide, d'un conseil d'aménagement ou d'informations sur votre réservation ? Notre équipe est à votre disposition.</p>
+            <div class="space-y-6">
+                <div class="flex items-start gap-4">
+                    <span class="material-symbols-outlined text-primary mt-1">location_on</span>
+                    <div>
+                        <span class="font-label-caps block text-on-surface mb-1">Showroom</span>
+                        <span class="font-body-md text-on-surface-variant">Boulevard Millenium, Oran, Algérie</span>
+                    </div>
+                </div>
+                <div class="flex items-start gap-4">
+                    <span class="material-symbols-outlined text-primary mt-1">phone</span>
+                    <div>
+                        <span class="font-label-caps block text-on-surface mb-1">Téléphone</span>
+                        <span class="font-body-md text-on-surface-variant">+213 555 00 00 00</span>
+                    </div>
+                </div>
+                <div class="flex items-start gap-4">
+                    <span class="material-symbols-outlined text-primary mt-1">mail</span>
+                    <div>
+                        <span class="font-label-caps block text-on-surface mb-1">Email</span>
+                        <span class="font-body-md text-on-surface-variant">contact@lecanape.dz</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <form class="space-y-6 flex flex-col" onsubmit="event.preventDefault(); alert('Message envoyé !');">
+                <input class="bg-transparent border-b border-outline-variant focus:border-primary outline-none font-body-md text-on-surface py-3 w-full transition-colors" placeholder="Votre nom" type="text" required />
+                <input class="bg-transparent border-b border-outline-variant focus:border-primary outline-none font-body-md text-on-surface py-3 w-full transition-colors" placeholder="Votre email" type="email" required />
+                <textarea class="bg-transparent border-b border-outline-variant focus:border-primary outline-none font-body-md text-on-surface py-3 w-full transition-colors min-h-[120px] resize-none" placeholder="Votre message" required></textarea>
+                <button type="submit" class="bg-primary text-on-primary font-label-caps py-4 px-8 hover:bg-primary-container transition-colors tracking-widest uppercase self-start mt-4">Envoyer</button>
+            </form>
+        </div>
+    </div>
+`;
+
+const accountContent = `
+    <div id="auth-container" class="max-w-md mx-auto text-center">
+        <span class="material-symbols-outlined text-6xl text-primary mb-6">account_circle</span>
+        
+        <div id="login-view">
+            <h3 class="font-headline-md text-on-surface mb-4" style="font-family:'Playfair Display',serif">Connexion</h3>
+            <p class="font-body-md text-on-surface-variant mb-8">Connectez-vous pour accéder à vos réservations et gérer vos informations.</p>
+            <form id="login-form" class="space-y-6 flex flex-col">
+                <input id="login-email" class="bg-transparent border-b border-outline-variant focus:border-primary outline-none font-body-md text-on-surface py-3 w-full transition-colors text-center" placeholder="Adresse email" type="email" required />
+                <input id="login-password" class="bg-transparent border-b border-outline-variant focus:border-primary outline-none font-body-md text-on-surface py-3 w-full transition-colors text-center" placeholder="Mot de passe" type="password" required />
+                <p id="login-error" class="text-sm text-red-600 hidden"></p>
+                <button type="submit" class="bg-primary w-full text-on-primary font-label-caps py-4 px-8 hover:bg-primary-container transition-colors tracking-widest uppercase mt-4">Se Connecter</button>
+            </form>
+            <p class="mt-8 text-sm text-on-surface-variant">Pas encore de compte ? <button onclick="toggleAuthView('register')" class="text-primary underline">Créer un compte</button></p>
+        </div>
+
+        <div id="register-view" class="hidden">
+            <h3 class="font-headline-md text-on-surface mb-4" style="font-family:'Playfair Display',serif">Inscription</h3>
+            <p class="font-body-md text-on-surface-variant mb-8">Créez votre espace personnel LE CANAPÉ.</p>
+            <form id="register-form" class="space-y-6 flex flex-col">
+                <input id="register-prenom" class="bg-transparent border-b border-outline-variant focus:border-primary outline-none font-body-md text-on-surface py-3 w-full transition-colors text-center" placeholder="Prénom" type="text" required />
+                <input id="register-nom" class="bg-transparent border-b border-outline-variant focus:border-primary outline-none font-body-md text-on-surface py-3 w-full transition-colors text-center" placeholder="Nom" type="text" required />
+                <input id="register-phone" class="bg-transparent border-b border-outline-variant focus:border-primary outline-none font-body-md text-on-surface py-3 w-full transition-colors text-center" placeholder="Numéro de téléphone" type="tel" required />
+                <input id="register-address" class="bg-transparent border-b border-outline-variant focus:border-primary outline-none font-body-md text-on-surface py-3 w-full transition-colors text-center" placeholder="Adresse complète / Wilaya" type="text" required />
+                <input id="register-email" class="bg-transparent border-b border-outline-variant focus:border-primary outline-none font-body-md text-on-surface py-3 w-full transition-colors text-center" placeholder="Adresse email" type="email" required />
+                <input id="register-password" class="bg-transparent border-b border-outline-variant focus:border-primary outline-none font-body-md text-on-surface py-3 w-full transition-colors text-center" placeholder="Mot de passe (6 car. min)" type="password" minlength="6" required />
+                <p id="register-error" class="text-sm text-red-600 hidden"></p>
+                <p id="register-success" class="text-sm text-green-700 hidden">Inscription réussie ! Vous pouvez maintenant vous connecter.</p>
+                <button type="submit" class="bg-primary w-full text-on-primary font-label-caps py-4 px-8 hover:bg-primary-container transition-colors tracking-widest uppercase mt-4">S'inscrire</button>
+            </form>
+            <p class="mt-8 text-sm text-on-surface-variant">Déjà un compte ? <button onclick="toggleAuthView('login')" class="text-primary underline">Se connecter</button></p>
+        </div>
+
+        <div id="account-view" class="hidden text-left">
+            <h3 class="font-headline-md text-on-surface mb-8 text-center" style="font-family:'Playfair Display',serif">Bienvenue</h3>
+            
+            <div class="bg-surface-container-low p-6 mb-8 border border-outline-variant/30">
+                <h4 class="font-label-caps uppercase tracking-widest text-primary mb-4">Vos Informations</h4>
+                <p class="font-body-md text-on-surface-variant mb-2">Nom : <span id="user-name" class="text-on-surface font-medium"></span></p>
+                <p class="font-body-md text-on-surface-variant mb-2">Email : <span id="user-email" class="text-on-surface font-medium"></span></p>
+                <p class="font-body-md text-on-surface-variant mb-2">Téléphone : <span id="user-phone" class="text-on-surface font-medium"></span></p>
+                <p class="font-body-md text-on-surface-variant mb-2">Adresse : <span id="user-address" class="text-on-surface font-medium"></span></p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+                <a href="/wishlist.html" class="flex items-center p-4 border border-outline-variant/50 hover:border-primary transition-colors group">
+                    <span class="material-symbols-outlined text-primary mr-4 group-hover:scale-110 transition-transform">favorite_border</span>
+                    <span class="font-body-md text-on-surface">Ma liste de souhaits</span>
+                </a>
+                <a href="/orders.html" class="flex items-center p-4 border border-outline-variant/50 hover:border-primary transition-colors group">
+                    <span class="material-symbols-outlined text-primary mr-4 group-hover:scale-110 transition-transform">local_shipping</span>
+                    <span class="font-body-md text-on-surface">Mes réservations</span>
+                </a>
+            </div>
+
+            <button id="logout-btn" class="text-sm text-on-surface-variant hover:text-red-600 underline text-center w-full block">Se déconnecter</button>
+        </div>
+    </div>
+
+    <script>
+        const sbClient = supabase.createClient(window.ENV.SUPABASE_URL, window.ENV.SUPABASE_ANON_KEY);
+
+        function toggleAuthView(view) {
+            document.getElementById('login-view').classList.add('hidden');
+            document.getElementById('register-view').classList.add('hidden');
+            document.getElementById('account-view').classList.add('hidden');
+            document.getElementById(view + '-view').classList.remove('hidden');
+        }
+
+        async function checkSession() {
+            const { data: { session } } = await sbClient.auth.getSession();
+            if (session) {
+                const meta = session.user.user_metadata || {};
+                document.getElementById('user-email').textContent = session.user.email;
+                document.getElementById('user-name').textContent = (meta.first_name || '') + ' ' + (meta.last_name || '');
+                document.getElementById('user-phone').textContent = meta.phone || 'Non renseigné';
+                document.getElementById('user-address').textContent = meta.address || 'Non renseigné';
+                toggleAuthView('account');
+            } else {
+                toggleAuthView('login');
+            }
+        }
+
+        document.getElementById('login-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            const errEl = document.getElementById('login-error');
+            errEl.classList.add('hidden');
+            
+            const submitBtn = document.querySelector('#login-form button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Connexion...';
+            submitBtn.disabled = true;
+            
+            const { data, error } = await sbClient.auth.signInWithPassword({ email, password });
+            
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
+            if (error) {
+                // Traduction des erreurs communes
+                let msg = error.message;
+                if (msg.includes('Email not confirmed')) msg = 'Veuillez confirmer votre adresse email avant de vous connecter.';
+                else if (msg.includes('Invalid login credentials')) msg = 'Identifiants incorrects.';
+                
+                errEl.textContent = msg;
+                errEl.classList.remove('hidden');
+            } else {
+                checkSession();
+            }
+        });
+
+        document.getElementById('register-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const prenom = document.getElementById('register-prenom').value;
+            const nom = document.getElementById('register-nom').value;
+            const phone = document.getElementById('register-phone').value;
+            const address = document.getElementById('register-address').value;
+            const email = document.getElementById('register-email').value;
+            const password = document.getElementById('register-password').value;
+            
+            const errEl = document.getElementById('register-error');
+            const succEl = document.getElementById('register-success');
+            errEl.classList.add('hidden');
+            succEl.classList.add('hidden');
+
+            const submitBtn = document.querySelector('#register-form button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Veuillez patienter...';
+            submitBtn.disabled = true;
+
+            const response = await fetch('/api/auth/register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    email,
+                    password,
+                    options: {
+                        data: {
+                            first_name: prenom,
+                            last_name: nom,
+                            phone: phone,
+                            address: address
+                        }
+                    }
+                })
+            });
+
+            const result = await response.json();
+            
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
+            if (!response.ok) {
+                errEl.textContent = (result.error || 'Erreur lors de l\\'inscription') + (result.details ? ' - ' + result.details : '');
+                errEl.classList.remove('hidden');
+            } else {
+                succEl.textContent = result.message || 'Inscription réussie. Connexion en cours...';
+                succEl.classList.remove('hidden');
+                
+                // Auto-login since the user is confirmed
+                const loginRes = await sbClient.auth.signInWithPassword({ email, password });
+                if (loginRes.error) {
+                    errEl.textContent = "Compte créé, mais erreur de connexion automatique : " + loginRes.error.message;
+                    errEl.classList.remove('hidden');
+                } else {
+                    setTimeout(() => window.location.reload(), 1500);
+                }
+            }
+        });
+
+        document.getElementById('logout-btn').addEventListener('click', async () => {
+            await sbClient.auth.signOut();
+            checkSession();
+        });
+
+        window.addEventListener('DOMContentLoaded', checkSession);
+    </script>
+`;
+
+const wishlistContent = `
+    <div id="wishlist-root" class="text-center py-12">
+        <span class="material-symbols-outlined text-6xl text-outline-variant mb-6">favorite_border</span>
+        <h3 class="font-headline-md text-on-surface mb-4" style="font-family:'Playfair Display',serif">Chargement...</h3>
+    </div>
+    <script>
+        window.addEventListener('DOMContentLoaded', async () => {
+            try {
+                const sbClient = window.supabase.createClient(window.ENV.SUPABASE_URL, window.ENV.SUPABASE_ANON_KEY);
+                const root = document.getElementById('wishlist-root');
+                const { data: { session } } = await sbClient.auth.getSession();
+                if (!session) {
+                    root.innerHTML = '<h3 class="font-headline-md text-on-surface mb-4">Connectez-vous pour voir vos favoris.</h3><a href="/account.html" class="bg-primary text-on-primary font-label-caps py-4 px-8 uppercase inline-block">Se connecter</a>';
+                    return;
+                }
+                const { data, error } = await sbClient.from('wishlists').select('*').eq('user_id', session.user.id);
+                if (error) throw error;
+                if (!data || data.length === 0) {
+                    root.innerHTML = '<span class="material-symbols-outlined text-6xl text-outline-variant mb-6">favorite_border</span><h3 class="font-headline-md text-on-surface mb-4">Liste vide</h3><p class="font-body-md text-on-surface-variant mb-12">Votre liste de souhaits est actuellement vide.</p><a href="/produits/" class="bg-primary text-on-primary font-label-caps py-4 px-8 uppercase inline-block">Découvrir les collections</a>';
+                } else {
+                    root.innerHTML = '<h3 class="font-headline-md text-on-surface mb-8">Vos Favoris (' + data.length + ')</h3><div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">' + data.map(item => '<div class="border border-outline-variant p-4"><p class="font-label-caps text-secondary mb-2 uppercase">' + item.type + '</p><a href="/' + (item.type === 'product' ? 'produits' : 'packs') + '/' + item.product_slug + '/" class="font-headline-md text-primary underline">' + item.product_slug + '</a></div>').join('') + '</div>';
+                }
+            } catch (err) {
+                console.error("Wishlist Error:", err);
+                document.getElementById('wishlist-root').innerHTML = '<h3 class="text-red-500 font-bold mb-4">Erreur: ' + err.message + '</h3>';
+            }
+        });
+    </script>
+`;
+
+const ordersContent = `
+    <div id="orders-root" class="text-center py-12">
+        <span class="material-symbols-outlined text-6xl text-outline-variant mb-6">local_shipping</span>
+        <h3 class="font-headline-md text-on-surface mb-4" style="font-family:'Playfair Display',serif">Chargement...</h3>
+    </div>
+    <script>
+        window.addEventListener('DOMContentLoaded', async () => {
+            try {
+                const sbClient = window.supabase.createClient(window.ENV.SUPABASE_URL, window.ENV.SUPABASE_ANON_KEY);
+                const root = document.getElementById('orders-root');
+                const { data: { session } } = await sbClient.auth.getSession();
+                if (!session) {
+                    root.innerHTML = '<h3 class="font-headline-md text-on-surface mb-4">Connectez-vous pour voir vos commandes.</h3><a href="/account.html" class="bg-primary text-on-primary font-label-caps py-4 px-8 uppercase inline-block">Se connecter</a>';
+                    return;
+                }
+                const { data, error } = await sbClient.from('orders').select('*').eq('user_id', session.user.id);
+                if (error) throw error;
+                if (!data || data.length === 0) {
+                    root.innerHTML = '<span class="material-symbols-outlined text-6xl text-outline-variant mb-6">local_shipping</span><h3 class="font-headline-md text-on-surface mb-4">Aucune commande</h3><p class="font-body-md text-on-surface-variant mb-12">Vous n\\'avez pas encore effectué de réservation.</p><a href="/packs/" class="bg-primary text-on-primary font-label-caps py-4 px-8 uppercase inline-block">Découvrir nos compositions</a>';
+                } else {
+                    root.innerHTML = '<h3 class="font-headline-md text-on-surface mb-8">Vos Commandes (' + data.length + ')</h3><div class="space-y-4 text-left">' + data.map(item => '<div class="border border-outline-variant p-4 flex justify-between items-center"><div><p class="font-label-caps text-secondary mb-1 uppercase">' + item.type + '</p><a href="/' + (item.type === 'product' ? 'produits' : 'packs') + '/' + item.product_slug + '/" class="font-headline-md text-primary hover:underline">' + item.product_slug + '</a><p class="text-sm mt-2 text-on-surface-variant">Commandé le ' + new Date(item.created_at).toLocaleDateString('fr-FR') + '</p></div><span class="px-4 py-2 bg-surface-variant text-on-surface uppercase text-xs font-bold rounded">' + item.status + '</span></div>').join('') + '</div>';
+                }
+            } catch (err) {
+                console.error("Orders Error:", err);
+                document.getElementById('orders-root').innerHTML = '<h3 class="text-red-500 font-bold mb-4">Erreur: ' + err.message + '</h3>';
+            }
+        });
+    </script>
+`;
+
+const textContent = (text) => `
+    <div class="font-body-md text-on-surface-variant leading-loose space-y-6 max-w-3xl mx-auto text-left">
+        ${text}
+    </div>
+`;
+
+const pages = [
+    ['about.html', 'about', 'À Propos', 'Notre Histoire', aboutContent],
+    ['contact.html', 'contact', 'Contact', 'Nous contacter', contactContent],
+    ['account.html', 'account', 'Mon Compte', 'Espace Client', accountContent],
+    ['wishlist.html', 'wishlist', 'Favoris', 'Liste de souhaits', wishlistContent],
+    ['orders.html', 'orders', 'Commandes', 'Mes Réservations', ordersContent],
+    ['terms.html', 'terms', 'Termes', 'Conditions Générales', textContent(`<p>Les présentes conditions générales régissent l'utilisation du site LE CANAPÉ.</p><p>En utilisant ce site, vous acceptez nos conditions de vente, de réservation et d'utilisation. Les prix sont affichés en Dinar Algérien (DZD) et toutes les commandes sont soumises à validation.</p><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam.</p>`)],
+    ['privacy.html', 'privacy', 'Confidentialité', 'Politique de confidentialité', textContent(`<p>La protection de vos données personnelles est notre priorité.</p><p>Nous ne collectons que les informations strictement nécessaires au traitement de vos réservations et à l'amélioration de votre expérience sur notre site. Vos données ne seront jamais revendues à des tiers.</p><p>Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus. Phasellus ultrices nulla quis nibh. Quisque a lectus.</p>`)]
+];
+
+for (const [filename, slug, title, subtitle, contentHtml] of pages) {
+    writeFileSync(join(root, filename), genericPage(slug, title, title, subtitle, contentHtml), 'utf8');
+    console.log('Generated ' + filename);
+}
 
 const urls = [
     ['', '1.0', 'weekly'],

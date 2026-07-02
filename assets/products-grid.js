@@ -1,31 +1,39 @@
 /**
  * Renders and filters product cards on produits/index.html.
+ * Dynamically builds sub-filter rows from CATEGORIES_TREE.
  */
+import { CATEGORIES_TREE } from './admin-auth.js';
+
 (function () {
     const grid = document.getElementById('product-grid');
+    const subContainer = document.getElementById('sub-filters-container');
     if (!grid) return;
 
     let allProducts = [];
     let activeCategory = null;
+    let activeSubcategory = null;
+    let activeSubsubcategory = null;
 
     const formatPrice = (value, currency = 'DZD') =>
         `${Number(value || 0).toLocaleString('fr-FR')} ${currency}`;
 
     const escapeHtml = (value) => {
-        const el = document.createElement('div');
-        el.textContent = value || '';
-        return el.innerHTML;
+        return String(value || '')
+            .replace(/&/g, '&amp;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;');
     };
 
     const loadCatalog = async () => {
+        const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
         const inline = document.getElementById('catalog-data');
-        if (inline) return JSON.parse(inline.textContent);
-
+        if (inline && !isLocal) return JSON.parse(inline.textContent);
         try {
             const res = await fetch('../data/products.json', { cache: 'no-store' });
             if (res.ok) return res.json();
-        } catch { /* API fallback */ }
-
+        } catch { /* fallback */ }
         const res = await fetch('/api/products');
         return res.json();
     };
@@ -42,9 +50,10 @@
     };
 
     const renderProducts = () => {
-        const products = activeCategory
-            ? allProducts.filter((product) => product.category === activeCategory)
-            : allProducts;
+        let products = allProducts;
+        if (activeCategory) products = products.filter(p => p.category === activeCategory);
+        if (activeSubcategory) products = products.filter(p => p.subcategory === activeSubcategory);
+        if (activeSubsubcategory) products = products.filter(p => p.subsubcategory === activeSubsubcategory);
 
         if (!products.length) {
             grid.innerHTML = '<p class="col-span-full text-center text-on-surface-variant py-12">Aucun article dans cette catégorie pour le moment.</p>';
@@ -68,9 +77,123 @@
         animateCards();
     };
 
-    const getInitialCategory = () => {
+    const updateUrl = () => {
+        const url = new URL(window.location.href);
+        if (activeCategory) url.searchParams.set('category', activeCategory);
+        else url.searchParams.delete('category');
+        if (activeSubcategory) url.searchParams.set('subcategory', activeSubcategory);
+        else url.searchParams.delete('subcategory');
+        if (activeSubsubcategory) url.searchParams.set('subsubcategory', activeSubsubcategory);
+        else url.searchParams.delete('subsubcategory');
+        window.history.replaceState({}, '', url);
+    };
+
+    // --- Dynamic Sub-filter Rendering ---
+
+    const SUB_TAG_BASE = 'sub-tag px-5 py-2 border font-label-caps text-label-caps uppercase tracking-wide transition-all duration-300';
+    const SUB_TAG_INACTIVE = 'border-outline-variant bg-surface-container-low text-on-surface-variant hover:bg-on-surface hover:text-background hover:border-on-surface';
+    const SUB_TAG_ACTIVE = 'border-primary bg-primary text-on-primary';
+
+    const makeSubTag = (label, onClick) => {
+        const btn = document.createElement('button');
+        btn.className = `${SUB_TAG_BASE} ${SUB_TAG_INACTIVE}`;
+        btn.textContent = label;
+        btn.addEventListener('click', onClick);
+        return btn;
+    };
+
+    const renderSubFilters = () => {
+        if (!subContainer) return;
+        subContainer.innerHTML = '';
+
+        if (!activeCategory) {
+            subContainer.style.minHeight = '0';
+            return;
+        }
+
+        const catObj = CATEGORIES_TREE[activeCategory];
+        if (!catObj || !catObj.subcategories) {
+            subContainer.style.minHeight = '0';
+            return;
+        }
+
+        const subcats = catObj.subcategories;
+        subContainer.style.minHeight = '48px';
+
+        // Row 1: subcategories
+        const row1 = document.createElement('div');
+        row1.className = 'flex flex-wrap justify-center gap-3 mb-3';
+
+        // "Tout voir" button for subcategory
+        const allSubBtn = makeSubTag('Tout voir', () => {
+            activeSubcategory = null;
+            activeSubsubcategory = null;
+            renderSubFilters();
+            renderProducts();
+            updateUrl();
+        });
+        if (!activeSubcategory) allSubBtn.className = `${SUB_TAG_BASE} ${SUB_TAG_ACTIVE}`;
+        row1.appendChild(allSubBtn);
+
+        for (const [key, val] of Object.entries(subcats)) {
+            if (key === 'general') continue; // Skip generic fallback key
+            const btn = makeSubTag(val.label, () => {
+                activeSubcategory = key;
+                activeSubsubcategory = null;
+                renderSubFilters();
+                renderProducts();
+                updateUrl();
+            });
+            if (activeSubcategory === key) btn.className = `${SUB_TAG_BASE} ${SUB_TAG_ACTIVE}`;
+            row1.appendChild(btn);
+        }
+
+        subContainer.appendChild(row1);
+
+        // Row 2: sub-subcategories (if active subcategory has them)
+        if (activeSubcategory && subcats[activeSubcategory]?.subsubcategories) {
+            const subsubcats = subcats[activeSubcategory].subsubcategories;
+            const row2 = document.createElement('div');
+            row2.className = 'flex flex-wrap justify-center gap-3';
+
+            // Animate in
+            if (typeof gsap !== 'undefined') {
+                gsap.fromTo(row2, { opacity: 0, y: -8 }, { opacity: 1, y: 0, duration: 0.3, ease: 'power2.out' });
+            }
+
+            const allSubSubBtn = makeSubTag('Tous', () => {
+                activeSubsubcategory = null;
+                renderSubFilters();
+                renderProducts();
+                updateUrl();
+            });
+            if (!activeSubsubcategory) allSubSubBtn.className = `${SUB_TAG_BASE} ${SUB_TAG_ACTIVE}`;
+            row2.appendChild(allSubSubBtn);
+
+            for (const [key, val] of Object.entries(subsubcats)) {
+                const btn = makeSubTag(val.label, () => {
+                    activeSubsubcategory = key;
+                    renderSubFilters();
+                    renderProducts();
+                    updateUrl();
+                });
+                if (activeSubsubcategory === key) btn.className = `${SUB_TAG_BASE} ${SUB_TAG_ACTIVE}`;
+                row2.appendChild(btn);
+            }
+
+            subContainer.appendChild(row2);
+        }
+    };
+
+    // --- Main Category Filter Buttons ---
+
+    const getInitialState = () => {
         const params = new URLSearchParams(window.location.search);
-        return params.get('category') || document.querySelector('.filter-btn.active')?.dataset.target || null;
+        return {
+            category: params.get('category') || document.querySelector('.filter-btn.active')?.dataset.target || null,
+            subcategory: params.get('subcategory') || null,
+            subsubcategory: params.get('subsubcategory') || null,
+        };
     };
 
     const setActiveButton = () => {
@@ -84,23 +207,28 @@
         document.querySelectorAll('.filter-btn[data-target]').forEach((btn) => {
             btn.addEventListener('click', () => {
                 activeCategory = btn.dataset.target || null;
+                activeSubcategory = null;
+                activeSubsubcategory = null;
                 setActiveButton();
+                renderSubFilters();
                 renderProducts();
-
-                const url = new URL(window.location.href);
-                if (activeCategory) url.searchParams.set('category', activeCategory);
-                else url.searchParams.delete('category');
-                window.history.replaceState({}, '', url);
+                updateUrl();
             });
         });
     };
 
+    // --- Init ---
+
     loadCatalog()
         .then((products) => {
-            allProducts = products.filter((product) => product.status === 'published' && product.archived !== true);
-            activeCategory = getInitialCategory();
+            allProducts = products.filter((p) => p.status === 'published' && p.archived !== true);
+            const initial = getInitialState();
+            activeCategory = initial.category;
+            activeSubcategory = initial.subcategory;
+            activeSubsubcategory = initial.subsubcategory;
             bindCategoryFilters();
             setActiveButton();
+            renderSubFilters();
             renderProducts();
         })
         .catch(() => {

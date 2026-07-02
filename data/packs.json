@@ -4,9 +4,9 @@
     "name": "Le Salon Méridien",
     "category": "salon",
     "categoryLabel": "SALON",
-    "pieceCount": 3,
-    "price": 185000,
-    "oldPrice": 218000,
+    "pieceCount": 2,
+    "price": 63600,
+    "oldPrice": 318000,
     "currency": "DZD",
     "discountLabel": "Économisez 15%",
     "shortDescription": "Une composition sculpturale pensée pour l'art de recevoir.",
@@ -15,26 +15,22 @@
     "status": "published",
     "includedProducts": [
       {
-        "name": "Canapé Méridien 3 Places",
-        "material": "Cuir Italien",
-        "price": 115000,
-        "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuAa5jwxH1X4eUZCMQry8bv3bTF50XqQC-mqYvHxlmYarGkvQaCSlCXpryai_4mhYLg1GgvK4E2rn2Zvw_gemOTmI1_RwEHuhv5A_Rz8bcvD00tr9MKwZzGLlHeAUy7Tcqeb0EIykoDb1jqMnCtbJMHQA_PaGc1cT89KCkM9bh_p5vdWGkjujPFC0hdwHmk6Hd5LfbRWq9nKYLi44NKIUZlNlje9eunNg122JMGlBym3MDan4eARHeGNjbzw0snJKwZJ3duRKeDZ5Q",
-        "productSlug": "canape-cuir"
+        "productSlug": "canape-cuir",
+        "name": "Canapé Cuir",
+        "material": "Cuir Pleine Fleur",
+        "price": 4100,
+        "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuBcJzyTtU0QZJM2dDqn2n_A2QIpR-MVCcA8RFX9zhCV85dQgIwabQSAZs1bj08SBsZEGL1pAGkzcZ1IXn0_vhN1IKTiwzs-Vdg7nn3eTooPsYGEg734kRYgtTdYEIY2sM7U8Rva75ACxQlPh65eGfy-uIC0ymukB-Feuab24Ft1tX24A9TKHH9NeJ2YRUfz5JVpMLoAOs8-UB59mwD_nGJ1pNNLOY-shD1uxVRA0zQVw9xVd__3CaRebXeUldY4NIIBHnBr7ToG-XH7"
       },
       {
-        "name": "Table Basse Oblique",
-        "material": "Noyer Massif",
-        "price": 55000,
-        "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuCXw0K8rY7bK2Hj144Nhc-E3p8F_qnZ4OqTpAPm5GcrKTx0kmdLrKsA-aGLhy3dSzIDmolDmXrved_qnHryRADaipqnYPQfNtrgs5FuRRMObi9sP9sr3_vUH3pdVFHG3A98KOHte8VFfRgVDnhwqyuBTWALzr2ioRtNwFFJ54e24SpopWOuIT0JTUBlP6-kvSZDmkR9zR6WpiS77HHy5ydIaassZuyWHy0k4jBRWR_bnvhqjnLBIeb0O-caEitTee66U-1gvUO52w"
-      },
-      {
-        "name": "Lampadaire Arc",
-        "material": "Laiton Brossé",
-        "price": 48000,
-        "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuAHll-nvuZSZ4kqvCRHrreHz5Z3AJkCAqd71qsoOXh5PvjRBVKutkbh-ZLM9ol_LHS8XXOKdxgnBpA5yE2sP54uI3CA2ls0LWkwDZrHOasynSi4fY_RMe39iOWfajjBrnvCbravMPeVTsjsYtZDPKGCaDThyBffPv0vqi3hY-YAyGlB4v0uPwOe1Zf_CYkWpXpnK0fgbIpnrXeLNDrkZDkMRgRLd6ANCSXbzvrXKmNMmFCNqpEl5HNiPA5lL1jEADgJ0eREdMX_UQ",
-        "productSlug": "lampe-bronze"
+        "productSlug": "lampe-bronze",
+        "name": "Lampe Bronze",
+        "material": "Bronze Patiné",
+        "price": 450,
+        "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuAfOSO-kkT85iezoqN_27BS1y3sBmUF8PocV8FQL49tCM-iZ3lcYri_SDWhVshCtAWqa7fwcTz5jToLDj61kXyASkxjB6nlNW-15xzYbEAPrnouH68Yzm9Ie_7TyOvasFQXWPTdAxQhopRp8B3qL9kQh7vgMEbhdy_8rPiydcT3-_lyzFz7pkhB_yYBxtK9uWjSwG7wVVC4UyLB4jdW8nMe7F3oEpWAfsCKP-eER54xqpmDRSdLcw1295EQcIfYV678KXn3tpeYhPSW"
       }
-    ]
+    ],
+    "archived": false,
+    "updatedAt": "2026-07-01"
   },
   {
     "slug": "chambre-nocturne",

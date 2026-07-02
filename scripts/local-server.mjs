@@ -3,6 +3,7 @@ import { createReadStream, existsSync, statSync } from 'fs';
 import { readFile } from 'fs/promises';
 import { extname, join, normalize } from 'path';
 import { fileURLToPath, pathToFileURL } from 'url';
+import 'dotenv/config';
 
 const root = join(fileURLToPath(new URL('..', import.meta.url)));
 const port = Number(process.env.PORT || 3000);
@@ -13,10 +14,15 @@ const routes = [
     { pattern: /^\/api\/packs$/, file: 'api/packs.js' },
     { pattern: /^\/api\/login$/, file: 'api/login.js' },
     { pattern: /^\/api\/logout$/, file: 'api/logout.js' },
+    { pattern: /^\/api\/auth\/register$/, file: 'api/auth/register.js' },
     { pattern: /^\/api\/admin\/me$/, file: 'api/admin/me.js' },
     { pattern: /^\/api\/admin\/products$/, file: 'api/admin/products.js' },
     { pattern: /^\/api\/admin\/products\/([^/]+)$/, file: 'api/admin/products/[slug].js', params: ['slug'] },
+    { pattern: /^\/api\/admin\/packs$/, file: 'api/admin/packs.js' },
+    { pattern: /^\/api\/admin\/packs\/([^/]+)$/, file: 'api/admin/packs/[slug].js', params: ['slug'] },
     { pattern: /^\/api\/admin\/upload$/, file: 'api/admin/upload.js' },
+    { pattern: /^\/api\/admin\/orders$/, file: 'api/admin/orders.js' },
+    { pattern: /^\/api\/admin\/orders\/([^/]+)$/, file: 'api/admin/orders/[id].js', params: ['id'] },
 ];
 
 const mime = {
@@ -121,7 +127,13 @@ async function serveStatic(req, res, url) {
     }
 
     if (!existsSync(filePath)) {
-        send(res, 404, await readFile(join(root, 'index.html'), 'utf8'), { 'Content-Type': mime['.html'] });
+        let notFoundContent = '404 Not Found';
+        try {
+            notFoundContent = await readFile(join(root, '404.html'), 'utf8');
+        } catch (e) {
+            // fallback if 404.html is missing
+        }
+        send(res, 404, notFoundContent, { 'Content-Type': mime['.html'] });
         return;
     }
 

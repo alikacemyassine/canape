@@ -15,14 +15,27 @@
   ],
   "headers": [
     {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "X-Frame-Options", "value": "SAMEORIGIN" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
+        { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=()" }
+      ]
+    },
+    {
       "source": "/admin/(.*)",
       "headers": [
-        {
-          "key": "X-Robots-Tag",
-          "value": "noindex, nofollow"
-        }
+        { "key": "X-Robots-Tag", "value": "noindex, nofollow" }
       ]
     }
+  ],
+  "rewrites": [
+    { "source": "/api/admin/packs", "destination": "/api/admin/packs.js" },
+    { "source": "/api/admin/packs/:slug", "destination": "/api/admin/packs/[slug].js" },
+    { "source": "/api/admin/orders", "destination": "/api/admin/orders.js" },
+    { "source": "/api/admin/orders/:id", "destination": "/api/admin/orders/[id].js" }
   ]
 }
+
 

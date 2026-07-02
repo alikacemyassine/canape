@@ -1,63 +1,40 @@
-import crypto from 'crypto';
+import { createClient } from '@supabase/supabase-js';
 
-const MAX_AGE_MS = 7 * 24 * 60 * 60 * 1000;
-
-function secret() {
-    return process.env.ADMIN_SECRET || process.env.ADMIN_PASSWORD || 'change-me-in-production';
-}
-
-export function createSessionToken() {
-    const payload = { exp: Date.now() + MAX_AGE_MS };
-    const data = Buffer.from(JSON.stringify(payload)).toString('base64url');
-    const sig = crypto.createHmac('sha256', secret()).update(data).digest('base64url');
-    return `${data}.${sig}`;
-}
-
-export function verifySessionToken(token) {
-    if (!token || typeof token !== 'string') return false;
-    const parts = token.split('.');
-    if (parts.length !== 2) return false;
-    const [data, sig] = parts;
-    const expected = crypto.createHmac('sha256', secret()).update(data).digest('base64url');
-    if (sig !== expected) return false;
-    try {
-        const payload = JSON.parse(Buffer.from(data, 'base64url').toString());
-        return payload.exp > Date.now();
-    } catch {
-        return false;
-    }
-}
+const supabaseUrl = process.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL;
+const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.VITE_SUPABASE_ANON_KEY;
+const supabase = createClient(supabaseUrl, supabaseKey);
 
 export function getTokenFromRequest(req) {
+    const authHeader = req.headers.authorization;
+    if (authHeader && authHeader.startsWith('Bearer ')) {
+        return authHeader.substring(7);
+    }
     const cookie = req.headers.cookie || '';
-    const match = cookie.match(/(?:^|;\s*)admin_session=([^;]+)/);
+    const match = cookie.match(/(?:^|;\s*)sb-access-token=([^;]+)/);
     return match ? decodeURIComponent(match[1]) : null;
 }
 
-export function requireAdmin(req, res) {
+export async function requireAdmin(req, res) {
     const token = getTokenFromRequest(req);
-    if (!verifySessionToken(token)) {
-        res.status(401).json({ error: 'Unauthorized' });
+    if (!token) {
+        res.status(401).json({ error: 'Non autorisé' });
         return false;
     }
+
+    const { data: { user }, error } = await supabase.auth.getUser(token);
+    
+    if (error || !user) {
+        res.status(401).json({ error: 'Session invalide ou expirée' });
+        return false;
+    }
+
+    const adminEmail = process.env.ADMIN_EMAIL || 'admin@lecanape.dz';
+    if (user.email !== adminEmail) {
+        res.status(403).json({ error: 'Accès refusé. Réservé aux administrateurs.' });
+        return false;
+    }
+
+    req.user = user;
     return true;
 }
 
-export function setSessionCookie(res, token) {
-    const secure = process.env.NODE_ENV === 'production' ? '; Secure' : '';
-    res.setHeader(
-        'Set-Cookie',
-        `admin_session=${encodeURIComponent(token)}; HttpOnly; Path=/; Max-Age=${MAX_AGE_MS / 1000}; SameSite=Lax${secure}`
-    );
-}
-
-export function clearSessionCookie(res) {
-    const secure = process.env.NODE_ENV === 'production' ? '; Secure' : '';
-    res.setHeader('Set-Cookie', `admin_session=; HttpOnly; Path=/; Max-Age=0; SameSite=Lax${secure}`);
-}
-
-export function checkPassword(password) {
-    const expected = process.env.ADMIN_PASSWORD;
-    if (!expected) return password === 'canape-admin';
-    return password === expected;
-}

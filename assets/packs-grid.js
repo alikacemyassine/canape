@@ -17,9 +17,12 @@
     ];
 
     const escapeHtml = (value) => {
-        const el = document.createElement('div');
-        el.textContent = value || '';
-        return el.innerHTML;
+        return String(value || '')
+            .replace(/&/g, '&amp;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;');
     };
 
     const formatPrice = (value, currency = 'DZD') =>

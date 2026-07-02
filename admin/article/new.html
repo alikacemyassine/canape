@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 
 <head>
@@ -23,6 +23,7 @@
                     class="text-xs tracking-[0.3em] text-on-surface-variant">ADMIN SUITE</span></div>
             <nav class="flex flex-col gap-2">
                 <a href="../catalog.html" class="admin-nav-link active">Catalogue</a>
+                <a href="../packs.html" class="admin-nav-link">Packs</a>
             </nav>
             <button id="logout-btn" class="admin-btn-ghost mt-auto text-left">Déconnexion</button>
         </aside>
@@ -53,6 +54,14 @@
                             <label class="admin-label" for="category">Collection</label>
                             <select class="admin-input" id="category"></select>
                         </div>
+                        <div id="subcategory-wrapper" style="display: none;">
+                            <label class="admin-label" for="subcategory">Sous-collection</label>
+                            <select class="admin-input" id="subcategory"></select>
+                        </div>
+                        <div id="subsubcategory-wrapper" style="display: none;">
+                            <label class="admin-label" for="subsubcategory">Sous-sous-collection</label>
+                            <select class="admin-input" id="subsubcategory"></select>
+                        </div>
                         <div>
                             <label class="admin-label" for="short-desc">Description courte</label>
                             <textarea class="admin-input min-h-[80px] resize-y" id="short-desc" rows="3"></textarea>
@@ -64,53 +73,49 @@
                     </div>
                 </section>
 
-                <section class="admin-card">
-                    <h2 class="text-xs uppercase tracking-widest text-secondary mb-6">Spécifications techniques</h2>
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-6">
-                        <div><label class="admin-label" for="dim-l">Largeur (cm)</label><input class="admin-input"
-                                id="dim-l" type="number" /></div>
-                        <div><label class="admin-label" for="dim-p">Profondeur (cm)</label><input class="admin-input"
-                                id="dim-p" type="number" /></div>
-                        <div><label class="admin-label" for="dim-h">Hauteur (cm)</label><input class="admin-input"
-                                id="dim-h" type="number" /></div>
-                        <div><label class="admin-label" for="dim-a">Assise (cm)</label><input class="admin-input"
-                                id="dim-a" type="number" /></div>
+                <details class="admin-card mb-4 group" open>
+                    <summary class="text-xs uppercase tracking-widest text-secondary cursor-pointer list-none flex justify-between items-center outline-none">
+                        <span>Spécifications techniques</span>
+                        <span class="material-symbols-outlined transform group-open:rotate-180 transition-transform">expand_more</span>
+                    </summary>
+                    <div class="pt-6">
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-6">
+                            <div><label class="admin-label" for="dim-l">Largeur (cm)</label><input class="admin-input"
+                                    id="dim-l" type="number" /></div>
+                            <div><label class="admin-label" for="dim-p">Profondeur (cm)</label><input class="admin-input"
+                                    id="dim-p" type="number" /></div>
+                            <div><label class="admin-label" for="dim-h">Hauteur (cm)</label><input class="admin-input"
+                                    id="dim-h" type="number" /></div>
+                            <div><label class="admin-label" for="dim-a">Assise (cm)</label><input class="admin-input"
+                                    id="dim-a" type="number" /></div>
+                        </div>
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div><label class="admin-label" for="spec-structure">Structure</label><input class="admin-input"
+                                    id="spec-structure" /></div>
+                            <div><label class="admin-label" for="spec-padding">Rembourrage</label><input class="admin-input"
+                                    id="spec-padding" /></div>
+                            <div><label class="admin-label" for="spec-suspension">Suspension</label><input
+                                    class="admin-input" id="spec-suspension" /></div>
+                            <div><label class="admin-label" for="spec-fabrication">Fabrication</label><input
+                                    class="admin-input" id="spec-fabrication" /></div>
+                        </div>
                     </div>
-                    <div class="grid md:grid-cols-2 gap-6">
-                        <div><label class="admin-label" for="spec-structure">Structure</label><input class="admin-input"
-                                id="spec-structure" /></div>
-                        <div><label class="admin-label" for="spec-padding">Rembourrage</label><input class="admin-input"
-                                id="spec-padding" /></div>
-                        <div><label class="admin-label" for="spec-suspension">Suspension</label><input
-                                class="admin-input" id="spec-suspension" /></div>
-                        <div><label class="admin-label" for="spec-fabrication">Fabrication</label><input
-                                class="admin-input" id="spec-fabrication" /></div>
-                    </div>
-                </section>
+                </details>
 
-                <section class="admin-card">
+                <section class="admin-card mb-4">
                     <div class="flex justify-between items-center mb-6">
                         <h2 class="text-xs uppercase tracking-widest text-secondary">Variantes couleur</h2>
                         <button type="button" id="add-color" class="admin-btn-ghost text-xs py-2">+ Ajouter</button>
                     </div>
-                    <div id="colors-wrap" class="space-y-3"></div>
+                    <div id="colors-wrap" class="space-y-4"></div>
                 </section>
 
-                <section class="admin-card">
-                    <h2 class="text-xs uppercase tracking-widest text-secondary mb-6">Galerie visuelle</h2>
-                    <div class="space-y-4">
-                        <div><label class="admin-label" for="hero-image">Image principale (URL)</label><input
-                                class="admin-input" id="hero-image" type="url" placeholder="https://..." /></div>
-                        <div><label class="admin-label" for="gallery-1">Image galerie 1 (URL)</label><input
-                                class="admin-input" id="gallery-1" type="url" /></div>
-                        <div><label class="admin-label" for="gallery-2">Image galerie 2 (URL)</label><input
-                                class="admin-input" id="gallery-2" type="url" /></div>
-                    </div>
-                </section>
-
-                <section class="admin-card">
-                    <h2 class="text-xs uppercase tracking-widest text-secondary mb-6">Matières &amp; savoir-faire</h2>
-                    <div class="grid md:grid-cols-2 gap-8">
+                <details class="admin-card mb-4 group">
+                    <summary class="text-xs uppercase tracking-widest text-secondary cursor-pointer list-none flex justify-between items-center outline-none">
+                        <span>Matières &amp; savoir-faire</span>
+                        <span class="material-symbols-outlined transform group-open:rotate-180 transition-transform">expand_more</span>
+                    </summary>
+                    <div class="pt-6 grid md:grid-cols-2 gap-8">
                         <div class="space-y-3">
                             <p class="text-xs text-secondary">Bloc 1</p>
                             <input class="admin-input" id="mat-0-tag" placeholder="REVÊTEMENT" />
@@ -128,12 +133,17 @@
                             <input class="admin-input" id="mat-1-image" type="url" placeholder="URL image" />
                         </div>
                     </div>
-                </section>
+                </details>
 
-                <section class="admin-card">
-                    <label class="admin-label" for="long-desc">Description longue</label>
-                    <textarea class="admin-input min-h-[100px]" id="long-desc" rows="4"></textarea>
-                </section>
+                <details class="admin-card mb-4 group">
+                    <summary class="text-xs uppercase tracking-widest text-secondary cursor-pointer list-none flex justify-between items-center outline-none">
+                        <span>Description longue</span>
+                        <span class="material-symbols-outlined transform group-open:rotate-180 transition-transform">expand_more</span>
+                    </summary>
+                    <div class="pt-6">
+                        <textarea class="admin-input min-h-[100px]" id="long-desc" rows="4"></textarea>
+                    </div>
+                </details>
             </main>
         </div>
     </div>

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Modifier le pack — LE CANAPÉ Admin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config = { theme: { extend: { colors: { primary: '#964900', secondary: '#5f5e5e', background: '#fff8f3', 'on-surface-variant': '#564337', 'outline-variant': '#ddc1b1', error: '#ba1a1a' } } } }</script>
+    <link rel="stylesheet" href="../../assets/admin.css" />
+    <style>
+        .product-picker-card {
+            cursor: pointer;
+            border: 2px solid transparent;
+            border-radius: 8px;
+            overflow: hidden;
+            background: white;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .product-picker-card:hover { border-color: #ddc1b1; box-shadow: 0 2px 12px rgba(150,73,0,0.08); }
+        .product-picker-card.selected { border-color: #964900; box-shadow: 0 0 0 3px rgba(150,73,0,0.15); }
+        .product-picker-card img { width:100%; aspect-ratio:4/3; object-fit:cover; display:block; }
+        .product-picker-card .card-body { padding: 10px 12px; }
+        .product-picker-card .card-body h4 { font-size:13px; font-weight:600; color:#1a1a1a; margin:0 0 2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+        .product-picker-card .card-body p { font-size:11px; color:#564337; margin:0; }
+        .product-picker-card .check-badge { position:absolute; top:8px; right:8px; width:24px; height:24px; background:#964900; border-radius:50%; display:none; align-items:center; justify-content:center; color:white; font-size:14px; }
+        .product-picker-card.selected .check-badge { display:flex; }
+        .hero-upload-zone { border:2px dashed #ddc1b1; border-radius:8px; background:#fff8f3; cursor:pointer; transition:border-color 0.2s, background 0.2s; }
+        .hero-upload-zone:hover { border-color:#964900; background:#fdf2e9; }
+        .hero-upload-zone.has-image { border-style:solid; border-color:#964900; }
+    </style>
+</head>
+<body class="bg-background text-on-background">
+<div class="admin-shell">
+    <aside class="admin-sidebar">
+        <div class="admin-sidebar-brand">LE CANAPÉ<br/><span class="text-xs tracking-[0.3em] text-on-surface-variant">ADMIN SUITE</span></div>
+        <nav class="flex flex-col gap-2">
+            <a href="../catalog.html" class="admin-nav-link">Catalogue</a>
+            <a href="../packs.html" class="admin-nav-link active">Packs</a>
+            <span class="admin-nav-link opacity-40 cursor-not-allowed">Commandes</span>
+            <span class="admin-nav-link opacity-40 cursor-not-allowed">Paramètres</span>
+        </nav>
+        <button id="logout-btn" class="admin-btn-ghost mt-auto text-left">Déconnexion</button>
+    </aside>
+    <div class="admin-main">
+        <header class="admin-topbar">
+            <a href="../packs.html" class="inline-flex items-center gap-2 text-on-surface-variant hover:text-primary text-sm">
+                <span class="material-symbols-outlined text-base">arrow_back</span>
+                Retour aux packs
+            </a>
+            <a href="../../index.html" target="_blank" class="text-on-surface-variant hover:text-primary" title="Voir le site">
+                <span class="material-symbols-outlined">open_in_new</span>
+            </a>
+        </header>
+        <main class="admin-content max-w-5xl mx-auto">
+            <div class="flex items-center justify-between mb-8">
+                <h1 class="text-3xl" style="font-family:'Playfair Display',serif">Modifier le pack</h1>
+                <button type="button" id="delete-pack-btn" class="inline-flex items-center gap-2 text-error hover:bg-red-50 px-4 py-2 rounded-lg transition-colors text-sm">
+                    <span class="material-symbols-outlined text-base">delete</span> Supprimer ce pack
+                </button>
+            </div>
+
+            <form id="pack-form" class="flex flex-col gap-8" novalidate>
+
+                <section class="bg-white rounded-xl border border-outline-variant/50 p-6">
+                    <h2 class="text-lg font-semibold mb-4" style="font-family:'Playfair Display',serif">Photo principale du pack</h2>
+                    <div class="hero-upload-zone relative flex flex-col items-center justify-center text-center p-8 min-h-[220px]" id="hero-drop-zone">
+                        <img id="hero-preview" src="" alt="" class="absolute inset-0 w-full h-full object-cover rounded-lg" style="display:none" />
+                        <div id="hero-placeholder" class="relative z-10 flex flex-col items-center gap-3">
+                            <span class="material-symbols-outlined text-5xl text-on-surface-variant">add_photo_alternate</span>
+                            <p class="text-sm text-on-surface-variant">Glisser-déposer ou <span class="text-primary underline cursor-pointer" id="hero-click-label">choisir une photo</span></p>
+                            <p class="text-xs text-on-surface-variant/60">JPG, PNG — max 10 Mo</p>
+                        </div>
+                        <input type="file" id="hero-file-input" accept="image/*" class="hidden" />
+                        <input type="hidden" id="hero-image-url" name="heroImage" />
+                        <div id="hero-upload-progress" class="absolute inset-0 flex items-center justify-center bg-white/80 rounded-lg" style="display:none!important">
+                            <div class="flex flex-col items-center gap-2">
+                                <div class="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin"></div>
+                                <span class="text-sm text-on-surface-variant">Envoi en cours...</span>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" id="hero-remove-btn" class="mt-3 text-xs text-error hover:underline hidden">
+                        <span class="material-symbols-outlined text-sm align-middle">delete</span> Supprimer la photo
+                    </button>
+                </section>
+
+                <section class="bg-white rounded-xl border border-outline-variant/50 p-6">
+                    <h2 class="text-lg font-semibold mb-4" style="font-family:'Playfair Display',serif">Informations du pack</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                        <div class="flex flex-col gap-1 md:col-span-2">
+                            <label class="admin-label" for="pack-name">Nom du pack *</label>
+                            <input type="text" id="pack-name" name="name" class="admin-input" placeholder="ex : Le Salon Méridien" required />
+                        </div>
+                        <div class="flex flex-col gap-1">
+                            <label class="admin-label" for="pack-slug">Slug (URL)</label>
+                            <input type="text" id="pack-slug" name="slug" class="admin-input" readonly style="opacity:0.6; cursor:not-allowed" />
+                            <span class="text-xs text-on-surface-variant">Non modifiable après création</span>
+                        </div>
+                        <div class="flex flex-col gap-1">
+                            <label class="admin-label" for="pack-status">Statut</label>
+                            <select id="pack-status" name="status" class="admin-input">
+                                <option value="draft">Brouillon</option>
+                                <option value="published">Publié</option>
+                            </select>
+                        </div>
+                        <div class="flex flex-col gap-1">
+                            <label class="admin-label" for="pack-price">Prix (DZD) *</label>
+                            <input type="number" id="pack-price" name="price" class="admin-input" placeholder="ex : 185000" min="0" required />
+                        </div>
+                        <div class="flex flex-col gap-1">
+                            <label class="admin-label" for="pack-old-price">Ancien prix (DZD)</label>
+                            <input type="number" id="pack-old-price" name="oldPrice" class="admin-input" placeholder="ex : 218000 (optionnel)" min="0" />
+                        </div>
+                        <div class="flex flex-col gap-1 md:col-span-2">
+                            <label class="admin-label" for="pack-short-desc">Description courte</label>
+                            <input type="text" id="pack-short-desc" name="shortDescription" class="admin-input" placeholder="Résumé en une phrase…" />
+                        </div>
+                        <div class="flex flex-col gap-1 md:col-span-2">
+                            <label class="admin-label" for="pack-desc">Description longue</label>
+                            <textarea id="pack-desc" name="description" class="admin-input" rows="4" placeholder="Décrivez la composition, les matériaux, l'ambiance…"></textarea>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="bg-white rounded-xl border border-outline-variant/50 p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <div>
+                            <h2 class="text-lg font-semibold" style="font-family:'Playfair Display',serif">Articles inclus dans le pack</h2>
+                            <p class="text-sm text-on-surface-variant mt-1">Cliquez sur les articles pour les sélectionner. <span id="selected-count" class="text-primary font-semibold">0 sélectionné</span></p>
+                        </div>
+                        <div class="admin-search" style="max-width:220px">
+                            <span class="material-symbols-outlined text-on-surface-variant text-lg">search</span>
+                            <input type="search" id="product-search" placeholder="Filtrer les articles…" />
+                        </div>
+                    </div>
+                    <div id="selected-chips" class="flex flex-wrap gap-2 mb-5 empty:hidden"></div>
+                    <div id="product-picker-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
+                        <p class="col-span-full text-center text-on-surface-variant py-8">Chargement des articles…</p>
+                    </div>
+                </section>
+
+                <div class="flex items-center gap-4 pb-8">
+                    <button type="submit" class="admin-btn-primary inline-flex items-center gap-2" id="submit-btn">
+                        <span class="material-symbols-outlined text-lg">save</span>
+                        Enregistrer les modifications
+                    </button>
+                    <a href="../packs.html" class="admin-btn-ghost">Annuler</a>
+                    <span id="form-error" class="text-error text-sm hidden"></span>
+                </div>
+            </form>
+        </main>
+    </div>
+</div>
+<script type="module" src="../../assets/admin-pack-form.js"></script>
+</body>
+</html>

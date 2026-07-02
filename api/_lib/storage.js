@@ -1,5 +1,15 @@
 import { readFileSync, writeFileSync, existsSync } from 'fs';
 import { join } from 'path';
+import { exec } from 'child_process';
+
+function triggerLocalBuild() {
+    if (!isVercelRuntime()) {
+        exec('node scripts/generate-pdp.mjs', (err) => {
+            if (err) console.error('Local build failed:', err);
+            else console.log('Local static pages regenerated automatically.');
+        });
+    }
+}
 
 const KV_KEY = 'canape:products';
 const BLOB_PRODUCTS_PATH = 'data/products.json';
@@ -128,7 +138,80 @@ export async function setProducts(products) {
     }
 
     writeFileSync(productsPath(), JSON.stringify(normalized, null, 2) + '\n', 'utf8');
+    triggerLocalBuild();
     return normalized;
+}
+
+const KV_PACKS_KEY = 'canape:packs';
+const BLOB_PACKS_PATH = 'data/packs.json';
+
+function packsPath() {
+    return join(process.cwd(), 'data', 'packs.json');
+}
+
+function seedPacksFromFile() {
+    const path = packsPath();
+    if (!existsSync(path)) return [];
+    try {
+        return JSON.parse(readFileSync(path, 'utf8'));
+    } catch {
+        return [];
+    }
+}
+
+async function getPacksFromBlob() {
+    const blob = await getBlob();
+    if (!blob) return null;
+    const found = await blob.list({ prefix: BLOB_PACKS_PATH, limit: 1 });
+    const packsBlob = found.blobs?.find((item) => item.pathname === BLOB_PACKS_PATH);
+    if (!packsBlob) {
+        const seed = seedPacksFromFile();
+        if (seed.length > 0) await setPacksInBlob(seed);
+        return seed;
+    }
+    const res = await fetch(`${packsBlob.url}?t=${Date.now()}`, { cache: 'no-store' });
+    if (!res.ok) throw new Error('Unable to read packs from Blob storage');
+    return await res.json();
+}
+
+async function setPacksInBlob(packs) {
+    const blob = await getBlob();
+    if (!blob) return null;
+    await blob.put(BLOB_PACKS_PATH, JSON.stringify(packs, null, 2) + '\n', {
+        access: 'public',
+        addRandomSuffix: false,
+        allowOverwrite: true,
+        contentType: 'application/json; charset=utf-8',
+    });
+    return packs;
+}
+
+export async function getPacks() {
+    const blobPacks = await getPacksFromBlob();
+    if (blobPacks) return blobPacks;
+    const kv = await getKv();
+    if (kv) {
+        const stored = await kv.get(KV_PACKS_KEY);
+        if (stored && Array.isArray(stored) && stored.length > 0) return stored;
+        const seed = seedPacksFromFile();
+        if (seed.length > 0) await kv.set(KV_PACKS_KEY, seed);
+        return seed;
+    }
+    return seedPacksFromFile();
+}
+
+export async function setPacks(packs) {
+    const blobResult = await setPacksInBlob(packs);
+    if (blobResult) return blobResult;
+    const kv = await getKv();
+    if (kv) {
+        await kv.set(KV_PACKS_KEY, packs);
+        return packs;
+    }
+    if (isVercelRuntime()) throw new StorageNotConfiguredError();
+    writeFileSync(packsPath(), JSON.stringify(packs, null, 2) + '\n', 'utf8');
+    triggerLocalBuild();
+    return packs;
 }
 
 export function slugify(text) {
@@ -140,10 +223,57 @@ export function slugify(text) {
         .replace(/^-|-$/g, '');
 }
 
-export const CATEGORIES = {
-    sejour: { label: 'SÉJOUR', subcategories: { fauteuils: 'FAUTEUILS', canapes: 'CANAPÉS', general: 'SÉJOUR' } },
-    'salle-a-manger': { label: 'SALLE À MANGER', subcategories: { tables: 'TABLES', general: 'SALLE À MANGER' } },
-    chambre: { label: 'CHAMBRE', subcategories: { lits: 'LITS', general: 'CHAMBRE' } },
-    decoration: { label: 'DÉCORATION', subcategories: { luminaires: 'LUMINAIRES', miroirs: 'MIROIRS', general: 'DÉCORATION' } },
-    salon: { label: 'SALON', subcategories: { general: 'SALON' } },
+export const CATEGORIES_TREE = {
+    'sejour': {
+        label: 'SÉJOUR',
+        subcategories: {
+            'fauteuils': { label: 'FAUTEUILS' },
+            'canapes': { label: 'CANAPÉS' },
+            'general': { label: 'SÉJOUR' }
+        }
+    },
+    'salle-a-manger': {
+        label: 'SALLE À MANGER',
+        subcategories: {
+            'tables-de-repas': { label: 'TABLES DE REPAS' },
+            'general': { label: 'SALLE À MANGER' }
+        }
+    },
+    'chambre': {
+        label: 'CHAMBRE',
+        subcategories: {
+            'adulte': {
+                label: 'ADULTE',
+                subsubcategories: {
+                    'lits': { label: 'LITS' },
+                    'dressing': { label: 'DRESSING' },
+                    'commodes': { label: 'COMMODES' }
+                }
+            },
+            'junior': {
+                label: 'JUNIOR',
+                subsubcategories: {
+                    'lits': { label: 'LITS' },
+                    'dressing': { label: 'DRESSING' },
+                    'commodes': { label: 'COMMODES' },
+                    'bureau': { label: 'BUREAU' }
+                }
+            },
+            'general': { label: 'CHAMBRE' }
+        }
+    },
+    'decoration': {
+        label: 'DÉCORATION',
+        subcategories: {
+            'luminaires': { label: 'LUMINAIRES' },
+            'miroirs': { label: 'MIROIRS' },
+            'general': { label: 'DÉCORATION' }
+        }
+    },
+    'salon': {
+        label: 'SALON',
+        subcategories: {
+            'general': { label: 'SALON' }
+        }
+    }
 };

@@ -1,12 +1,94 @@
 [
   {
+    "slug": "sofa-reio",
+    "name": "Sofa Reio",
+    "category": "sejour",
+    "categoryLabel": "CANAPÉS",
+    "price": 145000,
+    "oldPrice": 180000,
+    "currency": "DZD",
+    "shortDescription": "Le canapé Reio incarne le luxe moderne avec ses lignes épurées et son revêtement en velours somptueux.",
+    "description": "Plongez dans le confort absolu avec le canapé Reio. Son design minimaliste s'intègre parfaitement aux intérieurs contemporains, tandis que son assise profonde et ses coussins généreux offrent une expérience de détente inégalée. Fabriqué à la main avec une structure en chêne massif.",
+    "heroImage": "/img/reio_blue_1.png",
+    "images": {
+      "hero": "/img/reio_blue_1.png",
+      "gallery": [
+        "/img/reio_blue_1.png",
+        "/img/reio_blue_2.png"
+      ]
+    },
+    "colors": [
+      {
+        "hex": "#0f204b",
+        "label": "Bleu Nuit",
+        "gallery": [
+          "/img/reio_blue_1.png",
+          "/img/reio_blue_2.png"
+        ]
+      },
+      {
+        "hex": "#005b41",
+        "label": "Vert Émeraude",
+        "gallery": [
+          "/img/reio_green_1.png",
+          "/img/reio_green_2.png"
+        ]
+      }
+    ],
+    "features": [
+      "Revêtement velours anti-taches",
+      "Assise mousse haute résilience 35kg/m³",
+      "Structure en chêne massif garanti 10 ans"
+    ],
+    "specifications": [
+      {
+        "label": "Structure",
+        "value": "Chêne Massif"
+      },
+      {
+        "label": "Revêtement",
+        "value": "Velours"
+      }
+    ],
+    "dimensions": {
+      "largeur": "220 cm",
+      "profondeur": "95 cm",
+      "hauteur": "85 cm",
+      "assise": "45 cm"
+    },
+    "materials": [
+      {
+        "tag": "REVÊTEMENT",
+        "title": "Velours Premium",
+        "text": "Un velours luxueux, doux au toucher et traité pour résister aux aléas du quotidien tout en conservant son éclat.",
+        "image": "/img/mat_velvet.png",
+        "aspect": "square",
+        "offset": false
+      },
+      {
+        "tag": "STRUCTURE",
+        "title": "Chêne Massif",
+        "text": "Une ossature robuste en chêne massif, sélectionné pour sa durabilité exceptionnelle et son grain naturel élégant.",
+        "image": "/img/mat_wood.png",
+        "aspect": "4/3",
+        "offset": true
+      }
+    ],
+    "status": "published",
+    "archived": false,
+    "createdAt": "2026-07-02T13:31:08.332Z",
+    "updatedAt": "2026-07-02"
+  },
+  {
     "slug": "table-chene",
     "name": "Table Chêne",
     "nameDisplay": "TABLE CHÊNE",
     "category": "salle-a-manger",
     "categoryLabel": "SALLE À MANGER",
-    "subcategory": "tables",
-    "subcategoryLabel": "TABLES",
+    "subcategory": "tables-de-repas",
+    "subcategoryLabel": "TABLES DE REPAS",
+    "subsubcategory": "",
+    "subsubcategoryLabel": "",
     "price": 2800,
     "currency": "DZD",
     "shortDescription": "Une table de repas en chêne massif aux lignes épurées, conçue pour rassembler famille et amis autour d'un centre de table d'exception.",
@@ -14,7 +96,7 @@
     "status": "published",
     "archived": false,
     "createdAt": "2026-06-25",
-    "updatedAt": "2026-06-28",
+    "updatedAt": "2026-06-30",
     "images": {
       "hero": "https://lh3.googleusercontent.com/aida-public/AB6AXuA0Z-EhelDaeLPLKadJobSWHdG91mvxFoYp1bTl5i3XWIa1h-SeTpAewAhx9S7IPckW0dqjDYVEDzOQW3kP9F6EheME2GB8QIWUn4fPWRHlZsq3_T-DBGXwRS9telozYKp9hLB0oHE4syWiciNRKPz8xd-RUBf-6FeQE6jTndaVy090sbkfQZK_ZJcjMldBzW9xZ3bcSz6Pf8hnR2mq-7HHIqlTKbjgncZr6JVokmT1aCAxtSd4yTCwyvrlJIfY7RWkXxVb01mUOPrZ",
       "gallery": [
@@ -136,7 +218,8 @@
     "colors": [
       {
         "hex": "#3b2f2f",
-        "label": "Noir"
+        "label": "Noir",
+        "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuDQ8mBXX_L9iVw4LgB8L9v_YmB8L9v_YmB8L9v_YmB8L9v_Y"
       },
       {
         "hex": "#8b5a2b",
@@ -330,9 +413,18 @@
       ]
     },
     "colors": [
-      { "hex": "#3b2f2f", "label": "Noir profond" },
-      { "hex": "#8b5a2b", "label": "Cognac" },
-      { "hex": "#d2b48c", "label": "Ivoire" }
+      {
+        "hex": "#3b2f2f",
+        "label": "Noir profond"
+      },
+      {
+        "hex": "#8b5a2b",
+        "label": "Cognac"
+      },
+      {
+        "hex": "#d2b48c",
+        "label": "Ivoire"
+      }
     ],
     "dimensions": {
       "largeur": "78 cm",
@@ -341,9 +433,18 @@
       "assise": "42 cm"
     },
     "specs": [
-      { "label": "Structure", "value": "Chêne massif" },
-      { "label": "Rembourrage", "value": "Mousse haute résilience" },
-      { "label": "Fabrication", "value": "Europe" }
+      {
+        "label": "Structure",
+        "value": "Chêne massif"
+      },
+      {
+        "label": "Rembourrage",
+        "value": "Mousse haute résilience"
+      },
+      {
+        "label": "Fabrication",
+        "value": "Europe"
+      }
     ],
     "materials": [
       {

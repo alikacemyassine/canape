@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 
 <head>
@@ -23,6 +23,7 @@
                     class="text-xs tracking-[0.3em] text-on-surface-variant">ADMIN SUITE</span></div>
             <nav class="flex flex-col gap-2">
                 <a href="../catalog.html" class="admin-nav-link active">Catalogue</a>
+                <a href="../packs.html" class="admin-nav-link">Packs</a>
             </nav>
             <button id="logout-btn" class="admin-btn-ghost mt-auto text-left">Déconnexion</button>
         </aside>
@@ -52,6 +53,14 @@
                         <div>
                             <label class="admin-label" for="category">Collection</label>
                             <select class="admin-input" id="category"></select>
+                        </div>
+                        <div id="subcategory-wrapper" style="display: none;">
+                            <label class="admin-label" for="subcategory">Sous-collection</label>
+                            <select class="admin-input" id="subcategory"></select>
+                        </div>
+                        <div id="subsubcategory-wrapper" style="display: none;">
+                            <label class="admin-label" for="subsubcategory">Sous-sous-collection</label>
+                            <select class="admin-input" id="subsubcategory"></select>
                         </div>
                         <div>
                             <label class="admin-label" for="short-desc">Description courte</label>

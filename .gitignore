@@ -11,3 +11,9 @@ Thumbs.db
 
 # Dev/design artifacts
 *.zip
+
+*.rar
+backend skills/
+Anthropic-Cybersecurity-Skills-main/
+.agents/
+scratch/

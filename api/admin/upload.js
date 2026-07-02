@@ -34,7 +34,7 @@ function parseDataUrl(dataUrl) {
 }
 
 export default async function handler(req, res) {
-    if (!requireAdmin(req, res)) return;
+    if (!(await requireAdmin(req, res))) return;
     if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
     try {
@@ -51,19 +51,9 @@ export default async function handler(req, res) {
         const ext = extensionFor(parsed.contentType, req.body?.fileName);
         const fileName = `${Date.now()}-${baseName}.${ext}`;
 
-        if (!process.env.BLOB_READ_WRITE_TOKEN) {
-            const uploadDir = join(process.cwd(), 'assets', 'uploads');
-            await mkdir(uploadDir, { recursive: true });
-            await writeFile(join(uploadDir, fileName), parsed.buffer);
-            return res.status(201).json({
-                url: `/assets/uploads/${fileName}`,
-                pathname: `assets/uploads/${fileName}`,
-            });
-        }
-
-        // Bypass DNS loop: Hit the cPanel IP directly and tell Apache it's for lecanape-dz.com
+        // Priority 1: cPanel custom upload server
         if (process.env.CPANEL_UPLOAD_URL) {
-            const res = await fetch('http://65.21.166.135/api/upload.php', {
+            const cpanelRes = await fetch('http://65.21.166.135/api/upload.php', {
                 method: 'POST',
                 headers: { 
                     'Content-Type': 'application/json',
@@ -76,18 +66,18 @@ export default async function handler(req, res) {
                 })
             });
 
-            if (!res.ok) {
-                const text = await res.text();
-                throw new Error(`Erreur cPanel (${res.status}): ${text}`);
+            if (!cpanelRes.ok) {
+                const text = await cpanelRes.text();
+                throw new Error(`Erreur cPanel (${cpanelRes.status}): ${text}`);
             }
 
-            const cpanelResult = await res.json();
+            const cpanelResult = await cpanelRes.json();
             if (cpanelResult.error) throw new Error(cpanelResult.error);
             
             return res.status(201).json({ url: cpanelResult.url, pathname: fileName });
         }
 
-        // Fallback to Vercel Blob if no cPanel is configured
+        // Priority 2: Vercel Blob storage
         if (process.env.BLOB_READ_WRITE_TOKEN) {
             const { put } = await import('@vercel/blob');
             const pathname = `products/${fileName}`;
@@ -98,9 +88,20 @@ export default async function handler(req, res) {
             return res.status(201).json({ url: blob.url, pathname: blob.pathname });
         }
 
+        // Priority 3: Local filesystem (development only)
+        if (!isVercelRuntime()) {
+            const uploadDir = join(process.cwd(), 'assets', 'uploads');
+            await mkdir(uploadDir, { recursive: true });
+            await writeFile(join(uploadDir, fileName), parsed.buffer);
+            return res.status(201).json({
+                url: `/assets/uploads/${fileName}`,
+                pathname: `assets/uploads/${fileName}`,
+            });
+        }
+
         throw new Error('Aucun serveur de stockage configuré (ni cPanel ni Vercel Blob).');
     } catch (err) {
-        console.error(err);
-        return res.status(500).json({ error: err.message || 'Impossible d envoyer l image.' });
+        console.error('[upload] Error:', err);
+        return res.status(500).json({ error: 'Impossible d\'envoyer l\'image. Veuillez réessayer.' });
     }
 }

@@ -43,6 +43,15 @@ export function formatPrice(n) {
     return Number(n).toLocaleString('fr-FR') + ' DZD';
 }
 
+export function escapeHtml(value) {
+    return String(value || '')
+        .replace(/&/g, '&amp;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+}
+
 export function slugify(text) {
     return text
         .toLowerCase()
@@ -52,10 +61,86 @@ export function slugify(text) {
         .replace(/^-|-$/g, '');
 }
 
-export const CATEGORIES = [
-    { id: 'sejour', label: 'Séjour' },
-    { id: 'salle-a-manger', label: 'Salle à manger' },
-    { id: 'chambre', label: 'Chambre' },
-    { id: 'decoration', label: 'Décoration' },
-    { id: 'salon', label: 'Salon' },
-];
+export const CATEGORIES_TREE = {
+    'sejour': {
+        label: 'Séjour',
+        subcategories: {
+            'fauteuils': { label: 'Fauteuils' },
+            'canapes': { label: 'Canapés' },
+            'general': { label: 'Général Séjour' }
+        }
+    },
+    'salle-a-manger': {
+        label: 'Salle à manger',
+        subcategories: {
+            'tables-de-repas': { label: 'Tables de repas' },
+            'general': { label: 'Général Salle à manger' }
+        }
+    },
+    'chambre': {
+        label: 'Chambre',
+        subcategories: {
+            'adulte': {
+                label: 'Adulte',
+                subsubcategories: {
+                    'lits': { label: 'Lits' },
+                    'dressing': { label: 'Dressing' },
+                    'commodes': { label: 'Commodes' }
+                }
+            },
+            'junior': {
+                label: 'Junior',
+                subsubcategories: {
+                    'lits': { label: 'Lits' },
+                    'dressing': { label: 'Dressing' },
+                    'commodes': { label: 'Commodes' },
+                    'bureau': { label: 'Bureau' }
+                }
+            },
+            'general': { label: 'Général Chambre' }
+        }
+    },
+    'decoration': {
+        label: 'Décoration',
+        subcategories: {
+            'luminaires': { label: 'Luminaires' },
+            'miroirs': { label: 'Miroirs' },
+            'general': { label: 'Général Décoration' }
+        }
+    },
+    'salon': {
+        label: 'Salon',
+        subcategories: {
+            'general': { label: 'Général Salon' }
+        }
+    }
+};
+
+/**
+ * Convert a File to a base64 data URL.
+ */
+function fileToDataUrl(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+    });
+}
+
+/**
+ * Upload an image file to /api/admin/upload.
+ * Returns the public URL string.
+ */
+export async function uploadImage(file) {
+    if (!file) throw new Error('Aucun fichier sélectionné');
+    if (!file.type.startsWith('image/')) throw new Error('Choisissez une image valide (JPG, PNG…)');
+    if (file.size > 10 * 1024 * 1024) throw new Error('Image trop lourde. Maximum 10 Mo.');
+    const dataUrl = await fileToDataUrl(file);
+    const result = await api('/admin/upload', {
+        method: 'POST',
+        body: JSON.stringify({ fileName: file.name, dataUrl }),
+    });
+    return result.url;
+}
+

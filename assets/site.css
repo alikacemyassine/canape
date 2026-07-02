@@ -52,7 +52,6 @@ button:focus-visible {
     padding-bottom: 1rem;
 }
 
-.glass-nav.hidden-nav { transform: translateY(-100%); }
 
 .reveal-up { visibility: visible; }
 
@@ -452,3 +451,8 @@ button:focus-visible {
         min-height: 320px;
     }
 }
+
+@media (hover: none) { .group-hover\:scale-105 { transition: none !important; } .hover\:-translate-y-1 { transition: none !important; } }
+
+/* Prevent navbar from hiding on scroll */
+.glass-nav.hidden-nav { transform: none !important; }

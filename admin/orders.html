@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="robots" content="noindex, nofollow"/>
+<title>Commandes Admin — LE CANAPÉ</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>tailwind.config={theme:{extend:{colors:{primary:'#964900',secondary:'#5f5e5e',background:'#fff8f3','on-surface-variant':'#564337','outline-variant':'#ddc1b1',error:'#ba1a1a'}}}}</script>
+<link rel="stylesheet" href="../assets/admin.css"/>
+<style>
+    .order-card {
+        background: white;
+        border: 1px solid var(--outline-variant);
+        padding: 1.5rem;
+        margin-bottom: 1rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+    .status-badge {
+        padding: 0.25rem 0.75rem;
+        border-radius: 9999px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+    }
+    .status-pending { background: #fff3cd; color: #856404; }
+    .status-confirmed { background: #d4edda; color: #155724; }
+    .status-cancelled { background: #f8d7da; color: #721c24; }
+</style>
+</head>
+<body class="bg-background text-on-background font-body-md">
+<div class="admin-shell">
+    <aside class="admin-sidebar">
+        <div class="admin-sidebar-brand">LE CANAPÉ<br/><span class="text-xs tracking-[0.3em] text-on-surface-variant">ADMIN SUITE</span></div>
+        <nav class="flex flex-col gap-2">
+            <a href="./catalog.html" class="admin-nav-link">Catalogue</a>
+            <a href="./packs.html" class="admin-nav-link">Packs</a>
+            <a href="./orders.html" class="admin-nav-link active">Commandes</a>
+            <span class="admin-nav-link opacity-40 cursor-not-allowed">Paramètres</span>
+        </nav>
+        <button id="logout-btn" class="admin-btn-ghost mt-auto text-left">Déconnexion</button>
+    </aside>
+    <div class="admin-main">
+        <header class="admin-topbar">
+            <div class="admin-search">
+                <span class="material-symbols-outlined text-on-surface-variant text-xl">search</span>
+                <input type="search" id="search-input" placeholder="Rechercher une commande..."/>
+            </div>
+            <a href="../index.html" target="_blank" class="text-on-surface-variant hover:text-primary" title="Voir le site">
+                <span class="material-symbols-outlined">open_in_new</span>
+            </a>
+        </header>
+        <main class="admin-content">
+            <div class="flex flex-wrap items-end justify-between gap-4 mb-8">
+                <div>
+                    <h1 class="text-3xl mb-2" style="font-family:'Playfair Display',serif">Commandes (Réservations)</h1>
+                    <p class="text-sm text-on-surface-variant">Gérez les commandes des clients. Contactez-les pour confirmer.</p>
+                </div>
+            </div>
+            
+            <div id="orders-list" class="flex flex-col gap-4">
+                <p class="text-on-surface-variant text-center py-16">Chargement des commandes...</p>
+            </div>
+        </main>
+    </div>
+</div>
+
+<script type="module">
+    import { api, requireAuth, logout, toast } from '../assets/admin-auth.js';
+
+    document.getElementById('logout-btn').addEventListener('click', logout);
+
+    const ordersList = document.getElementById('orders-list');
+    let orders = [];
+
+    function formatDate(isoString) {
+        return new Date(isoString).toLocaleString('fr-DZ', { 
+            dateStyle: 'medium', timeStyle: 'short' 
+        });
+    }
+
+    function escapeHtml(value) {
+        return String(value || '')
+            .replace(/&/g, '&amp;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;');
+    }
+
+    function renderStatus(status) {
+        if (status === 'confirmed') return '<span class="status-badge status-confirmed">Confirmée</span>';
+        if (status === 'cancelled') return '<span class="status-badge status-cancelled">Annulée</span>';
+        return '<span class="status-badge status-pending">En attente</span>';
+    }
+
+    function renderOrders() {
+        if (orders.length === 0) {
+            ordersList.innerHTML = '<p class="text-on-surface-variant text-center py-16">Aucune commande trouvée.</p>';
+            return;
+        }
+
+        ordersList.innerHTML = orders.map(order => {
+            const u = order.user || {};
+            const safeSlug = escapeHtml(order.product_slug);
+            const safeName = escapeHtml(`${u.first_name || ''} ${u.last_name || ''}`.trim());
+            const safeEmail = escapeHtml(u.email || '');
+            const safePhone = escapeHtml(u.phone || 'Non renseigné');
+            const safeAddress = escapeHtml(u.address || 'Non renseignée');
+            const safeId = escapeHtml(String(order.id || ''));
+
+            return `
+            <div class="order-card" id="order-${safeId}">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <h3 class="font-bold text-lg mb-1">${order.type === 'pack' ? 'Composition' : 'Produit'} : ${safeSlug}</h3>
+                        <p class="text-xs text-on-surface-variant mb-2">Commandé le ${formatDate(order.created_at)}</p>
+                    </div>
+                    <div>
+                        ${renderStatus(order.status)}
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 bg-surface-container-low p-4 text-sm">
+                    <div>
+                        <h4 class="font-bold mb-2 text-primary">Informations Client</h4>
+                        <p><strong>Nom :</strong> ${safeName}</p>
+                        <p><strong>Email :</strong> <a href="mailto:${safeEmail}" class="text-primary underline">${safeEmail}</a></p>
+                        <p><strong>Téléphone :</strong> ${safePhone}</p>
+                        <p><strong>Adresse :</strong> ${safeAddress}</p>
+                    </div>
+                    <div class="flex flex-col justify-end items-end gap-2">
+                        ${order.status === 'pending' ? `
+                            <button class="admin-btn-primary text-xs py-2 px-4 w-full md:w-auto text-center confirm-btn" data-id="${safeId}">Confirmer la commande</button>
+                            <button class="admin-btn-secondary text-xs py-2 px-4 w-full md:w-auto text-center cancel-btn" data-id="${safeId}">Annuler</button>
+                        ` : ''}
+                        ${order.status === 'confirmed' ? `
+                            <button class="admin-btn-secondary text-xs py-2 px-4 w-full md:w-auto text-center cancel-btn" data-id="${safeId}">Annuler</button>
+                        ` : ''}
+                    </div>
+                </div>
+            </div>
+        `;
+        }).join('');
+
+        // Bind events
+        document.querySelectorAll('.confirm-btn').forEach(btn => {
+            btn.addEventListener('click', async (e) => {
+                const id = e.target.getAttribute('data-id');
+                await updateStatus(id, 'confirmed');
+            });
+        });
+
+        document.querySelectorAll('.cancel-btn').forEach(btn => {
+            btn.addEventListener('click', async (e) => {
+                const id = e.target.getAttribute('data-id');
+                if (!confirm('Annuler cette commande ? Cette action est irréversible.')) return;
+                await updateStatus(id, 'cancelled');
+            });
+        });
+    }
+
+    async function updateStatus(id, status) {
+        try {
+            await api('/admin/orders/' + id, {
+                method: 'PUT',
+                body: JSON.stringify({ status })
+            });
+            toast('Statut mis à jour avec succès');
+            loadOrders(); // reload
+        } catch (err) {
+            toast('Erreur: ' + err.message, true);
+        }
+    }
+
+    async function loadOrders() {
+        try {
+            orders = await api('/admin/orders');
+            renderOrders();
+        } catch (err) {
+            ordersList.innerHTML = '<p class="text-red-600 text-center py-16">Erreur de chargement: ' + err.message + '</p>';
+        }
+    }
+
+    window.addEventListener('DOMContentLoaded', async () => {
+        if (!await requireAuth()) return;
+        await loadOrders();
+    });
+</script>
+</body>
+</html>
