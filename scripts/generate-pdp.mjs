@@ -21,8 +21,20 @@ const today = new Date().toISOString().slice(0, 10);
 const { data: rawProducts } = await supabase.from('products').select('*');
 const { data: rawPacks } = await supabase.from('packs').select('*');
 
-const products = (rawProducts || []).filter((item) => item.status === 'published' && item.archived !== true);
-const packs = (rawPacks || []).filter((item) => item.status === 'published' && item.archived !== true);
+const products = (rawProducts || []).filter((item) => item.status === 'published' && item.archived !== true)
+    .map(p => ({
+        ...p,
+        oldPrice: p.old_price,
+        nameDisplay: (p.name || '').toUpperCase(),
+        categoryLabel: (p.categoryLabel || p.category || '').toUpperCase(),
+        subcategoryLabel: (p.subcategoryLabel || p.subcategory || p.categoryLabel || p.category || '').toUpperCase(),
+    }));
+const packs = (rawPacks || []).filter((item) => item.status === 'published' && item.archived !== true)
+    .map(p => ({
+        ...p,
+        oldPrice: p.old_price,
+        nameDisplay: (p.name || '').toUpperCase(),
+    }));
 
 const escapeAttr = (value = '') => String(value).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
 const jsonScript = (value) => JSON.stringify(value).replace(/</g, '\\u003c');
