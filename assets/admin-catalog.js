@@ -1,4 +1,4 @@
-import { api, requireAuth, logout, formatPrice, toast, escapeHtml } from './admin-auth.js';
+import { api, requireAuth, logout, formatPrice, toast, escapeHtml } from './admin-auth.js?v=2';
 
 let allProducts = [];
 let filter = 'all';

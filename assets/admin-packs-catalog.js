@@ -2,7 +2,7 @@
  * admin-packs-catalog.js
  * Manages the Packs admin listing page (admin/packs.html)
  */
-import { api, requireAuth, logout, formatPrice, toast } from './admin-auth.js';
+import { api, requireAuth, logout, formatPrice, toast, escapeHtml } from './admin-auth.js?v=2';
 
 let allPacks = [];
 let search = '';

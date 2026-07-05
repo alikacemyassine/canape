@@ -32,7 +32,7 @@
     </div>
 </div>
 <script type="module">
-    import { api } from '../assets/admin-auth.js';
+    import { api } from '../assets/admin-auth.js?v=2';
 
     const { authenticated } = await api('/admin/session').catch(() => ({ authenticated: false }));
     if (authenticated) window.location.href = './catalog.html';
