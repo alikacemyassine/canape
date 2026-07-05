@@ -2,7 +2,7 @@
  * Renders and filters product cards on produits/index.html.
  * Dynamically builds sub-filter rows from CATEGORIES_TREE.
  */
-import { CATEGORIES_TREE } from './admin-auth.js';
+import { CATEGORIES_TREE } from './admin-auth.js?v=2';
 
 (function () {
     const grid = document.getElementById('product-grid');

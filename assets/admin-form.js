@@ -1,4 +1,4 @@
-import { api, requireAuth, toast, slugify, CATEGORIES_TREE } from './admin-auth.js';
+import { api, requireAuth, toast, slugify, CATEGORIES_TREE } from './admin-auth.js?v=2';
 
 const params = new URLSearchParams(window.location.search);
 const editSlug = params.get('slug');

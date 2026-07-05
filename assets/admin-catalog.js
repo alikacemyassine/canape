@@ -67,7 +67,7 @@ function render() {
                 </div>
                 <h3 class="font-headline-md text-lg mb-4" style="font-family:'Playfair Display',serif">${escapeHtml(p.name)}</h3>
                 <div class="flex gap-3 border-t border-outline-variant/30 pt-3">
-                    <a href="./article/edit.html?slug=${escapeHtml(p.slug)}" class="text-on-surface-variant hover:text-primary" title="Modifier">
+                    <a href="./article/edit.html?v=3&slug=${escapeHtml(p.slug)}" class="text-on-surface-variant hover:text-primary" title="Modifier">
                         <span class="material-symbols-outlined text-xl">edit</span>
                     </a>
                     <a href="../produits/item/?slug=${escapeHtml(p.slug)}" target="_blank" class="text-on-surface-variant hover:text-primary" title="Aperçu">

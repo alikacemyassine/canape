@@ -5,7 +5,7 @@
  * - Fetches all products and renders a visual checkable grid
  * - On submit: POSTs (new) or PUTs (edit) to /api/admin/packs
  */
-import { api, requireAuth, logout, toast, uploadImage } from './admin-auth.js';
+import { api, requireAuth, logout, toast, uploadImage } from './admin-auth.js?v=2';
 
 const isEdit = window.location.pathname.includes('/edit.html');
 const packSlug = new URLSearchParams(window.location.search).get('slug');

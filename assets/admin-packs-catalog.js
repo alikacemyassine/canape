@@ -39,7 +39,7 @@ function render() {
     const grid = document.getElementById('packs-grid');
     const items = filtered();
     if (!items.length) {
-        grid.innerHTML = '<p class="text-on-surface-variant col-span-full text-center py-16">Aucun pack trouvé. <a href="./pack/new.html" class="text-primary underline">Créer le premier pack</a></p>';
+        grid.innerHTML = '<p class="text-on-surface-variant col-span-full text-center py-16">Aucun pack trouvé. <a href="./pack/new.html?v=3" class="text-primary underline">Créer le premier pack</a></p>';
         return;
     }
 
@@ -63,7 +63,7 @@ function render() {
                 <h3 class="font-headline-md text-lg mb-1" style="font-family:'Playfair Display',serif">${p.name}</h3>
                 <p class="text-xs text-on-surface-variant mb-4 line-clamp-2">${p.shortDescription || ''}</p>
                 <div class="flex gap-3 border-t border-outline-variant/30 pt-3">
-                    <a href="./pack/edit.html?slug=${p.slug}" class="text-on-surface-variant hover:text-primary" title="Modifier">
+                    <a href="./pack/edit.html?v=3&slug=${p.slug}" class="text-on-surface-variant hover:text-primary" title="Modifier">
                         <span class="material-symbols-outlined text-xl">edit</span>
                     </a>
                     <button type="button" class="delete-btn text-on-surface-variant hover:text-error ml-auto" data-slug="${p.slug}" title="Supprimer">
