@@ -9,9 +9,17 @@ import { extname, join, normalize } from 'path';
 import { fileURLToPath, pathToFileURL } from 'url';
 import { config } from 'dotenv';
 import { resolve, dirname } from 'path';
-import WebSocket from 'ws';
-
-global.WebSocket = WebSocket;
+// ── WebSocket polyfill for Node < 22 (Supabase requires it) ───────────────────
+// Use dynamic import so the app doesn't crash if 'ws' isn't installed
+if (typeof globalThis.WebSocket === 'undefined') {
+    try {
+        const wsModule = await import('ws');
+        globalThis.WebSocket = wsModule.default || wsModule.WebSocket;
+    } catch {
+        // ws not installed — Supabase auth calls will fail but app still starts
+        console.warn('⚠️  ws package not found. Install it with: npm install ws');
+    }
+}
 
 // ── Load .env from the app root ───────────────────────────────────────────────
 const __dirname = dirname(fileURLToPath(import.meta.url));
