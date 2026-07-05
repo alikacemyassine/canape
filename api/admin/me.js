@@ -13,10 +13,11 @@ export default async function handler(req, res) {
         const { data: { user }, error } = await supabase.auth.getUser(token);
         if (error || !user) return res.status(200).json({ authenticated: false });
 
-        const adminEmail = process.env.ADMIN_EMAIL || 'admin@lecanape.dz';
-        const isAdmin = user.email === adminEmail;
+        const adminEmail = (process.env.ADMIN_EMAIL || 'admin@lecanape.dz').trim().toLowerCase();
+        const isAdmin = user.email && user.email.toLowerCase().trim() === adminEmail;
         return res.status(200).json({ authenticated: isAdmin });
-    } catch {
+    } catch (err) {
+        console.error('Error in /api/admin/me:', err);
         return res.status(200).json({ authenticated: false });
     }
 }

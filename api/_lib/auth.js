@@ -21,20 +21,29 @@ export async function requireAdmin(req, res) {
         return false;
     }
 
-    const { data: { user }, error } = await supabase.auth.getUser(token);
-    
-    if (error || !user) {
-        res.status(401).json({ error: 'Session invalide ou expirée' });
+    try {
+        const { data: { user }, error } = await supabase.auth.getUser(token);
+        
+        if (error || !user) {
+            console.error('requireAdmin error:', error);
+            res.status(401).json({ error: 'Session invalide ou expirée' });
+            return false;
+        }
+
+        const adminEmail = (process.env.ADMIN_EMAIL || 'admin@lecanape.dz').trim().toLowerCase();
+        const userEmail = (user.email || '').trim().toLowerCase();
+        
+        if (userEmail !== adminEmail) {
+            res.status(403).json({ error: 'Accès refusé. Réservé aux administrateurs.' });
+            return false;
+        }
+
+        req.user = user;
+        return true;
+    } catch (err) {
+        console.error('requireAdmin caught error:', err);
+        res.status(401).json({ error: 'Erreur interne' });
         return false;
     }
-
-    const adminEmail = process.env.ADMIN_EMAIL || 'admin@lecanape.dz';
-    if (user.email !== adminEmail) {
-        res.status(403).json({ error: 'Accès refusé. Réservé aux administrateurs.' });
-        return false;
-    }
-
-    req.user = user;
-    return true;
 }
 
