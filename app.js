@@ -37,7 +37,7 @@ const routes = [
     { pattern: /^\/api\/logout$/, file: 'api/logout.js' },
     { pattern: /^\/api\/auth\/register$/, file: 'api/auth/register.js' },
     { pattern: /^\/api\/version$/, file: 'api/version.js' },
-    { pattern: /^\/api\/admin\/me$/, file: 'api/admin/me.js' },
+    { pattern: /^\/api\/admin\/session$/, file: 'api/admin/session.js' },
     { pattern: /^\/api\/admin\/products(?:\/([^/]+))?$/, file: 'api/admin/products.js', params: ['slug'] },
     { pattern: /^\/api\/admin\/packs(?:\/([^/]+))?$/, file: 'api/admin/packs.js', params: ['slug'] },
     { pattern: /^\/api\/admin\/upload$/, file: 'api/admin/upload.js' },

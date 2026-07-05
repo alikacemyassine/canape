@@ -34,7 +34,7 @@
 <script type="module">
     import { api } from '../assets/admin-auth.js';
 
-    const { authenticated } = await api('/admin/me').catch(() => ({ authenticated: false }));
+    const { authenticated } = await api('/admin/session').catch(() => ({ authenticated: false }));
     if (authenticated) window.location.href = './catalog.html';
 
     document.getElementById('login-form').addEventListener('submit', async (e) => {

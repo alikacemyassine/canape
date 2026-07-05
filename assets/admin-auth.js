@@ -26,7 +26,7 @@ export async function api(path, options = {}) {
 }
 
 export async function requireAuth() {
-    const { authenticated, debug_error } = await api('/admin/me');
+    const { authenticated, debug_error } = await api('/admin/session');
     if (!authenticated) {
         if (debug_error) {
             alert('Debug Auth Error: ' + debug_error);
