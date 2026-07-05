@@ -26,8 +26,11 @@ export async function api(path, options = {}) {
 }
 
 export async function requireAuth() {
-    const { authenticated } = await api('/admin/me');
+    const { authenticated, debug_error } = await api('/admin/me');
     if (!authenticated) {
+        if (debug_error) {
+            alert('Debug Auth Error: ' + debug_error);
+        }
         window.location.href = '/admin/login.html';
         return false;
     }

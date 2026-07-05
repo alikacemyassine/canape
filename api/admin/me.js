@@ -8,16 +8,20 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 export default async function handler(req, res) {
     try {
         const token = getTokenFromRequest(req);
-        if (!token) return res.status(200).json({ authenticated: false });
+        if (!token) return res.status(200).json({ authenticated: false, debug_error: 'No token found in cookie' });
         
         const { data: { user }, error } = await supabase.auth.getUser(token);
-        if (error || !user) return res.status(200).json({ authenticated: false });
+        if (error || !user) {
+            return res.status(200).json({ authenticated: false, debug_error: error ? error.message : 'getUser returned no user' });
+        }
 
         const adminEmail = (process.env.ADMIN_EMAIL || 'canape.oran@gmail.com').trim().toLowerCase();
         const isAdmin = user.email && user.email.toLowerCase().trim() === adminEmail;
-        return res.status(200).json({ authenticated: isAdmin });
+        if (!isAdmin) {
+            return res.status(200).json({ authenticated: false, debug_error: `Email mismatch: ${user.email} != ${adminEmail}` });
+        }
+        return res.status(200).json({ authenticated: true });
     } catch (err) {
-        console.error('Error in /api/admin/me:', err);
-        return res.status(200).json({ authenticated: false });
+        return res.status(200).json({ authenticated: false, debug_error: err.message });
     }
 }
