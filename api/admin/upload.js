@@ -51,57 +51,17 @@ export default async function handler(req, res) {
         const ext = extensionFor(parsed.contentType, req.body?.fileName);
         const fileName = `${Date.now()}-${baseName}.${ext}`;
 
-        // Priority 1: cPanel custom upload server
-        if (process.env.CPANEL_UPLOAD_URL) {
-            const cpanelRes = await fetch('http://65.21.166.135/api/upload.php', {
-                method: 'POST',
-                headers: { 
-                    'Content-Type': 'application/json',
-                    'Host': 'lecanape-dz.com'
-                },
-                body: JSON.stringify({
-                    secret: process.env.UPLOAD_SECRET || '',
-                    fileName: fileName,
-                    dataUrl: req.body?.dataUrl
-                })
-            });
-
-            if (!cpanelRes.ok) {
-                const text = await cpanelRes.text();
-                throw new Error(`Erreur cPanel (${cpanelRes.status}): ${text}`);
-            }
-
-            const cpanelResult = await cpanelRes.json();
-            if (cpanelResult.error) throw new Error(cpanelResult.error);
-            
-            return res.status(201).json({ url: cpanelResult.url, pathname: fileName });
-        }
-
-        // Priority 2: Vercel Blob storage
-        if (process.env.BLOB_READ_WRITE_TOKEN) {
-            const { put } = await import('@vercel/blob');
-            const pathname = `products/${fileName}`;
-            const blob = await put(pathname, parsed.buffer, {
-                access: 'public',
-                contentType: parsed.contentType,
-            });
-            return res.status(201).json({ url: blob.url, pathname: blob.pathname });
-        }
-
-        // Priority 3: Local filesystem (development only)
-        if (!isVercelRuntime()) {
-            const uploadDir = join(process.cwd(), 'assets', 'uploads');
-            await mkdir(uploadDir, { recursive: true });
-            await writeFile(join(uploadDir, fileName), parsed.buffer);
-            return res.status(201).json({
-                url: `/assets/uploads/${fileName}`,
-                pathname: `assets/uploads/${fileName}`,
-            });
-        }
-
-        throw new Error('Aucun serveur de stockage configuré (ni cPanel ni Vercel Blob).');
-    } catch (err) {
-        console.error('[upload] Error:', err);
-        return res.status(500).json({ error: 'Impossible d\'envoyer l\'image. Veuillez réessayer.' });
+        // Upload to Local filesystem
+        const uploadDir = join(process.cwd(), 'assets', 'uploads');
+        await mkdir(uploadDir, { recursive: true });
+        await writeFile(join(uploadDir, fileName), parsed.buffer);
+        
+        return res.status(201).json({
+            url: `/assets/uploads/${fileName}`,
+            pathname: `assets/uploads/${fileName}`,
+        });
+    } catch (error) {
+        console.error('[Upload Error]', error);
+        return res.status(500).json({ error: error.message });
     }
 }
