@@ -23,15 +23,24 @@
         `${Number(value || 0).toLocaleString('fr-FR')} ${currency}`;
 
     const loadPacks = async () => {
-        const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
         const inline = document.getElementById('packs-data');
-        if (inline && !isLocal) return JSON.parse(inline.textContent);
+
+        // Always try the live API first
+        try {
+            const res = await fetch('/api/packs', { cache: 'no-store' });
+            if (res.ok) return res.json();
+        } catch { /* fall through */ }
+
+        // Local dev fallback
         try {
             const res = await fetch('../../data/packs.json', { cache: 'no-store' });
             if (res.ok) return res.json();
-        } catch { /* API fallback */ }
-        const res = await fetch('/api/packs');
-        return res.json();
+        } catch { /* fall through */ }
+
+        // Last resort: inline JSON baked at build time
+        if (inline) return JSON.parse(inline.textContent);
+
+        throw new Error('Impossible de charger les compositions.');
     };
 
     const productHref = (item) =>

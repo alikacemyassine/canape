@@ -252,17 +252,24 @@
     };
 
     const loadCatalog = async () => {
-        const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
         const inline = document.getElementById('catalog-data');
-        if (inline && !isLocal) return JSON.parse(inline.textContent);
 
+        // Always try the live API first so production stays in sync with Supabase
+        try {
+            const res = await fetch('/api/products', { cache: 'no-store' });
+            if (res.ok) return res.json();
+        } catch { /* fall through */ }
+
+        // Local dev fallback: products.json served by the dev server
         try {
             const res = await fetch('../../data/products.json', { cache: 'no-store' });
             if (res.ok) return res.json();
-        } catch { /* API fallback */ }
+        } catch { /* fall through */ }
 
-        const res = await fetch('/api/products');
-        return res.json();
+        // Last resort: use the inline JSON baked into the HTML at build time
+        if (inline) return JSON.parse(inline.textContent);
+
+        throw new Error('Impossible de charger le catalogue produits.');
     };
 
     loadCatalog()
