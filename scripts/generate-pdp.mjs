@@ -15,7 +15,7 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = join(__dirname, '..');
-const siteUrl = 'https://canape.vercel.app';
+const siteUrl = 'https://lecanapeoran.com';
 const today = new Date().toISOString().slice(0, 10);
 
 const { data: rawProducts } = await supabase.from('products').select('*');
