@@ -3,15 +3,11 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "generate": "node scripts/generate-pdp.mjs",
     "dev": "node scripts/local-server.mjs",
-    "dev:vercel": "vercel dev"
+    "generate": "node scripts/generate-pdp.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.110.0",
-    "@vercel/kv": "^3.0.0",
-    "dotenv": "^17.4.2",
-    "nodemailer": "^9.0.3",
-    "pg": "^8.22.0"
+    "dotenv": "^17.4.2"
   }
 }

@@ -16,13 +16,13 @@ const routes = [
     { pattern: /^\/api\/logout$/, file: 'api/logout.js' },
     { pattern: /^\/api\/auth\/register$/, file: 'api/auth/register.js' },
     { pattern: /^\/api\/admin\/me$/, file: 'api/admin/me.js' },
-    { pattern: /^\/api\/admin\/products$/, file: 'api/admin/products.js' },
-    { pattern: /^\/api\/admin\/products\/([^/]+)$/, file: 'api/admin/products/[slug].js', params: ['slug'] },
-    { pattern: /^\/api\/admin\/packs$/, file: 'api/admin/packs.js' },
-    { pattern: /^\/api\/admin\/packs\/([^/]+)$/, file: 'api/admin/packs/[slug].js', params: ['slug'] },
+    // Products — single handler, slug passed via query
+    { pattern: /^\/api\/admin\/products(?:\/([^/]+))?$/, file: 'api/admin/products.js', params: ['slug'] },
+    // Packs — single handler, slug passed via query
+    { pattern: /^\/api\/admin\/packs(?:\/([^/]+))?$/, file: 'api/admin/packs.js', params: ['slug'] },
     { pattern: /^\/api\/admin\/upload$/, file: 'api/admin/upload.js' },
-    { pattern: /^\/api\/admin\/orders$/, file: 'api/admin/orders.js' },
-    { pattern: /^\/api\/admin\/orders\/([^/]+)$/, file: 'api/admin/orders/[id].js', params: ['id'] },
+    // Orders — single handler, id passed via query
+    { pattern: /^\/api\/admin\/orders(?:\/([^/]+))?$/, file: 'api/admin/orders.js', params: ['id'] },
 ];
 
 const mime = {
