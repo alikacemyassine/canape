@@ -111,7 +111,7 @@ async function handleApi(req, res, url) {
         });
         req.query = query;
         req.body = await readBody(req);
-        // In production we don't cache-bust (no ?t= trick needed since Passenger restarts on deploy)
+        // We rely on cPanel passenger restart to clear the module cache, don't use Date.now() as it leaks memory in Node.js module registry
         const moduleUrl = pathToFileURL(join(root, route.file)).href;
         const mod = await import(moduleUrl);
         await mod.default(req, createApiResponse(res));
@@ -148,9 +148,10 @@ async function serveStatic(req, res, url) {
     const type = mime[extname(filePath).toLowerCase()] || 'application/octet-stream';
     // Cache static assets for 1 day, HTML no-cache
     const isHtml = type.startsWith('text/html');
+    const isJs = type.startsWith('application/javascript') || type.startsWith('text/javascript');
     res.writeHead(200, {
         'Content-Type': type,
-        'Cache-Control': isHtml ? 'no-cache' : 'public, max-age=86400',
+        'Cache-Control': (isHtml || isJs) ? 'no-cache, no-store, must-revalidate' : 'public, max-age=86400',
     });
     createReadStream(filePath).pipe(res);
 }
