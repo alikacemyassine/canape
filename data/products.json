@@ -456,5 +456,37 @@
         "offset": false
       }
     ]
+  },
+  {
+    "slug": "test-qa-canape",
+    "name": "Test QA Canapé UPDATED",
+    "category": "sejour",
+    "categoryLabel": "SÉJOUR",
+    "price": 120000,
+    "currency": "DZD",
+    "shortDescription": "",
+    "description": "",
+    "heroImage": "",
+    "images": {
+      "hero": "",
+      "gallery": []
+    },
+    "colors": [
+      {
+        "hex": "#111111",
+        "label": "Noir",
+        "gallery": []
+      }
+    ],
+    "features": [],
+    "specifications": [],
+    "options": {
+      "colors": [],
+      "materials": []
+    },
+    "status": "draft",
+    "archived": true,
+    "createdAt": "2026-07-05",
+    "updatedAt": "2026-07-05"
   }
 ]

@@ -91,7 +91,8 @@ async function handleApi(req, res, url) {
         const match = url.pathname.match(route.pattern);
         const query = Object.fromEntries(url.searchParams.entries());
         route.params?.forEach((name, index) => {
-            query[name] = decodeURIComponent(match[index + 1]);
+            const val = match[index + 1];
+            if (val !== undefined) query[name] = decodeURIComponent(val);
         });
 
         req.query = query;
