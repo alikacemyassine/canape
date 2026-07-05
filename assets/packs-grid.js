@@ -30,15 +30,19 @@
 
     const loadPacks = async () => {
         const inline = document.getElementById('packs-data');
-        if (inline) return JSON.parse(inline.textContent);
+
+        try {
+            const res = await fetch('/api/packs', { cache: 'no-store' });
+            if (res.ok) return res.json();
+        } catch { /* API fallback */ }
 
         try {
             const res = await fetch('../data/packs.json', { cache: 'no-store' });
             if (res.ok) return res.json();
         } catch { /* API fallback */ }
 
-        const res = await fetch('/api/packs');
-        return res.json();
+        if (inline) return JSON.parse(inline.textContent);
+        throw new Error('Impossible de charger les compositions.');
     };
 
     const renderFilters = () => {
@@ -81,7 +85,7 @@
         }
 
         grid.innerHTML = packs.map((pack) => `
-            <a href="./${encodeURIComponent(pack.slug)}/" class="product-card group cursor-pointer flex flex-col gap-4 reveal-up">
+            <a href="./item/?slug=${encodeURIComponent(pack.slug)}" class="product-card group cursor-pointer flex flex-col gap-4 reveal-up">
                 <div class="relative overflow-hidden aspect-[4/5] bg-surface-container w-full">
                     <img alt="${escapeHtml(pack.name)}" class="object-cover w-full h-full product-card-img" src="${escapeHtml(pack.heroImage)}" loading="lazy"/>
                 </div>

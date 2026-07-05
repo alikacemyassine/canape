@@ -70,7 +70,7 @@ import { CATEGORIES_TREE } from './admin-auth.js?v=2';
         }
 
         grid.innerHTML = products.map((product) => `
-            <a href="./${encodeURIComponent(product.slug)}/" class="product-card group cursor-pointer flex flex-col gap-4 reveal-up" data-category="${escapeHtml(product.category)}">
+            <a href="./item/?slug=${encodeURIComponent(product.slug)}" class="product-card group cursor-pointer flex flex-col gap-4 reveal-up" data-category="${escapeHtml(product.category)}">
                 <div class="relative overflow-hidden aspect-[4/5] bg-surface-container w-full">
                     <img alt="${escapeHtml(product.name)} - ${escapeHtml(product.categoryLabel)}" class="object-cover w-full h-full product-card-img" src="${escapeHtml(product.images?.hero)}" loading="lazy"/>
                 </div>
