@@ -30,4 +30,5 @@ backend skills/
 Anthropic-Cybersecurity-Skills-main/
 .agents/
 scratch/
-tmp/ 
+tmp/
+data/*.json
