@@ -9,6 +9,9 @@ import { extname, join, normalize } from 'path';
 import { fileURLToPath, pathToFileURL } from 'url';
 import { config } from 'dotenv';
 import { resolve, dirname } from 'path';
+import WebSocket from 'ws';
+
+global.WebSocket = WebSocket;
 
 // ── Load .env from the app root ───────────────────────────────────────────────
 const __dirname = dirname(fileURLToPath(import.meta.url));
