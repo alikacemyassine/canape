@@ -30,7 +30,7 @@ export async function requireAdmin(req, res) {
             return false;
         }
 
-        const adminEmail = (process.env.ADMIN_EMAIL || 'admin@lecanape.dz').trim().toLowerCase();
+        const adminEmail = (process.env.ADMIN_EMAIL || 'canape.oran@gmail.com').trim().toLowerCase();
         const userEmail = (user.email || '').trim().toLowerCase();
         
         if (userEmail !== adminEmail) {
