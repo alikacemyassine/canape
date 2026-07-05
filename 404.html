@@ -50,32 +50,49 @@
 </head>
 <body class="bg-background text-on-background font-body-md antialiased flex flex-col min-h-screen">
 
-<nav class="fixed top-0 w-full z-50 glass-nav flex justify-between items-center px-margin-mobile md:px-margin-desktop py-6 transition-all duration-500" id="main-nav">
-    <div class="hidden md:flex gap-8 items-center">
-        <a class="font-label-caps text-label-caps tracking-[0.1em] uppercase text-on-surface-variant hover:text-primary transition-colors duration-300" href="/index.html">Accueil</a>
-        <a class="font-label-caps text-label-caps tracking-[0.1em] uppercase text-on-surface-variant hover:text-primary transition-colors duration-300" href="/produits/">Collections</a>
-        <a class="font-label-caps text-label-caps tracking-[0.1em] uppercase text-on-surface-variant hover:text-primary transition-colors duration-300" href="/packs/">Compositions</a>
-    </div>
-    <a class="font-headline-md text-headline-md font-bold tracking-tighter text-primary hover:opacity-80 transition-opacity" href="/index.html">LE CANAPÉ</a>
-    <div class="flex items-center gap-6">
-        <div class="hidden md:flex gap-8 items-center">
-            <a class="font-label-caps text-label-caps tracking-[0.1em] uppercase text-on-surface-variant hover:text-primary transition-colors duration-300" href="/orders.html">Panier</a>
-            <a class="font-label-caps text-label-caps tracking-[0.1em] uppercase text-on-surface-variant hover:text-primary transition-colors duration-300" href="/account.html">Account</a>
-            <a class="font-label-caps text-label-caps tracking-[0.1em] uppercase text-on-surface-variant hover:text-primary transition-colors duration-300" href="/about.html">About</a>
+<nav class="fixed top-0 w-full z-50 glass-nav flex justify-between items-center px-margin-mobile md:px-margin-desktop py-6 transition-all duration-500"
+        id="main-nav">
+        <div class="hidden md:flex md:flex-1 gap-8 items-center justify-start">
+            <a class="font-label-caps text-label-caps tracking-[0.1em] uppercase text-on-surface-variant hover:text-primary transition-colors duration-300"
+                href="/">Accueil</a>
+            <a class="font-label-caps text-label-caps tracking-[0.1em] uppercase text-on-surface-variant hover:text-primary transition-colors duration-300"
+                href="/produits/">Collections</a>
+            <a class="font-label-caps text-label-caps tracking-[0.1em] uppercase text-on-surface-variant hover:text-primary transition-colors duration-300"
+                href="/packs/">Compositions</a>
         </div>
-        <button id="mobile-menu-toggle" aria-label="Menu Principal" class="md:hidden text-on-surface-variant hover:text-primary transition-colors duration-300 relative z-[60]">
-            <span class="material-symbols-outlined" id="mobile-menu-icon" aria-hidden="true">menu</span>
-        </button>
-    </div>
-    <div id="mobile-menu" class="fixed inset-0 bg-surface-container-lowest z-[55] flex flex-col items-center justify-center gap-8 translate-x-full transition-transform duration-500 md:hidden">
-        <a class="font-headline-md text-headline-md text-on-surface-variant" href="/index.html">Accueil</a>
-        <a class="font-headline-md text-headline-md text-on-surface-variant" href="/produits/">Collections</a>
-        <a class="font-headline-md text-headline-md text-on-surface-variant" href="/packs/">Compositions</a>
-        <a class="font-headline-md text-headline-md text-on-surface-variant" href="/orders.html">Panier</a>
-        <a class="font-headline-md text-headline-md text-on-surface-variant" href="/account.html">Account</a>
-        <a class="font-headline-md text-headline-md text-on-surface-variant" href="/about.html">About</a>
-    </div>
-</nav>
+        <a class="font-headline-md text-headline-md font-bold tracking-tighter text-primary hover:opacity-80 transition-opacity text-center md:flex-none"
+            href="/">LE CANAPÉ</a>
+        <div class="flex items-center gap-6 md:flex-1 justify-end">
+            <div class="hidden md:flex gap-8 items-center">
+                <a class="text-on-surface-variant hover:text-primary transition-colors duration-300 flex items-center"
+                    href="/wishlist.html" aria-label="Liste de souhaits">
+                    <span class="material-symbols-outlined text-[24px]">favorite</span>
+                </a>
+                <a class="font-label-caps text-label-caps tracking-[0.1em] uppercase text-on-surface-variant hover:text-primary transition-colors duration-300"
+                    href="/orders.html">Panier</a>
+                <a class="font-label-caps text-label-caps tracking-[0.1em] uppercase text-on-surface-variant hover:text-primary transition-colors duration-300"
+                    href="/account.html">Account</a>
+                <a class="font-label-caps text-label-caps tracking-[0.1em] uppercase text-on-surface-variant hover:text-primary transition-colors duration-300"
+                    href="/about.html">About</a>
+            </div>
+            <button id="mobile-menu-toggle" aria-label="Menu Principal"
+                class="md:hidden text-on-surface-variant hover:text-primary transition-colors duration-300 relative z-[60] p-3 -m-3">
+                <span class="material-symbols-outlined" id="mobile-menu-icon" aria-hidden="true">menu</span>
+            </button>
+        </div>
+
+        <!-- Mobile Menu Overlay -->
+        <div id="mobile-menu"
+            class="fixed top-0 left-0 w-screen h-[100dvh] bg-surface-container-lowest z-[55] flex flex-col items-center justify-center gap-8 translate-x-full transition-transform duration-500 md:hidden">
+            <a class="font-headline-md text-headline-md text-on-surface-variant" href="/">Accueil</a>
+            <a class="font-headline-md text-headline-md text-on-surface-variant" href="/produits/">Collections</a>
+            <a class="font-headline-md text-headline-md text-on-surface-variant" href="/packs/">Compositions</a>
+            <a class="font-headline-md text-headline-md text-on-surface-variant" href="/wishlist.html">Liste de souhaits</a>
+            <a class="font-headline-md text-headline-md text-on-surface-variant" href="/orders.html">Panier</a>
+            <a class="font-headline-md text-headline-md text-on-surface-variant" href="/account.html">Account</a>
+            <a class="font-headline-md text-headline-md text-on-surface-variant" href="/about.html">About</a>
+        </div>
+    </nav>
 <main class="flex-grow flex flex-col items-center justify-center text-center px-margin-mobile md:px-margin-desktop py-32 reveal-up">
     <h1 class="font-headline-lg md:text-display-lg text-primary mb-6 uppercase tracking-wide" style="font-family:'Playfair Display',serif">404</h1>
     <h2 class="font-headline-md text-on-surface mb-6">Page introuvable</h2>

@@ -57,32 +57,49 @@
 </head>
 <body class="bg-background text-on-background font-body-md antialiased" data-pack-slug="chambre-nocturne">
 
-<nav class="fixed top-0 w-full z-50 glass-nav flex justify-between items-center px-margin-mobile md:px-margin-desktop py-6 transition-all duration-500" id="main-nav">
-    <div class="hidden md:flex gap-8 items-center">
-        <a class="font-label-caps text-label-caps tracking-[0.1em] uppercase text-on-surface-variant hover:text-primary transition-colors duration-300" href="/index.html">Accueil</a>
-        <a class="font-label-caps text-label-caps tracking-[0.1em] uppercase text-on-surface-variant hover:text-primary transition-colors duration-300" href="/produits/">Collections</a>
-        <a class="font-label-caps text-label-caps tracking-[0.1em] uppercase text-primary border-b border-primary pb-1" href="/packs/">Compositions</a>
-    </div>
-    <a class="font-headline-md text-headline-md font-bold tracking-tighter text-primary hover:opacity-80 transition-opacity" href="/index.html">LE CANAPÉ</a>
-    <div class="flex items-center gap-6">
-        <div class="hidden md:flex gap-8 items-center">
-            <a class="font-label-caps text-label-caps tracking-[0.1em] uppercase text-on-surface-variant hover:text-primary transition-colors duration-300" href="/orders.html">Panier</a>
-            <a class="font-label-caps text-label-caps tracking-[0.1em] uppercase text-on-surface-variant hover:text-primary transition-colors duration-300" href="/account.html">Account</a>
-            <a class="font-label-caps text-label-caps tracking-[0.1em] uppercase text-on-surface-variant hover:text-primary transition-colors duration-300" href="/about.html">About</a>
+<nav class="fixed top-0 w-full z-50 glass-nav flex justify-between items-center px-margin-mobile md:px-margin-desktop py-6 transition-all duration-500"
+        id="main-nav">
+        <div class="hidden md:flex md:flex-1 gap-8 items-center justify-start">
+            <a class="font-label-caps text-label-caps tracking-[0.1em] uppercase text-on-surface-variant hover:text-primary transition-colors duration-300"
+                href="/">Accueil</a>
+            <a class="font-label-caps text-label-caps tracking-[0.1em] uppercase text-on-surface-variant hover:text-primary transition-colors duration-300"
+                href="/produits/">Collections</a>
+            <a class="font-label-caps text-label-caps tracking-[0.1em] uppercase text-on-surface-variant hover:text-primary transition-colors duration-300"
+                href="/packs/">Compositions</a>
         </div>
-        <button id="mobile-menu-toggle" aria-label="Menu Principal" class="md:hidden text-on-surface-variant hover:text-primary transition-colors duration-300 relative z-[60]">
-            <span class="material-symbols-outlined" id="mobile-menu-icon" aria-hidden="true">menu</span>
-        </button>
-    </div>
-    <div id="mobile-menu" class="fixed inset-0 bg-surface-container-lowest z-[55] flex flex-col items-center justify-center gap-8 translate-x-full transition-transform duration-500 md:hidden">
-        <a class="font-headline-md text-headline-md text-on-surface-variant" href="/index.html">Accueil</a>
-        <a class="font-headline-md text-headline-md text-on-surface-variant" href="/produits/">Collections</a>
-        <a class="font-headline-md text-headline-md text-primary" href="/packs/">Compositions</a>
-        <a class="font-headline-md text-headline-md text-on-surface-variant" href="/orders.html">Panier</a>
-        <a class="font-headline-md text-headline-md text-on-surface-variant" href="/account.html">Account</a>
-        <a class="font-headline-md text-headline-md text-on-surface-variant" href="/about.html">About</a>
-    </div>
-</nav>
+        <a class="font-headline-md text-headline-md font-bold tracking-tighter text-primary hover:opacity-80 transition-opacity text-center md:flex-none"
+            href="/">LE CANAPÉ</a>
+        <div class="flex items-center gap-6 md:flex-1 justify-end">
+            <div class="hidden md:flex gap-8 items-center">
+                <a class="text-on-surface-variant hover:text-primary transition-colors duration-300 flex items-center"
+                    href="/wishlist.html" aria-label="Liste de souhaits">
+                    <span class="material-symbols-outlined text-[24px]">favorite</span>
+                </a>
+                <a class="font-label-caps text-label-caps tracking-[0.1em] uppercase text-on-surface-variant hover:text-primary transition-colors duration-300"
+                    href="/orders.html">Panier</a>
+                <a class="font-label-caps text-label-caps tracking-[0.1em] uppercase text-on-surface-variant hover:text-primary transition-colors duration-300"
+                    href="/account.html">Account</a>
+                <a class="font-label-caps text-label-caps tracking-[0.1em] uppercase text-on-surface-variant hover:text-primary transition-colors duration-300"
+                    href="/about.html">About</a>
+            </div>
+            <button id="mobile-menu-toggle" aria-label="Menu Principal"
+                class="md:hidden text-on-surface-variant hover:text-primary transition-colors duration-300 relative z-[60] p-3 -m-3">
+                <span class="material-symbols-outlined" id="mobile-menu-icon" aria-hidden="true">menu</span>
+            </button>
+        </div>
+
+        <!-- Mobile Menu Overlay -->
+        <div id="mobile-menu"
+            class="fixed top-0 left-0 w-screen h-[100dvh] bg-surface-container-lowest z-[55] flex flex-col items-center justify-center gap-8 translate-x-full transition-transform duration-500 md:hidden">
+            <a class="font-headline-md text-headline-md text-on-surface-variant" href="/">Accueil</a>
+            <a class="font-headline-md text-headline-md text-on-surface-variant" href="/produits/">Collections</a>
+            <a class="font-headline-md text-headline-md text-on-surface-variant" href="/packs/">Compositions</a>
+            <a class="font-headline-md text-headline-md text-on-surface-variant" href="/wishlist.html">Liste de souhaits</a>
+            <a class="font-headline-md text-headline-md text-on-surface-variant" href="/orders.html">Panier</a>
+            <a class="font-headline-md text-headline-md text-on-surface-variant" href="/account.html">Account</a>
+            <a class="font-headline-md text-headline-md text-on-surface-variant" href="/about.html">About</a>
+        </div>
+    </nav>
 <main class="pack-detail-page" id="pack-root"></main>
 <script type="application/json" id="packs-data">[{"id":"salon-meridien","name":"Le Salon Méridien","slug":"salon-meridien","description":"L'alliance parfaite entre l'assise profonde en cuir pleine fleur et les lignes architecturales du noyer massif, créant un espace d'une élégance intemporelle.","price":63600,"old_price":318000,"status":"published","items":[],"images":[],"archived":false,"created_at":"2026-07-01T10:03:16.744578+00:00"},{"id":"chambre-nocturne","name":"La Chambre Nocturne","slug":"chambre-nocturne","description":"Un lit bas capitonné, des tables sculpturales et un éclairage doux composent une atmosphère enveloppante et précise.","price":210000,"old_price":null,"status":"published","items":[],"images":[],"archived":false,"created_at":"2026-07-01T10:03:16.875203+00:00"},{"id":"espace-dinatoire","name":"L'Espace Dînatoire","slug":"espace-dinatoire","description":"Table sculpturale, assises généreuses et lumière verticale composent un espace de repas élégant et durable.","price":340000,"old_price":null,"status":"published","items":[],"images":[],"archived":false,"created_at":"2026-07-01T10:03:16.994216+00:00"},{"id":"bureau-executif","name":"Le Bureau Exécutif","slug":"bureau-executif","description":"Bureau en bois, fauteuil en cuir et éclairage focalisé créent un environnement de concentration haut de gamme.","price":120000,"old_price":null,"status":"published","items":[],"images":[],"archived":false,"created_at":"2026-07-01T10:03:17.152181+00:00"},{"id":"salon-horizon","name":"Le Salon Horizon","slug":"salon-horizon","description":"Un canapé généreux, une table monolithique et des tons ivoire composent un séjour calme et contemporain.","price":275000,"old_price":null,"status":"published","items":[],"images":[],"archived":false,"created_at":"2026-07-01T10:03:17.294201+00:00"},{"id":"table-circulaire","name":"La Table Circulaire","slug":"table-circulaire","description":"Table ronde, chaises sculpturales et suspensions claires forment un ensemble équilibré pour les espaces plus intimes.","price":150000,"old_price":null,"status":"published","items":[],"images":[],"archived":false,"created_at":"2026-07-01T10:03:17.417179+00:00"}]</script>
 

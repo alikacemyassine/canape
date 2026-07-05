@@ -260,29 +260,6 @@ packsHtml = packsHtml.includes('id="packs-data"')
     : packsHtml.replace('</body>', `${packCatalogScript}\n</body>`);
 writeFileSync(packsPath, packsHtml, 'utf8');
 
-const html404 = `<!DOCTYPE html>
-<html lang="fr" style="background-color:#fff8f3;">
-<head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>404 - Page introuvable | LE CANAPÉ</title>
-${headAssets('/')}
-</head>
-<body class="bg-background text-on-background font-body-md antialiased flex flex-col min-h-screen">
-${nav('/', '')}
-<main class="flex-grow flex flex-col items-center justify-center text-center px-margin-mobile md:px-margin-desktop py-32 reveal-up">
-    <h1 class="font-headline-lg md:text-display-lg text-primary mb-6 uppercase tracking-wide" style="font-family:'Playfair Display',serif">404</h1>
-    <h2 class="font-headline-md text-on-surface mb-6">Page introuvable</h2>
-    <p class="font-body-lg text-on-surface-variant max-w-md mx-auto mb-12">Il semblerait que la page que vous cherchez n'existe pas ou qu'elle soit en cours de création.</p>
-    <a href="/produits/" class="bg-primary text-on-primary font-label-caps py-4 px-8 hover:bg-primary-container hover:text-on-primary-container transition-colors duration-500 tracking-widest uppercase text-label-caps inline-block">Découvrir nos collections</a>
-</main>
-${footer('/')}
-<script src="/assets/site.js"></script>
-</body>
-</html>`;
-writeFileSync(join(root, '404.html'), html404, 'utf8');
-console.log('Generated 404.html');
-
 const genericPage = (slug, title, headline, subtitle, contentHtml) => `<!DOCTYPE html>
 <html lang="fr" style="background-color:#fff8f3;">
 <head>
@@ -609,21 +586,8 @@ const textContent = (text) => `
     </div>
 `;
 
-const pages = [
-    ['about.html', 'about', 'À Propos', 'Notre Histoire', aboutContent],
-    ['contact.html', 'contact', 'Contact', 'Nous contacter', contactContent],
-    ['account.html', 'account', 'Mon Compte', 'Espace Client', accountContent],
-    ['wishlist.html', 'wishlist', 'Favoris', 'Liste de souhaits', wishlistContent],
-    ['orders.html', 'orders', 'Commandes', 'Mes Réservations', ordersContent],
-    ['terms.html', 'terms', 'Termes', 'Conditions Générales', textContent(`<p>Les présentes conditions générales régissent l'utilisation du site LE CANAPÉ.</p><p>En utilisant ce site, vous acceptez nos conditions de vente, de réservation et d'utilisation. Les prix sont affichés en Dinar Algérien (DZD) et toutes les commandes sont soumises à validation.</p><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam.</p>`)],
-    ['privacy.html', 'privacy', 'Confidentialité', 'Politique de confidentialité', textContent(`<p>La protection de vos données personnelles est notre priorité.</p><p>Nous ne collectons que les informations strictement nécessaires au traitement de vos réservations et à l'amélioration de votre expérience sur notre site. Vos données ne seront jamais revendues à des tiers.</p><p>Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus. Phasellus ultrices nulla quis nibh. Quisque a lectus.</p>`)]
-];
-
-for (const [filename, slug, title, subtitle, contentHtml] of pages) {
-    writeFileSync(join(root, filename), genericPage(slug, title, title, subtitle, contentHtml), 'utf8');
-    console.log('Generated ' + filename);
-}
-
+// Static pages like orders.html, wishlist.html, contact.html are manually maintained now
+// and are no longer overwritten by this script.
 const urls = [
     ['', '1.0', 'weekly'],
     ['produits/', '0.9', 'weekly'],
