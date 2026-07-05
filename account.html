@@ -316,7 +316,7 @@
         <div class="w-full md:w-auto">
             <span class="font-label-caps text-label-caps tracking-[0.1em] uppercase text-on-surface block mb-4">Newsletter</span>
             <p class="font-body-md text-on-surface-variant mb-4 text-sm max-w-xs">Abonnez-vous pour recevoir nos dernières collections et offres exclusives en avant-première.</p>
-            <form class="flex gap-2" onsubmit="event.preventDefault(); alert('Merci de votre inscription !');">
+            <form class="flex gap-2" onsubmit="handleNewsletterSubmit(event)">
                 <input type="email" placeholder="Votre adresse email" required
                     class="bg-transparent border-b border-outline-variant focus:border-primary outline-none font-body-md text-on-surface py-2 w-full max-w-[200px] transition-colors" />
                 <button type="submit" aria-label="S'abonner"
