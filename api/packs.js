@@ -1,8 +1,4 @@
-import { createClient } from '@supabase/supabase-js';
-
-const supabaseUrl = process.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL;
-const supabaseKey = process.env.VITE_SUPABASE_ANON_KEY;
-const supabase = createClient(supabaseUrl, supabaseKey);
+import { getPacks } from './_lib/storage.js';
 
 export default async function handler(req, res) {
     res.setHeader('Cache-Control', 's-maxage=60, stale-while-revalidate=300');
@@ -11,20 +7,15 @@ export default async function handler(req, res) {
     if (req.method !== 'GET') return res.status(405).json({ error: 'Method not allowed' });
 
     try {
-        const { data: packs, error } = await supabase
-            .from('packs')
-            .select('*')
-            .eq('status', 'published')
-            .eq('archived', false);
-
-        if (error) throw error;
+        const packs = await getPacks();
+        const published = packs.filter(p => p.status === 'published' && !p.archived);
 
         // Map database columns to frontend expectations
-        const formatted = packs.map(p => ({
+        const formatted = published.map(p => ({
             ...p,
-            oldPrice: p.old_price,
-            nameDisplay: p.name.toUpperCase(),
-            categoryLabel: 'SALON', // Hardcoded as per original design
+            oldPrice: p.oldPrice || p.old_price,
+            nameDisplay: (p.name || '').toUpperCase(),
+            categoryLabel: (p.categoryLabel || p.category || 'SALON').toUpperCase(),
         }));
 
         return res.status(200).json(formatted);
