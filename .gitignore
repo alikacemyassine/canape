@@ -31,3 +31,4 @@ Anthropic-Cybersecurity-Skills-main/
 .agents/
 scratch/
 tmp/ 
+data/*.json

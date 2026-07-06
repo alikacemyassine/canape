@@ -29,8 +29,10 @@ function buildProduct(body, existing = null) {
     return {
         slug,
         name,
-        category: body.category || existing?.category || 'canapes',
-        categoryLabel: body.categoryLabel || existing?.categoryLabel || 'CANAPÉS',
+        category: body.category || existing?.category || 'sejour',
+        categoryLabel: body.category || existing?.category || 'sejour',
+        subcategory: body.subcategory || existing?.subcategory || 'general',
+        subsubcategory: body.subsubcategory || existing?.subsubcategory || '',
         price,
         ...(oldPrice ? { oldPrice } : {}),
         ...(body.discountLabel ? { discountLabel: body.discountLabel } : {}),
@@ -40,6 +42,19 @@ function buildProduct(body, existing = null) {
         heroImage: derivedHero,
         images: { hero: derivedHero, gallery: firstGallery },
         colors,
+        materials: Array.isArray(body.materials) ? body.materials : (existing?.materials || []),
+        dimensions: {
+            assise: body.dimAssise || existing?.dimensions?.assise || '—',
+            hauteur: body.dimHauteur ? (String(body.dimHauteur).includes('cm') ? body.dimHauteur : `${body.dimHauteur} cm`) : (existing?.dimensions?.hauteur || '—'),
+            largeur: body.dimLargeur ? (String(body.dimLargeur).includes('cm') ? body.dimLargeur : `${body.dimLargeur} cm`) : (existing?.dimensions?.largeur || '—'),
+            profondeur: body.dimProfondeur ? (String(body.dimProfondeur).includes('cm') ? body.dimProfondeur : `${body.dimProfondeur} cm`) : (existing?.dimensions?.profondeur || '—')
+        },
+        specs: [
+            { label: 'Structure', value: body.specStructure || existing?.specs?.find(s => s.label === 'Structure')?.value || '—' },
+            { label: 'Rembourrage', value: body.specPadding || existing?.specs?.find(s => s.label === 'Rembourrage')?.value || '—' },
+            { label: 'Suspension', value: body.specSuspension || existing?.specs?.find(s => s.label === 'Suspension')?.value || '—' },
+            { label: 'Fabrication', value: body.specFabrication || existing?.specs?.find(s => s.label === 'Fabrication')?.value || '—' }
+        ],
         features: Array.isArray(body.features) ? body.features : (existing?.features || []),
         specifications: Array.isArray(body.specifications) ? body.specifications : (existing?.specifications || []),
         options: body.options || existing?.options || { colors: [], materials: [] },
